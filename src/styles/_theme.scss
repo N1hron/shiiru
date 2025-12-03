@@ -1,0 +1,40 @@
+:root {
+  --color-slate-900: hsl(216, 25%, 20%);
+  --color-slate-800: hsl(216, 25%, 28%);
+  --color-slate-700: hsl(216, 25%, 35%);
+  --color-slate-600: hsl(216, 25%, 43%);
+  --color-slate-500: hsl(216, 25%, 49%);
+  --color-slate-400: hsl(216, 25%, 56%);
+  --color-slate-300: hsl(216, 25%, 64%);
+  --color-slate-200: hsl(216, 25%, 75%);
+  --color-slate-100: hsl(216, 25%, 85%);
+  --color-slate-050: hsl(216, 25%, 94%);
+  --color-slate-025: hsl(216, 25%, 98%);
+
+  --color-blue-900: hsl(213, 46%, 34%);
+  --color-blue-800: hsl(213, 46%, 43%);
+  --color-blue-700: hsl(213, 46%, 48%);
+  --color-blue-600: hsl(213, 46%, 53%);
+  --color-blue-500: hsl(213, 46%, 57%);
+  --color-blue-400: hsl(213, 46%, 62%);
+  --color-blue-300: hsl(213, 46%, 67%);
+  --color-blue-200: hsl(213, 46%, 76%);
+  --color-blue-100: hsl(213, 46%, 85%);
+  --color-blue-050: hsl(213, 46%, 94%);
+  --color-blue-025: hsl(213, 46%, 98%);
+
+  --border-width-thin: calc(1rem / 16);
+  --border-width-medium: calc(2rem / 16);
+  --border-width-thick: calc(3rem / 16);
+
+  --transition-duration-fastest: 0.125s;
+  --transition-duration-fast: 0.25s;
+  --transition-duration-slow: 0.5s;
+
+  --font-size-small: calc(1rem * 14 / 16);
+  --font-size-medium: 1rem;
+
+  --elevation-shadow:
+    0 0 0.25rem 0 hsl(from var(--color-slate-500) h s l / 0.125),
+    0 0.25rem 0.5rem 0 hsl(from var(--color-slate-500) h s l / 0.25);
+}

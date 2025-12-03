@@ -1,0 +1,11 @@
+@use "./styles/modern-normalize";
+@use "./styles/reset";
+@use "./styles/fonts";
+@use "./styles/theme";
+
+html {
+  font-family: "Nunito", sans-serif;
+  background-color: #fff;
+  color: var(--color-slate-600);
+  font-weight: 600;
+}

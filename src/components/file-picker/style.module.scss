@@ -1,0 +1,95 @@
+@use "../../styles/mixins" as m;
+
+.filePicker {
+  position: fixed;
+  display: flex;
+  max-width: 40rem;
+  width: 100%;
+  margin: 0 auto;
+  top: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  transition-property: top, transform, max-width;
+  transition-duration: var(--transition-duration-fast);
+  transition-timing-function: cubic-bezier(0.5, -0.2, 0.5, 1.2);
+
+  // &:has(.urlInput:focus) {
+  //   animation: shake 0.5s linear 0s 1;
+  // }
+
+  &:has(.spinner) {
+    .urlInput {
+      padding-right: 3.75rem;
+    }
+  }
+
+  &Empty {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 50rem;
+  }
+
+  &Loading {
+    .spinner {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+// @keyframes shake {
+//   0% {
+//     transform: translateX(0);
+//   }
+//   25% {
+//     transform: translateX(1.5rem);
+//   }
+//   50% {
+//     transform: translateX(-1.5rem);
+//   }
+//   75% {
+//     transform: translateX(1.5rem);
+//   }
+//   100% {
+//     transform: translateX(0);
+//   }
+// }
+
+.selectFile {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &:has(+ .fileInput:focus-visible) {
+    outline: solid 2px red;
+  }
+}
+
+.fileInput {
+  @include m.visually-hidden;
+}
+
+.urlInput {
+  flex-grow: 1;
+  padding-left: 7.6rem;
+}
+
+.spinner {
+  position: absolute;
+  right: 1.125rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1.5rem;
+  width: 1.5rem;
+  pointer-events: none;
+  fill: var(--color-blue-500);
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition-property: visibility, opacity;
+  transform-origin: top left;
+  transition-duration: var(--transition-duration-fast);
+}

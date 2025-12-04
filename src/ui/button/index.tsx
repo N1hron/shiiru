@@ -6,14 +6,16 @@ import { toCapitalized } from "@/utils";
 
 type ButtonProps = ComponentPropsWithRef<"button"> & {
   color?: "blue";
-  size?: "medium";
+  size?: "medium" | "small";
+  icon?: boolean;
 };
 
-export function Button({ color = "blue", size = "medium", className, children, ...props }: ButtonProps) {
+export function Button({ color = "blue", size = "medium", icon, className, children, ...props }: ButtonProps) {
   const cl = clsx(
     styles.button,
     styles[`button${toCapitalized(color)}`],
     styles[`button${toCapitalized(size)}`],
+    icon && styles.buttonIcon,
     className,
   );
 

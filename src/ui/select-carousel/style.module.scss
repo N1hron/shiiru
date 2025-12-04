@@ -1,0 +1,53 @@
+.selectCarousel {
+  display: flex;
+  gap: 0.25rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  box-shadow: var(--elevation-shadow-low);
+  padding: 0.25rem;
+}
+
+.button {
+  flex-shrink: 0;
+
+  svg {
+    height: 100%;
+    width: auto;
+  }
+
+  path {
+    stroke: #fff;
+  }
+
+  &:last-child {
+    svg {
+      rotate: 180deg;
+    }
+  }
+}
+
+.value {
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-blue-500);
+  border-radius: 0.25rem;
+  color: #fff;
+  background: repeating-linear-gradient(
+    -45deg,
+    hsl(from var(--color-blue-500) h s l / 1) 0,
+    hsl(from var(--color-blue-500) h s l / 1) 0.3rem,
+    hsl(from var(--color-blue-500) h s l / 0.9) 0.3rem,
+    hsl(from var(--color-blue-500) h s l / 0.9) 0.6rem
+  );
+
+  // background: repeating-linear-gradient(
+  //   -45deg,
+  //   hsl(from var(--color-blue-500) h s l / 0.1) 0,
+  //   hsl(from var(--color-blue-500) h s l / 0.1) 0.3rem,
+  //   hsl(from var(--color-blue-500) h s l / 0.05) 0.3rem,
+  //   hsl(from var(--color-blue-500) h s l / 0.05) 0.6rem
+  // );
+}

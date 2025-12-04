@@ -1,5 +1,6 @@
 import { useId, useRef, type ChangeEvent } from "react";
 
+import UploadIcon from "@/assets/icons/upload.svg?react";
 import { Button } from "@/ui";
 import { uploadFile, useAppDispatch } from "@/store";
 
@@ -29,23 +30,22 @@ export function SelectFile() {
   }
 
   return (
-    <>
+    <div className={styles.fileInput}>
       <Button
-        className={styles.selectFile}
         id={buttonId}
+        icon
         tabIndex={-1}
         onClick={handleClick}
       >
-        Select file
+        <UploadIcon />
       </Button>
       <input
-        className={styles.fileInput}
         type="file"
         accept="image/*, video/*"
         aria-labelledby={buttonId}
         ref={inputRef}
         onChange={handleChange}
       />
-    </>
+    </div>
   );
 }

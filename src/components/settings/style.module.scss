@@ -1,0 +1,21 @@
+.settings {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  width: 15rem;
+  padding: 0.5rem 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: var(--elevation-shadow-high);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stringItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}

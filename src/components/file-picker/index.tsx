@@ -8,13 +8,15 @@ import { selectFilePickerStatus, selectIsFileSelected, useAppSelector } from "@/
 import styles from "./style.module.scss";
 
 export function FilePicker() {
-  const isEmpty = useAppSelector(selectIsFileSelected);
+  const isFileSelected = useAppSelector(selectIsFileSelected);
   const status = useAppSelector(selectFilePickerStatus);
 
   const cl = clsx(
     styles.filePicker,
-    isEmpty && styles.filePickerEmpty,
+    !isFileSelected && styles.filePickerEmpty,
+    status === "idle" && styles.filePickerIdle,
     status === "loading" && styles.filePickerLoading,
+    status === "error" && styles.filePickerError,
   );
 
   return (

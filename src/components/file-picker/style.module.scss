@@ -4,76 +4,69 @@
   position: fixed;
   display: flex;
   max-width: 40rem;
-  width: 100%;
+  width: calc(100% - 2rem);
   margin: 0 auto;
   top: 1rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-
-  transition-property: top, transform, max-width;
-  transition-duration: var(--transition-duration-fast);
-  transition-timing-function: cubic-bezier(0.5, -0.2, 0.5, 1.2);
-
-  // &:has(.urlInput:focus) {
-  //   animation: shake 0.5s linear 0s 1;
-  // }
-
-  &:has(.spinner) {
-    .urlInput {
-      padding-right: 3.75rem;
-    }
-  }
-
-  &Empty {
-    top: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 50rem;
-  }
+  left: 1rem;
 
   &Loading {
     .spinner {
       visibility: visible;
       opacity: 1;
     }
+
+    .urlInput {
+      padding-right: 3.75rem;
+    }
   }
-}
 
-// @keyframes shake {
-//   0% {
-//     transform: translateX(0);
-//   }
-//   25% {
-//     transform: translateX(1.5rem);
-//   }
-//   50% {
-//     transform: translateX(-1.5rem);
-//   }
-//   75% {
-//     transform: translateX(1.5rem);
-//   }
-//   100% {
-//     transform: translateX(0);
-//   }
-// }
+  &Error:not(.filePickerLoading) {
+    animation: shake 0.5s linear 0s 1;
 
-.selectFile {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-
-  &:has(+ .fileInput:focus-visible) {
-    outline: solid 2px red;
+    @keyframes shake {
+      0% {
+        translate: 0 0;
+      }
+      25% {
+        translate: 1rem 0;
+      }
+      50% {
+        translate: -1rem 0;
+      }
+      75% {
+        translate: 1rem 0;
+      }
+      100% {
+        translate: 0 0;
+      }
+    }
   }
 }
 
 .fileInput {
-  @include m.visually-hidden;
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  button {
+    &:has(+ .fileInput:focus-visible) {
+      outline: solid 2px red;
+    }
+
+    path {
+      stroke: var(--text-color);
+    }
+  }
+
+  input {
+    @include m.visually-hidden;
+  }
 }
 
 .urlInput {
   flex-grow: 1;
-  padding-left: 7.6rem;
+  padding-left: 3.25rem;
 }
 
 .spinner {

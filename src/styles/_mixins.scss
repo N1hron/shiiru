@@ -10,3 +10,19 @@
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+@mixin background-dashed($color: var(--color-blue-500)) {
+  background: repeating-linear-gradient(
+    -45deg,
+    $color 0,
+    $color 0.3rem,
+    hsl(from $color h s calc(l - 5)) 0.3rem,
+    hsl(from $color h s calc(l - 5)) 0.6rem
+  );
+}
+
+@mixin unselectable() {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

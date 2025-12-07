@@ -1,39 +1,30 @@
-import { config } from "./config";
-
-type KeysMatching<T extends object, V> = {
+export type KeysMatching<T extends object, V> = {
   [K in keyof T]: T[K] extends V ? K : never;
 }[keyof T];
 
-export type FileData = {
-  name: {
-    full: string;
-    stem: string;
-    ext: string;
-  };
-  mime: string;
-  size: number;
-  type: "video" | "image";
-  duration: number;
-  width: number;
-  height: number;
-  url: string;
+export type FilterValues<T extends object, V> = {
+  [K in KeysMatching<T, V>]: T[K]
 };
 
-type ConfigSettingsItems = typeof config["settings"]["items"];
-type ConfigSettingsItem = ConfigSettingsItems[number];
+export type StickerSize = "sticker" | "emoji";
+export type StickerVerticalAlignment = "top" | "middle" | "bottom";
+export type StickerHorizontalAlignment = "left" | "middle" | "right";
+export type StickerResizeMode = "fill" | "contain" | "cover" | "scale down";
 
-export type Settings = {
-  [N in ConfigSettingsItem["name"]]: Extract<ConfigSettingsItem, { name: N }> extends { values: (infer V)[] } ? V : boolean;
+export type StickerSettings = {
+  size: StickerSize;
+  verticalAlignment: StickerVerticalAlignment;
+  horizontalAlignment: StickerHorizontalAlignment;
+  resizeMode: StickerResizeMode;
+  trim: boolean;
 };
 
-export type SettingName = keyof Settings;
-export type SettingValue<N extends SettingName> = Settings[N];
+export type StickerStringSetttings = FilterValues<StickerSettings, string>;
+export type StickerBooleanSetttings = FilterValues<StickerSettings, boolean>;
 
-export type StringSettingName = KeysMatching<Settings, string>;
-export type StringSettingValue<N extends StringSettingName> = Settings[N];
+export type StickerSettingName = keyof StickerSettings;
+export type StickerStringSettingName = keyof StickerStringSetttings;
+export type StickerBooleanSettingName = keyof StickerBooleanSetttings;
 
-export type BooleanSettingName = KeysMatching<Settings, boolean>;
-export type BooleanSettingValue<N extends BooleanSettingName> = Settings[N];
-
-export type StringSettings = Pick<Settings, StringSettingName>;
-export type BooleanSettings = Pick<Settings, BooleanSettingName>;
+export type StickerSettingValue<V extends StickerSettingName> = StickerSettings[V];
+export type StickerStringSettingValue<V extends StickerStringSettingName> = StickerSettings[V];

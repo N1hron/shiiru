@@ -1,12 +1,9 @@
 .settings {
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
   width: 15rem;
-  padding: 0.5rem 0.5rem 0.75rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #fff;
-  box-shadow: var(--elevation-shadow-high);
+  box-shadow: var(--shadow-elevation-high);
   height: fit-content;
   display: flex;
   flex-direction: column;

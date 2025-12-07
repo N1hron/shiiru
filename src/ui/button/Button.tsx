@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import type { ComponentPropsWithRef } from "react";
 
-import styles from "./style.module.scss";
 import { toCapitalized } from "@/utils";
+
+import styles from "./style.module.scss";
 
 type ButtonProps = ComponentPropsWithRef<"button"> & {
   color?: "blue";

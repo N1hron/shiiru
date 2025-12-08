@@ -5,9 +5,11 @@ import { useSpinButtonContext } from "./SpinButtonContext";
 
 import styles from "./style.module.scss";
 
-type SpinButtonValueProps = Omit<ComponentPropsWithRef<"div">, "children">;
+type SpinButtonValueProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
+  suffix?: string;
+};
 
-export function SpinButtonValue({ className, ...props }: SpinButtonValueProps) {
+export function SpinButtonValue({ suffix = "", className, ...props }: SpinButtonValueProps) {
   const {
     id,
     label,
@@ -69,7 +71,7 @@ export function SpinButtonValue({ className, ...props }: SpinButtonValueProps) {
       onKeyDown={handleKeyDown}
       {...props}
     >
-      {valueText || valueNow}
+      {(valueText || valueNow) + suffix}
     </div>
   );
 }

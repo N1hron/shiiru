@@ -7,17 +7,18 @@ type SpinButtonNumericProps = SpinButtonProps<{
   max: number;
   value: number;
   defaultValue: number;
+  step?: number;
   setValue: (value: number) => void;
 }>;
 
-export function SpinButtonNumeric({ min, max, value, defaultValue, setValue, ...props }: SpinButtonNumericProps) {
-  const increment = () => setValue(wrap(min, value + 1, max));
-  const decrement = () => setValue(wrap(min, value - 1, max));
+export function SpinButtonNumeric({ min, max, value, defaultValue, step = 1, setValue, ...props }: SpinButtonNumericProps) {
+  const increment = () => setValue(wrap(min, value + step, max));
+  const decrement = () => setValue(wrap(min, value - step, max));
   const reset = () => setValue(defaultValue);
 
   return (
     <SpinButtonContent
-      type="string"
+      type="numeric"
       valueMin={min}
       valueMax={max}
       valueNow={value}

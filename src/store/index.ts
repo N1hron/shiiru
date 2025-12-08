@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 
 import { stickerSettingsReducer } from "./slices/sticker-settings";
+import { editorReducer } from "./slices/editor";
 
 const reducer = combineReducers({
   stickerSettings: stickerSettingsReducer,
+  editor: editorReducer,
 });
 
 export const store = configureStore({

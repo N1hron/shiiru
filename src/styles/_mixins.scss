@@ -11,18 +11,43 @@
   overflow: hidden;
 }
 
-@mixin background-dashed($color: var(--color-blue-500)) {
-  background: repeating-linear-gradient(
-    -45deg,
-    $color 0,
-    $color 0.3rem,
-    hsl(from $color h s calc(l - 5)) 0.3rem,
-    hsl(from $color h s calc(l - 5)) 0.6rem
-  );
-}
-
 @mixin unselectable() {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+@mixin focus-outline($color: var(--color-blue-500)) {
+  outline: dotted var(--border-width-medium) $color;
+  outline-offset: var(--border-width-thin);
+}
+
+@mixin background-dashed($color-1: var(--color-blue-500), $color-2: hsl(from $color-1 h s calc(l - 5))) {
+  background: repeating-linear-gradient(-45deg, $color-1 0, $color-1 0.3rem, $color-2 0.3rem, $color-2 0.6rem);
+}
+
+@mixin background-dashed-animated($color-1: var(--color-blue-500), $color-2: hsl(from $color-1 h s calc(l - 5))) {
+  @include background-dashed($color-1, $color-2);
+
+  background-size: 200% 100%;
+  animation-name: move-bg;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+
+  &:hover:not(:disabled, [aria-disabled="true"]) {
+    animation-play-state: running;
+  }
+
+  @keyframes move-bg {
+    from {
+      background-position: 100%;
+    }
+
+    to {
+      background-position: 0%;
+    }
+  }
 }

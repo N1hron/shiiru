@@ -56,7 +56,7 @@ export function SpinButtonTrigger({ mode, title, className, ...props }: SpinButt
   return (
     <Button
       className={cl}
-      size="small"
+      size="medium"
       icon
       aria-controls={id}
       tabIndex={-1}

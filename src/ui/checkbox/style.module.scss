@@ -1,0 +1,56 @@
+@use "../../styles/mixins" as m;
+
+.checkbox {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  box-shadow: var(--shadow-elevation-low);
+  display: flex;
+  gap: 0.25rem;
+
+  &:has(.button:disabled) {
+    .label {
+      @include m.background-dashed(var(--color-slate-300));
+      cursor: default;
+    }
+  }
+
+  &:has(.button:focus-visible) {
+    @include m.focus-outline;
+  }
+}
+
+.buttonWrapper {
+  height: 1.5rem;
+  width: calc(1.5rem - var(--border-width-medium));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  path {
+    stroke: #fff;
+    stroke-width: 2.25;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.label {
+  @include m.background-dashed-animated;
+  @include m.unselectable;
+
+  border-radius: 0.25rem;
+  padding: 0 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  text-transform: lowercase;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}

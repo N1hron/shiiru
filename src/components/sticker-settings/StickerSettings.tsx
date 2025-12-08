@@ -1,5 +1,7 @@
-import { StickerSettingsReset } from "./StickerSettingsReset";
 import { StickerSettingsStringItem } from "./StickerSettingsStringItem";
+import { StickerSettingsBooleanItem } from "./StickerSettingsBooleanItem";
+import { StickerSettingsRemember } from "./StickerSettingsRemember";
+import { Divider } from "@/ui";
 
 import styles from "./style.module.scss";
 
@@ -10,7 +12,9 @@ export function StickerSettings() {
       <StickerSettingsStringItem name="verticalAlignment" />
       <StickerSettingsStringItem name="horizontalAlignment" />
       <StickerSettingsStringItem name="resizeMode" />
-      <StickerSettingsReset />
+      <Divider />
+      <StickerSettingsBooleanItem name="trim" />
+      <StickerSettingsRemember />
     </div>
   );
 }

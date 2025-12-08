@@ -1,6 +1,9 @@
+@use "../../styles/mixins" as m;
+
 .settings {
   width: 15rem;
   padding: 0.5rem;
+  padding-bottom: 0.75rem;
   border-radius: 0.5rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-high);

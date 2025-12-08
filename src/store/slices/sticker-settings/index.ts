@@ -1,6 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { compareStickerSettings } from "./utils";
 import type { StickerSettingName, StickerSettings, StickerSettingValue } from "@/types";
 import type { AppState } from "@/store";
 
@@ -39,16 +38,10 @@ const settingsSlice = createSlice({
     setRememberStickerSettings(state, action: PayloadAction<boolean>) {
       state.remember = action.payload;
     },
-    resetStickerSettings(state) {
-      state.items = defaultSettings;
-    },
   },
   selectors: {
     selectRememberStickerSettings(state) {
       return state.remember;
-    },
-    selectIsDefaultStickerSettings(state) {
-      return compareStickerSettings(defaultSettings, state.items);
     },
   },
 });
@@ -61,6 +54,6 @@ export const selectStickerSetting = <N extends StickerSettingName>(
 };
 
 export const stickerSettingsReducer = settingsSlice.reducer;
-export const { setStickerSetting, resetStickerSettings, setRememberStickerSettings } = settingsSlice.actions;
+export const { setStickerSetting, setRememberStickerSettings } = settingsSlice.actions;
 export const { selectRememberStickerSettings } = settingsSlice.selectors;
 

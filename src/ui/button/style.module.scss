@@ -1,12 +1,9 @@
 @use "../../styles/mixins" as m;
 
-$background-color: var(--background-color);
-$background-color-hover: hsl(from var(--background-color) h s calc(l - 5));
-$border-color: hsl(from var(--background-color) h s calc(l - 15));
 $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
 
 .button {
-  --text-color: #fff;
+  @include m.unselectable;
 
   all: unset;
   z-index: 0;
@@ -18,8 +15,6 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
   background: none;
   border: none;
   overflow: hidden;
-
-  @include m.unselectable;
 
   svg {
     height: 100%;
@@ -34,14 +29,24 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
     right: 0;
     bottom: 0;
     height: 50%;
-    background-color: $border-color;
+    background-color: var(--border-color);
+    border-radius: var(--border-radius);
   }
 
   &:disabled {
     --background-color: var(--color-slate-300);
+    --border-color: hsl(from var(--color-slate-300) h s calc(l - 15));
+
+    color: #fff;
+
+    &:focus-visible {
+      outline: none;
+    }
   }
 
   &:not(:disabled) {
+    cursor: pointer;
+
     &:active {
       padding-top: $padding-active;
       padding-bottom: 0;
@@ -53,16 +58,34 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
 
     &:hover {
       .content {
-        background-color: $background-color-hover;
+        background-color: var(--background-color-hover);
       }
     }
   }
 
-  &Blue {
-    --background-color: var(--color-blue-500);
+  &:focus-visible {
+    @include m.focus-outline;
   }
 
-  &Medium {
+  &Color {
+    &None {
+      --background-color: #fff;
+      --background-color-hover: hsl(from #fff h s calc(l - 2.5));
+      --border-color: hsl(from var(--color-blue-050) h s calc(l - 5));
+
+      color: inherit;
+    }
+
+    &Blue {
+      --background-color: var(--color-blue-500);
+      --background-color-hover: hsl(from var(--color-blue-500) h s calc(l - 5));
+      --border-color: hsl(from var(--color-blue-500) h s calc(l - 15));
+
+      color: #fff;
+    }
+  }
+
+  &Large {
     --height: 2rem;
 
     border-radius: 0.3666rem;
@@ -72,13 +95,23 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
     }
   }
 
-  &Small {
+  &Medium {
     --height: 1.5rem;
 
     border-radius: 0.25rem;
 
     .content {
       padding: 0 0.5rem;
+    }
+  }
+
+  &Small {
+    --height: 1.25rem;
+
+    border-radius: 0.25rem;
+
+    .content {
+      padding: 0;
     }
   }
 
@@ -96,8 +129,6 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
   gap: 0.25rem;
   height: 100%;
   border-radius: inherit;
-  background-color: $background-color;
-  border: solid var(--border-width-thin) $border-color;
-  color: var(--text-color);
-  cursor: pointer;
+  background-color: var(--background-color);
+  border: solid var(--border-width-thin) var(--border-color);
 }

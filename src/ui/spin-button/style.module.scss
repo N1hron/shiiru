@@ -3,13 +3,13 @@
 .spinButton {
   padding: 0.25rem;
   border-radius: 0.25rem;
-  display: flex;
-  gap: 0.25rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-low);
+  display: flex;
+  gap: 0.25rem;
 
   &:has(.value:focus-visible) {
-    outline: solid var(--color-blue-500) var(--border-width-medium);
+    @include m.focus-outline;
   }
 }
 
@@ -27,6 +27,9 @@
 }
 
 .value {
+  @include m.unselectable;
+  @include m.background-dashed-animated;
+
   z-index: 0;
   padding: 0 0.5rem;
   position: relative;
@@ -40,50 +43,9 @@
   cursor: pointer;
   overflow: hidden;
 
-  @include m.unselectable;
-
   &[aria-disabled="true"] {
+    @include m.background-dashed-animated(var(--color-slate-300));
     cursor: default;
-
-    &::before {
-      @include m.background-dashed(var(--color-slate-300));
-      animation: none;
-    }
-  }
-
-  &::before {
-    content: "";
-    z-index: -1;
-    position: absolute;
-    width: 200%;
-    top: 0;
-    left: 0;
-    bottom: 0;
-
-    @include m.background-dashed;
-
-    animation-name: move-right;
-    animation-duration: 5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-    animation-play-state: paused;
-
-    @keyframes move-right {
-      from {
-        transform: translateX(-50%);
-      }
-
-      to {
-        transform: translateX(0);
-      }
-    }
-  }
-
-  &:hover {
-    &::before {
-      animation-play-state: running;
-    }
   }
 
   &:focus-visible {

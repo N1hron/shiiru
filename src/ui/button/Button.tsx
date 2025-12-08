@@ -6,15 +6,15 @@ import { toCapitalized } from "@/utils";
 import styles from "./style.module.scss";
 
 type ButtonProps = ComponentPropsWithRef<"button"> & {
-  color?: "blue";
-  size?: "medium" | "small";
+  color?: "blue" | "none";
+  size?: "large" | "medium" | "small";
   icon?: boolean;
 };
 
-export function Button({ color = "blue", size = "medium", icon, className, children, ...props }: ButtonProps) {
+export function Button({ color = "blue", size = "large", icon, className, children, ...props }: ButtonProps) {
   const cl = clsx(
     styles.button,
-    styles[`button${toCapitalized(color)}`],
+    styles[`buttonColor${toCapitalized(color)}`],
     styles[`button${toCapitalized(size)}`],
     icon && styles.buttonIcon,
     className,

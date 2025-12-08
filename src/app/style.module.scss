@@ -2,39 +2,25 @@
   padding: 1rem;
 }
 
-.card {
-  background-color: white;
-  box-shadow:
-    0 0 0.25rem 0 hsl(from var(--color-slate-500) h s l / 0.125),
-    0 0.25rem 0.5rem 0 hsl(from var(--color-slate-500) h s l / 0.25);
-  width: 15rem;
-  height: 50rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
+.panelRight {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 1rem;
+}
 
-  div {
-    height: 2.5rem;
+.panelBottomLeft {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+}
 
-    background: repeating-linear-gradient(
-      -45deg,
-      var(--color-blue-500) 0,
-      var(--color-blue-500) 0.3rem,
-      hsl(from var(--color-blue-500) h s l / 0.9) 0.3rem,
-      hsl(from var(--color-blue-500) h s l / 0.9) 0.6rem
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-blue-025);
-    font-size: 1.25rem;
-    // border: solid 1px var(--color-blue-600);
-    // border-bottom-width: 3px;
-  }
-
-  // div:last-child {
-  //   height: 1.25rem;
-  // }
+.panelTopLeft {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  max-width: 25rem;
+  width: 100%;
 }

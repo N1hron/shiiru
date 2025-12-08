@@ -20,6 +20,13 @@ type Config = {
       }
     };
   };
+  editor: {
+    zoom: {
+      min: number;
+      max: number;
+      defaultValue: number;
+    };
+  };
 };
 
 export const config: Config = {
@@ -51,6 +58,13 @@ export const config: Config = {
         label: "Trim spaces",
         defaultValue: true,
       },
+    },
+  },
+  editor: {
+    zoom: {
+      min: 10,
+      max: 3000,
+      defaultValue: 100,
     },
   },
 };

@@ -3,8 +3,6 @@
 $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
 
 .button {
-  @include m.unselectable;
-
   all: unset;
   z-index: 0;
   position: relative;
@@ -14,7 +12,8 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
   padding-bottom: $padding-active;
   background: none;
   border: none;
-  overflow: hidden;
+
+  @include m.unselectable;
 
   svg {
     height: 100%;
@@ -28,9 +27,10 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
     left: 0;
     right: 0;
     bottom: 0;
-    height: 50%;
+    width: 100%;
+    height: calc(var(--height) - $padding-active);
     background-color: var(--border-color);
-    border-radius: var(--border-radius);
+    border-radius: inherit;
   }
 
   &:disabled {
@@ -108,7 +108,7 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
   &Small {
     --height: 1.25rem;
 
-    border-radius: 0.25rem;
+    border-radius: 0.2rem;
 
     .content {
       padding: 0;

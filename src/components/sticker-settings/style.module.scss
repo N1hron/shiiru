@@ -2,12 +2,13 @@
 
 .settings {
   width: 15rem;
-  padding: 0.5rem;
-  padding-bottom: 0.75rem;
+  padding: 0.5rem 0.5rem 0.75rem 0.5rem;
   border-radius: 0.5rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-high);
-  height: fit-content;
+}
+
+.items {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -18,4 +19,8 @@
   flex-direction: column;
   gap: 0.5rem;
   text-align: center;
+}
+
+.divider {
+  margin: 0.75rem 0;
 }

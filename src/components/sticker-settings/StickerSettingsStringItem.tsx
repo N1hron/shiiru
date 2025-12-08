@@ -24,7 +24,7 @@ export function StickerSettingsStringItem<N extends StickerStringSettingName>({
   }
 
   return (
-    <div className={styles.stringItem}>
+    <li className={styles.stringItem}>
       <span id={labelId}>{label}</span>
       <SpinButton
         labelledBy={labelId}
@@ -32,11 +32,12 @@ export function StickerSettingsStringItem<N extends StickerStringSettingName>({
         defaultValue={defaultValue}
         values={values}
         setValue={setValue}
+        cyclic
       >
         <SpinButton.Trigger mode="dec" />
         <SpinButton.Value />
         <SpinButton.Trigger mode="inc" />
       </SpinButton>
-    </div>
+    </li>
   );
 }

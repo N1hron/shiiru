@@ -5,13 +5,17 @@ import { SpinButtonContext, type SpinButtonContextValue } from "./SpinButtonCont
 
 import styles from "./style.module.scss";
 
-type SpinButtonContentProps = ComponentPropsWithRef<"div"> & Omit<SpinButtonContextValue, "id">;
+type SpinButtonContentProps = ComponentPropsWithRef<"div"> & Omit<SpinButtonContextValue, "id"> & {
+  cyclic?: boolean;
+  disabled?: boolean;
+};
 
 export function SpinButtonContent({
   type,
   label,
   labelledBy,
   disabled,
+  cyclic,
   valueMin,
   valueMax,
   valueNow,
@@ -25,17 +29,20 @@ export function SpinButtonContent({
 }: SpinButtonContentProps) {
   const id = useId();
   const cl = clsx(styles.spinButton, className);
+  const incrementDisabled = disabled || !cyclic && (valueNow >= valueMax);
+  const decrementDisabled = disabled || !cyclic && (valueNow <= valueMin);
 
   const contextValue: SpinButtonContextValue = {
     id,
     type,
     label,
     labelledBy,
-    disabled,
     valueMax,
     valueMin,
     valueNow,
     valueText,
+    incrementDisabled,
+    decrementDisabled,
     decrement,
     increment,
     reset,

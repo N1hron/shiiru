@@ -1,5 +1,12 @@
+import clsx from "clsx";
+import type { ComponentPropsWithRef } from "react";
+
 import styles from "./style.module.scss";
 
-export function Divider() {
-  return <div className={styles.divider} />;
+type DividerProps = ComponentPropsWithRef<"div">;
+
+export function Divider({ className, ...props }: DividerProps) {
+  const cl = clsx(styles.divider, className);
+
+  return <div className={cl} {...props} />;
 }

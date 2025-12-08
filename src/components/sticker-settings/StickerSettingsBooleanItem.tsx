@@ -19,8 +19,8 @@ export function StickerSettingsBooleanItem({ name }: StickerSettingsBooleanItemP
   }
 
   return (
-    <div className={styles.booleanItem}>
+    <li className={styles.booleanItem}>
       <Checkbox label={label} value={value} setValue={setValue} />
-    </div>
+    </li>
   );
 }

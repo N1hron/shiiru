@@ -5,11 +5,12 @@ export type SpinButtonContextValue = {
   id: string;
   label?: string;
   labelledBy?: string;
-  disabled?: boolean;
   valueMin: number;
   valueMax: number;
   valueNow: number;
   valueText?: string;
+  incrementDisabled?: boolean;
+  decrementDisabled?: boolean;
   increment: () => void;
   decrement: () => void;
   reset: () => void;

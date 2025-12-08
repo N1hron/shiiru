@@ -14,7 +14,8 @@ export function SpinButtonValue({ suffix = "", className, ...props }: SpinButton
     id,
     label,
     labelledBy,
-    disabled,
+    incrementDisabled,
+    decrementDisabled,
     valueMin,
     valueMax,
     valueNow,
@@ -24,33 +25,32 @@ export function SpinButtonValue({ suffix = "", className, ...props }: SpinButton
     decrement,
   } = useSpinButtonContext();
 
+  const disabled = decrementDisabled && incrementDisabled;
   const cl = clsx(styles.value, className);
 
   function handleClick() {
-    if (!disabled) {
-      reset();
-    }
+    if (disabled) return;
+
+    reset();
   }
 
   function handleKeyDown(event: KeyboardEvent) {
-    if (!disabled) {
-      const preventDefault = (fn: () => void) => {
-        event.preventDefault();
-        fn();
-      };
+    if (disabled) return;
 
-      switch(event.key) {
-        case "Enter":
-        case " ":
-          return preventDefault(reset);
-        case "ArrowUp":
-        case "ArrowRight":
-          return preventDefault(increment);
-        case "ArrowDown":
-        case "ArrowLeft":
-          return preventDefault(decrement);
-      }
-    };
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      return reset();
+    }
+
+    if ((event.key === "ArrowUp" || event.key === "ArrowRight") && !incrementDisabled) {
+      event.preventDefault();
+      return increment();
+    }
+
+    if ((event.key === "ArrowDown" || event.key === "ArrowLeft") && !decrementDisabled) {
+      event.preventDefault();
+      return decrement();
+    }
   }
 
   return (

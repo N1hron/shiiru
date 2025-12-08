@@ -2,6 +2,7 @@ import type { ComponentPropsWithRef } from "react";
 
 type SpinButtonBaseProps = ComponentPropsWithRef<"div"> & {
   disabled?: boolean;
+  cyclic?: boolean;
 } & ({
   label: string;
   labelledBy?: never;

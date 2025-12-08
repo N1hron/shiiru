@@ -13,8 +13,9 @@ type SpinButtonTriggerProps = ComponentPropsWithRef<typeof Button> & {
   mode: "inc" | "dec";
 };
 
-export function SpinButtonTrigger({ mode, title, className, ...props }: SpinButtonTriggerProps) {
-  const { type, id, disabled, increment, decrement } = useSpinButtonContext();
+export function SpinButtonTrigger({ mode, title, className, disabled, ...props }: SpinButtonTriggerProps) {
+  const { type, id, decrementDisabled, incrementDisabled, increment, decrement } = useSpinButtonContext();
+  const isDisabled = disabled || (mode === "dec" ? decrementDisabled : incrementDisabled);
 
   const cl = clsx(
     styles.trigger,
@@ -24,12 +25,10 @@ export function SpinButtonTrigger({ mode, title, className, ...props }: SpinButt
   );
 
   function handleClick() {
-    if (!disabled) {
-      if (mode === "dec") {
-        decrement();
-      } else {
-        increment();
-      }
+    if (mode === "dec") {
+      decrement();
+    } else {
+      increment();
     }
   }
 
@@ -61,7 +60,7 @@ export function SpinButtonTrigger({ mode, title, className, ...props }: SpinButt
       aria-controls={id}
       tabIndex={-1}
       title={getTitle()}
-      disabled={disabled}
+      disabled={isDisabled}
       onClick={handleClick}
       {...props}
     >

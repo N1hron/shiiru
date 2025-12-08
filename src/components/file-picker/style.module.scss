@@ -7,6 +7,14 @@
   position: absolute;
   left: 0.5rem;
   top: 0.5rem;
+
+  svg {
+    height: 85%;
+  }
+
+  path {
+    stroke: #fff;
+  }
 }
 
 .input {

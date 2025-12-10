@@ -109,6 +109,7 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
     --height: 1.25rem;
 
     border-radius: 0.2rem;
+    font-size: var(--font-size-small);
 
     .content {
       padding: 0;

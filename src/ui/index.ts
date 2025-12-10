@@ -3,3 +3,4 @@ export { TextInput } from "./text-input/TextInput";
 export { SpinButton } from "./spin-button/SpinButton";
 export { Checkbox } from "./checkbox/Checkbox";
 export { Divider } from "./divider/Divider";
+export { FileInput } from "./file-input/FileInput";

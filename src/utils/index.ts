@@ -3,3 +3,6 @@ export { loadImage } from "./loadImage";
 export { splitFileName } from "./splitFileName";
 export { clamp } from "./clamp";
 export { wrap } from "./wrap";
+export { satisfiesAccept } from "./satisfiesAccept";
+export { throttle } from "./throttle";
+export { formatFileSize } from "./formatFileSize";

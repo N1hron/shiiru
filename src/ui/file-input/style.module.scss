@@ -1,0 +1,13 @@
+@use "../../styles/mixins" as m;
+
+.button {
+  width: 100%;
+
+  &:has(+ .input:focus-visible) {
+    @include m.focus-outline;
+  }
+}
+
+.input {
+  @include m.visually-hidden;
+}

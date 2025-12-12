@@ -11,7 +11,6 @@ export class DownloadError extends Error {
   constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
-    console.log(this);
   }
 }
 

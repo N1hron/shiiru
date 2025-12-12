@@ -1,0 +1,8 @@
+@use "../../styles/mixins" as m;
+
+.editor {
+  @include m.background-dashed(#fff, var(--color-blue-050));
+
+  height: 100%;
+  border-radius: 0.5rem;
+}

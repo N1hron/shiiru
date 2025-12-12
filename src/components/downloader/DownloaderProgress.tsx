@@ -1,4 +1,4 @@
-import { selectDownloadProgress, selectDownloadStatus, useAppSelector } from "@/store";
+import { selectDownloadProgress, selectIsDownloadedURL, useAppSelector } from "@/store";
 import { formatFileSize } from "@/utils";
 
 import styles from "./style.module.scss";
@@ -7,12 +7,12 @@ import clsx from "clsx";
 
 export function DownloaderProgress() {
   const [value, max] = useAppSelector(selectDownloadProgress);
-  const status = useAppSelector(selectDownloadStatus);
-  const isVisible = status === "loading" || status === "finishing" || status === "success" ;
+  const isLoading = useAppSelector((state) => state.downloader.status === "loading");
+  const isDownloadedURL = useAppSelector(selectIsDownloadedURL);
 
-  if (!isVisible) return null;
+  if (!isLoading && !isDownloadedURL) return null;
 
-  const cl = clsx(styles.progress, status === "loading" && styles.progressActive);
+  const cl = clsx(styles.progress, isLoading && styles.progressActive);
 
   return (
     <p className={cl}>

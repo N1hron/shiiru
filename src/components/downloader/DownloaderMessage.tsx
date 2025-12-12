@@ -1,9 +1,34 @@
-import { selectDownloadMessage, useAppSelector } from "@/store";
+import {
+  selectDownloadErrorMessage,
+  selectDownloadStatus,
+  selectIsDownloadedURL,
+  selectIsDownloadURLValid,
+  useAppSelector,
+} from "@/store";
 
 import styles from "./style.module.scss";
 
 export function DownloaderMessage() {
-  const message = useAppSelector(selectDownloadMessage);
+  const status = useAppSelector(selectDownloadStatus);
+  const isURLValid = useAppSelector(selectIsDownloadURLValid);
+  const errorMessage = useAppSelector(selectDownloadErrorMessage);
+  const isDownloadedURL = useAppSelector(selectIsDownloadedURL);
 
-  return <p className={styles.message}>{message}</p>;
+  function renderMessage() {
+    if (status === "success" && isDownloadedURL) {
+      return "done";
+    }
+
+    if (status === "idle" || status === "success") {
+      return isURLValid ? "ready" : "invalid url";
+    }
+
+    if (status === "error") {
+      return errorMessage;
+    }
+
+    return status;
+  }
+
+  return <p className={styles.message}>{renderMessage()}</p>;
 }

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { createUploadedFile } from "@/store/utils";
-import type { AppDispatch, AppState } from "@/store";
+import { addFile, selectIsDownloading, type AppDispatch, type AppState } from "@/store";
 
 export const uploadLocalFiles = createAsyncThunk<
   void,
@@ -10,15 +10,22 @@ export const uploadLocalFiles = createAsyncThunk<
     dispatch: AppDispatch;
     state: AppState;
   }
->("uploader/uploadLocalFiles", async (data, { dispatch }) => {
+>("uploader/uploadLocalFiles", async (data, { dispatch, getState }) => {
   const files = data instanceof File ? [data] : data;
 
   for (const file of files) {
+    const state = getState();
+    const availableSpace = state.uploader.availableSpace;
+    const isDownloading = selectIsDownloading(state);
+
+    if (availableSpace - (isDownloading ? 1 : 0) <= 0) {
+      break;
+    }
+
     try {
-      const uploadedFile = await createUploadedFile(file);
-      dispatch(uploadedFile);
+      dispatch(addFile(await createUploadedFile(file)));
     } catch {
       continue;
-    }
+    };
   }
 });

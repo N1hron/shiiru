@@ -2,30 +2,37 @@
 
 .uploader {
   position: relative;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-high);
-}
-
-.addFiles {
-  position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
-  right: 0.5rem;
   display: flex;
   gap: 0.25rem;
 }
 
-.fileCount {
+.input {
+  display: block;
+  flex-basis: 50%;
+
+  svg {
+    rotate: 45deg;
+  }
+
+  path {
+    stroke: #fff;
+    stroke-width: 1.75;
+  }
+}
+
+.count {
   @include m.background-dashed;
   @include m.unselectable;
 
+  flex-basis: 50%;
   color: #fff;
   padding: 0.25rem 0.5rem;
   font-size: var(--font-size-medium);
   line-height: 1;
   border-radius: 0.25rem;
   text-align: center;
-  flex-grow: 1;
 }

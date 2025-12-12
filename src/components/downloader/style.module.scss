@@ -4,13 +4,13 @@
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #fff;
-  box-shadow: var(--shadow-elevation-high);
+  box-shadow: var(--shadow-elevation-high-reverse);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.25rem;
 
-  // &:has(.input:focus) {
-  //   outline: solid var(--border-width-medium) var(--color-blue-500);
+  // &:has(.input:focus-visible) {
+  //   @include m.focus-outline;
   // }
 }
 
@@ -21,13 +21,17 @@
   background: none;
   margin-bottom: 0.25rem;
 
+  &::placeholder {
+    color: var(--color-slate-300);
+    text-align: center;
+  }
+
   &:focus {
     outline: none;
   }
 
-  &::placeholder {
-    color: var(--color-slate-300);
-    text-align: center;
+  &:disabled {
+    @include m.unselectable;
   }
 }
 
@@ -38,7 +42,7 @@
   @include m.unselectable;
 
   color: #fff;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem;
   font-size: var(--font-size-medium);
   line-height: 1;
   border-radius: 0.25rem;
@@ -68,23 +72,4 @@
 
 .download {
   grid-column: 1/-1;
-}
-
-.preview {
-  @include m.background-dashed(#fff, var(--color-blue-050));
-
-  grid-column: 1/-1;
-  aspect-ratio: 1920 / 1080;
-  border-radius: 0.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-
-  img,
-  video {
-    object-fit: contain;
-    max-height: 100%;
-    max-width: 100%;
-  }
 }

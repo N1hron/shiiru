@@ -2,6 +2,7 @@
 
 .button {
   width: 100%;
+  display: block;
 
   &:has(+ .input:focus-visible) {
     @include m.focus-outline;

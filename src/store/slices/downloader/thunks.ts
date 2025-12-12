@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { setDownloadProgress, type AppDispatch, type AppState, setDownloadMessage, setDownloadSpeed, setDownloadStatus } from "@/store";
+import { setDownloadProgress, type AppDispatch, type AppState, setDownloadSpeed, setDownloadStatus } from "@/store";
 import { DownloadError, fileFromChunks, fileTypeFromResponse } from "./utils";
 import { throttle } from "@/utils";
 import { createUploadedFile } from "@/store/utils";
@@ -15,12 +15,16 @@ export const downloadFromURL = createAsyncThunk<
   }
 >("downloader/downloadFromURL", async (_, { dispatch, getState, signal }) => {
   dispatch(setDownloadStatus("preparing"));
-  dispatch(setDownloadMessage("preparing"));
+
+  const abortController = new AbortController();
+  const signalInner = abortController.signal;
+
+  signal.addEventListener("abort", () => abortController.abort());
 
   const url = getState().downloader.url;
-  const response = await fetch(url, { signal, mode: "cors" });
+  const response = await fetch(url, { signal: signalInner, mode: "cors" });
 
-  // Validation
+  // Validation phase
 
   if (!response.ok) {
     const message = response.status === 404 ? "not found" : "invalid source";
@@ -37,10 +41,8 @@ export const downloadFromURL = createAsyncThunk<
     throw new DownloadError("unsupported format");
   }
 
-  // Downloading
-
+  // Downloading phase
   dispatch(setDownloadStatus("loading"));
-  dispatch(setDownloadMessage("loading"));
 
   const reader = response.body.getReader();
   const contentLength = response.headers.get("Content-Length");
@@ -53,11 +55,13 @@ export const downloadFromURL = createAsyncThunk<
   let isDone = false;
 
   const updateProgress = throttle(() => {
-    dispatch(setDownloadProgress([progressValue, fileSize]));
+    if (!signalInner.aborted) {
+      dispatch(setDownloadProgress([progressValue, fileSize]));
+    }
   }, 50);
 
   const updateSpeed = throttle(() => {
-    if (!isDone) {
+    if (!isDone && !signalInner.aborted) {
       const now = Date.now();
       const timePassed = now - lastProgressValueTime;
 
@@ -84,10 +88,8 @@ export const downloadFromURL = createAsyncThunk<
     isDone = chunk.done;
   }
 
-  // Convert into File
-
+  // File creation phase
   dispatch(setDownloadStatus("finishing"));
-  dispatch(setDownloadMessage("finishing"));
 
   const file = fileFromChunks(chunks, type.mime, type.ext);
 

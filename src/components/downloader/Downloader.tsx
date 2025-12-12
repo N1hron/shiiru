@@ -3,7 +3,6 @@ import type { ClipboardEvent } from "react";
 import { DownloaderInput } from "./DownloaderInput";
 import { DownloaderMessage } from "./DownloaderMessage";
 import { DownloaderSpeed } from "./DownloaderSpeed";
-import { DownloaderPreview } from "./DownloaderPreview";
 import { DownloaderDownload } from "./DownloaderDownload";
 import { DownloaderProgress } from "./DownloaderProgress";
 
@@ -28,7 +27,6 @@ export function Downloader() {
       <DownloaderMessage />
       <DownloaderSpeed />
       <DownloaderProgress />
-      <DownloaderPreview />
       <DownloaderDownload />
     </div>
   );

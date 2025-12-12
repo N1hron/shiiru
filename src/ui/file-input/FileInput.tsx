@@ -7,9 +7,19 @@ import styles from "./style.module.scss";
 
 type FileInputProps =
   ComponentPropsWithRef<"div"> &
+  Pick<ComponentProps<typeof Button>, "size" | "icon"> &
   Pick<ComponentProps<"input">, "onChange" | "accept" | "disabled">;
 
-export function FileInput({ className, accept, disabled, children, onChange, ...props }: FileInputProps) {
+export function FileInput({
+  className,
+  size = "large",
+  icon,
+  accept,
+  disabled,
+  children,
+  onChange,
+  ...props
+}: FileInputProps) {
   const buttonId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const cl = clsx(styles.fileInput, className);
@@ -24,6 +34,8 @@ export function FileInput({ className, accept, disabled, children, onChange, ...
     <div className={cl} {...props}>
       <Button
         className={styles.button}
+        size={size}
+        icon={icon}
         id={buttonId}
         disabled={disabled}
         tabIndex={-1}

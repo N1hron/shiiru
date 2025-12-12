@@ -5,11 +5,11 @@ import type { UploadedFile } from "@/types";
 
 import styles from "./style.module.scss";
 
-type UploaderFileListItemProps = {
+type FileListItemProps = {
   file: UploadedFile;
 };
 
-export function UploaderFileListItem({ file }: UploaderFileListItemProps) {
+export function FileListItem({ file }: FileListItemProps) {
   const dispatch = useAppDispatch();
 
   function handleRemoveClick() {
@@ -19,7 +19,7 @@ export function UploaderFileListItem({ file }: UploaderFileListItemProps) {
   return (
     <li className={styles.item}>
       <div className={styles.previewWrapper}><canvas className={styles.preview} /></div>
-      <p className={styles.name}><span>{file.name}</span></p>
+      <p className={styles.name} title={file.name}><span>{file.name}</span></p>
       <Button className={styles.remove} icon size="medium" title="Remove file" onClick={handleRemoveClick}>
         <XMarkIcon aria-hidden />
       </Button>

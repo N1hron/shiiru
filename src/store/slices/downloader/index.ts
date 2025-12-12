@@ -4,24 +4,29 @@ import { isAbortError, isDownloadError, isValidURL } from "./utils";
 import { downloadFromURL } from "./thunks";
 import type { UploadedFile } from "@/types";
 
-type DownloadStatus = "invalid" | "ready" | "preparing" | "loading" | "finishing" | "success" | "error";
+type DownloadStatus = "idle" | "preparing" | "loading" | "finishing" | "success" | "error";
 
 type DownloaderState = {
   url: string;
+  isURLValid: boolean;
   status: DownloadStatus;
-  message: string;
+  errorMessage: string | null;
   progress: [value: number, max: number];
   speed: number;
-  file: UploadedFile | null;
+  result: {
+    file: UploadedFile;
+    url: string;
+  } | null;
 };
 
 const initialState: DownloaderState = {
   url: "",
-  status: "invalid",
-  message: "invalid url",
+  isURLValid: isValidURL(""),
+  status: "idle",
+  errorMessage: null,
   progress: [0, 0],
   speed: 0,
-  file: null,
+  result: null,
 };
 
 const downloaderSlice = createSlice({
@@ -30,17 +35,14 @@ const downloaderSlice = createSlice({
   reducers: {
     setDownloadURL(state, action: PayloadAction<string>) {
       state.url = action.payload;
+      state.isURLValid = isValidURL(action.payload);
 
-      const isValid = isValidURL(action.payload);
-
-      state.status = isValid ? "ready" : "invalid";
-      state.message = isValid ? "ready" : "invalid url";
+      if (state.status === "error") {
+        state.status = "idle";
+      }
     },
     setDownloadStatus(state, action: PayloadAction<DownloadStatus>) {
       state.status = action.payload;
-    },
-    setDownloadMessage(state, action: PayloadAction<string>) {
-      state.message = action.payload;
     },
     setDownloadProgress(state, action: PayloadAction<DownloaderState["progress"]>) {
       state.progress = action.payload;
@@ -53,11 +55,14 @@ const downloaderSlice = createSlice({
     selectDownloadURL(state) {
       return state.url;
     },
+    selectIsDownloadURLValid(state) {
+      return state.isURLValid;
+    },
     selectDownloadStatus(state) {
       return state.status;
     },
-    selectDownloadMessage(state) {
-      return state.message;
+    selectDownloadErrorMessage(state) {
+      return state.errorMessage;
     },
     selectDownloadProgress(state) {
       return state.progress;
@@ -65,25 +70,33 @@ const downloaderSlice = createSlice({
     selectDownloadSpeed(state) {
       return state.speed;
     },
-    selectDownloadedFile(state) {
-      return state.file;
+    selectDownloadResult(state) {
+      return state.result;
+    },
+    selectIsDownloading(state) {
+      return state.status === "preparing" || state.status === "loading" || state.status === "finishing";
+    },
+    selectIsDownloadedURL(state) {
+      return state.url === state.result?.url;
     },
   },
   extraReducers(builder) {
     builder.addAsyncThunk(downloadFromURL, {
       fulfilled(state, action) {
+        state.result = { file: action.payload, url: state.url };
         state.status = "success";
-        state.message = "done";
-        state.file = action.payload;
       },
       rejected(state, { error }) {
-        if (!isAbortError(error)) {
+        if (isAbortError(error)) {
+          state.status = "idle";
+        } else {
           state.status = "error";
+          state.result = null;
 
           if (isDownloadError(error)) {
-            state.message = error.message;
+            state.errorMessage = error.message;
           } else {
-            state.message = "network error";
+            state.errorMessage = "network error";
           }
         }
       },
@@ -96,18 +109,20 @@ export const downloaderReducer = downloaderSlice.reducer;
 export const {
   setDownloadURL,
   setDownloadStatus,
-  setDownloadMessage,
   setDownloadProgress,
   setDownloadSpeed,
 } = downloaderSlice.actions;
 
 export const {
   selectDownloadURL,
+  selectIsDownloadURLValid,
   selectDownloadStatus,
-  selectDownloadMessage,
   selectDownloadProgress,
   selectDownloadSpeed,
-  selectDownloadedFile,
+  selectDownloadErrorMessage,
+  selectDownloadResult,
+  selectIsDownloading,
+  selectIsDownloadedURL,
 } = downloaderSlice.selectors;
 
 export * from "./thunks";

@@ -1,8 +1,10 @@
-import { isAnyOf, type PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, isAnyOf, type PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { config } from "@/config";
+import { uploadLocalFiles } from "./thunks";
 import type { UploadedFile } from "@/types";
+import { selectIsDownloading } from "../downloader";
 
 type UploaderState = {
   items: UploadedFile[];
@@ -48,11 +50,26 @@ const uploaderSlice = createSlice({
     builder.addMatcher(isAnyOf(addFile, removeFile), (state) => {
       state.availableSpace = config.uploader.maxFiles - state.items.length;
     });
+    builder.addAsyncThunk(uploadLocalFiles, {
+      pending(state) {
+        state.isUploading = true;
+      },
+      settled(state) {
+        state.isUploading = false;
+      },
+    });
   },
 });
 
 export const uploaderReducer = uploaderSlice.reducer;
 export const { addFile, removeFile } = uploaderSlice.actions;
-export const { selectFiles, selectFileCount } = uploaderSlice.selectors;
+export const { selectFiles, selectFileCount, selectIsUploading, selectUploaderAvailableSpace } = uploaderSlice.selectors;
+
+export const selectCanUpload = createSelector(
+  [selectUploaderAvailableSpace, selectIsUploading, selectIsDownloading],
+  (availableSpace, isUploading, isDownloading) =>{
+    return !isUploading && (availableSpace - (isDownloading ? 1 : 0) <= 0);
+  },
+);
 
 export * from "./thunks";

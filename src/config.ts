@@ -27,6 +27,9 @@ type Config = {
       defaultValue: number;
     };
   };
+  uploader: {
+    maxFiles: number;
+  };
 };
 
 export const config: Config = {
@@ -66,5 +69,8 @@ export const config: Config = {
       max: 3000,
       defaultValue: 100,
     },
+  },
+  uploader: {
+    maxFiles: 20,
   },
 };

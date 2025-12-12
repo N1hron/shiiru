@@ -34,20 +34,14 @@
   animation-duration: 5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-fill-mode: both;
   animation-play-state: paused;
-
-  &:hover:not(:disabled, [aria-disabled="true"]) {
-    animation-play-state: running;
-  }
 
   @keyframes move-bg {
     from {
-      background-position: 100%;
+      background-position: 100% 0;
     }
-
     to {
-      background-position: 0%;
+      background-position: 0 0;
     }
   }
 }

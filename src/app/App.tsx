@@ -1,4 +1,4 @@
-import { StickerSettings, Uploader, Preview } from "@/components";
+import { StickerSettings, Preview, Uploader, Downloader } from "@/components";
 
 import styles from "./style.module.scss";
 
@@ -8,6 +8,7 @@ export function App() {
       <div className={styles.panelTop}></div>
       <div className={styles.panelLeft}>
         <Uploader />
+        <Downloader />
       </div>
       <div className={styles.panelRight}>
         <StickerSettings />

@@ -2,76 +2,30 @@
 
 .uploader {
   position: relative;
-  height: 100%;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-high);
-  display: flex;
-  flex-direction: column;
 }
 
-.filePickerWrapper {
+.addFiles {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.5rem 0.5rem 0.75rem 0.5rem;
-}
-
-.filePicker {
-  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  box-shadow: var(--shadow-elevation-low);
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.loadURL {
-  display: flex;
-  flex-direction: column;
   gap: 0.25rem;
+}
 
-  input {
-    background: none;
-    border: none;
+.fileCount {
+  @include m.background-dashed;
+  @include m.unselectable;
 
-    &:focus {
-      outline: none;
-    }
-
-    &::placeholder {
-      color: var(--color-slate-300);
-      text-align: center;
-    }
-  }
-
-  p {
-    @include m.background-dashed;
-    @include m.unselectable;
-
-    flex-grow: 1;
-    color: #fff;
-    border-radius: 0.25rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &:not(:has(input:placeholder-shown)) {
-    margin-bottom: 0.25rem;
-    padding: 0.25rem;
-    border-radius: 0.25rem;
-    background-color: #fff;
-    box-shadow: var(--shadow-elevation-low);
-  }
-
-  &Loading {
-    p {
-      @include m.background-dashed-animated;
-      animation-play-state: running;
-    }
-  }
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--font-size-medium);
+  line-height: 1;
+  border-radius: 0.25rem;
+  text-align: center;
+  flex-grow: 1;
 }

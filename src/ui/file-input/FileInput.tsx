@@ -34,6 +34,7 @@ export function FileInput({ className, accept, disabled, children, onChange, ...
       <input
         className={styles.input}
         type="file"
+        multiple
         accept={accept}
         disabled={disabled}
         aria-labelledby={buttonId}

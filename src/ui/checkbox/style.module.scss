@@ -52,4 +52,8 @@
   text-transform: lowercase;
   color: #fff;
   cursor: pointer;
+
+  &:hover {
+    animation-play-state: running;
+  }
 }

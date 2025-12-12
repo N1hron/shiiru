@@ -43,8 +43,12 @@
   overflow: hidden;
 
   &[aria-disabled="true"] {
-    @include m.background-dashed-animated(var(--color-slate-300));
+    @include m.background-dashed(var(--color-slate-300));
     cursor: default;
+  }
+
+  &:hover {
+    animation-play-state: running;
   }
 
   &:focus-visible {

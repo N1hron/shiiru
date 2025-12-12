@@ -28,3 +28,15 @@ export type StickerBooleanSettingName = keyof StickerBooleanSetttings;
 
 export type StickerSettingValue<V extends StickerSettingName> = StickerSettings[V];
 export type StickerStringSettingValue<V extends StickerStringSettingName> = StickerSettings[V];
+
+export type UploadedFile = {
+  id: string;
+  name: string;
+  mime: string;
+  size: number;
+  type: "image" | "video";
+  url: string;
+  width: number;
+  height: number;
+  duration: number;
+};

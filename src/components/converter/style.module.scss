@@ -1,10 +1,16 @@
 @use "../../styles/mixins" as m;
 
-.preview {
+.converter {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
   width: 15rem;
-  height: 15rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-high);
+}
+
+.title {
+  @include m.visually-hidden;
 }

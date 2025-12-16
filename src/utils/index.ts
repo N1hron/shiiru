@@ -6,3 +6,4 @@ export { wrap } from "./wrap";
 export { satisfiesAccept } from "./satisfiesAccept";
 export { throttle } from "./throttle";
 export { formatFileSize } from "./formatFileSize";
+export { seekVideo } from "./seekVideo";

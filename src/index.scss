@@ -12,5 +12,5 @@ html {
 
 *::selection {
   color: #fff;
-  background-color: hsl(from var(--color-blue-500) h s calc(l + 5));
+  background-color: var(--color-blue-500);
 }

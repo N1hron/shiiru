@@ -2,37 +2,93 @@
 
 .uploader {
   position: relative;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 15rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   background-color: #fff;
   box-shadow: var(--shadow-elevation-high);
+}
+
+.title {
+  @include m.visually-hidden;
+}
+
+.droparea {
+  @include m.background-dashed(#fff, var(--color-blue-050));
+
+  flex-grow: 1;
+  border-radius: 0.25rem;
+
+  &:hover {
+    @include m.background-dashed-animated(var(--color-blue-025), var(--color-blue-100));
+
+    animation-play-state: running;
+    cursor: pointer;
+  }
+}
+
+.addFiles {
   display: flex;
   gap: 0.25rem;
 }
 
-.input {
-  display: block;
+.fileInput,
+.fileCount {
   flex-basis: 50%;
-
-  svg {
-    rotate: 45deg;
-  }
-
-  path {
-    stroke: #fff;
-    stroke-width: 1.75;
-  }
 }
 
-.count {
+.fileCount,
+.downloadStatus,
+.downloadProgress {
   @include m.background-dashed;
   @include m.unselectable;
 
-  flex-basis: 50%;
-  color: #fff;
-  padding: 0.25rem 0.5rem;
-  font-size: var(--font-size-medium);
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 0.25rem;
-  text-align: center;
+  color: #fff;
+}
+
+.download {
+  display: grid;
+  grid-auto-columns: 1fr;
+  gap: 0.25rem;
+}
+
+.downloadUrl {
+  grid-column: 1/3;
+  padding: 0;
+  border: 0;
+  padding-bottom: 0.25rem;
+
+  &::placeholder {
+    text-align: center;
+    color: var(--color-slate-300);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.downloadStatus {
+  grid-column: 1/3;
+  height: 1.5rem;
+
+  &:has(+ .downloadButton) {
+    grid-column: 1/2;
+  }
+}
+
+.downloadButton {
+  grid-column: 2/3;
+}
+
+.downloadProgress {
+  grid-column: 1/3;
+  height: 1.5rem;
 }

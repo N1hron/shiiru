@@ -2,6 +2,8 @@ import styles from "./style.module.scss";
 
 export function Editor() {
   return (
-    <div className={styles.editor}></div>
+    <section className={styles.editor}>
+      <h2 className={styles.title}>Editor</h2>
+    </section>
   );
 }

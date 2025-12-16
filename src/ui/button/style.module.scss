@@ -28,7 +28,7 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
     right: 0;
     bottom: 0;
     width: 100%;
-    height: calc(var(--height) - $padding-active);
+    height: 50%;
     background-color: var(--border-color);
     border-radius: inherit;
   }
@@ -38,6 +38,7 @@ $padding-active: calc(var(--border-width-thick) - var(--border-width-thin));
     --border-color: hsl(from var(--color-slate-300) h s calc(l - 15));
 
     color: #fff;
+    cursor: not-allowed;
 
     &:focus-visible {
       outline: none;

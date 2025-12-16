@@ -1,75 +1,121 @@
-import { createSelector, isAnyOf, type PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { config } from "@/config";
-import { uploadLocalFiles } from "./thunks";
-import type { UploadedFile } from "@/types";
-import { selectIsDownloading } from "../downloader";
+import { isValidURL } from "./utils";
+import type { InputFile } from "@/types";
+
+type UploaderItem = InputFile & {
+  id: string;
+  previewStatus: "loading" | "success" | "error";
+};
+
+type DownloadStatus = "idle" | "preparing" | "loading" | "finishing" | "success" | "error";
 
 type UploaderState = {
-  items: UploadedFile[];
+  items: UploaderItem[];
   isUploading: boolean;
   availableSpace: number;
+  download: {
+    url: string;
+    isValid: boolean;
+    status: DownloadStatus;
+    size: number | null;
+    progress: number;
+    speed: number;
+  };
 };
 
 const initialState: UploaderState = {
   items: [],
   isUploading: false,
   availableSpace: config.uploader.maxFiles,
+  download: {
+    url: "",
+    isValid: false,
+    status: "idle",
+    size: null,
+    progress: 0,
+    speed: 0,
+  },
 };
 
 const uploaderSlice = createSlice({
   name: "uploader",
   initialState,
   reducers: {
-    addFile(state, action: PayloadAction<UploadedFile>) {
-      state.items.push(action.payload);
+    addFile: {
+      reducer(state, action: PayloadAction<UploaderItem>) {
+        state.items.push(action.payload);
+        state.availableSpace = config.uploader.maxFiles - state.items.length;
+      },
+      prepare(file: InputFile): { payload: UploaderItem } {
+        return {
+          payload: {
+            ...file,
+            id: nanoid(),
+            previewStatus: "loading",
+          },
+        };
+      },
     },
     removeFile(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      state.availableSpace = config.uploader.maxFiles - state.items.length;
     },
-    setIsUploading(state, action: PayloadAction<boolean>) {
-      state.isUploading = action.payload;
+    setDownloadUrl(state, action: PayloadAction<string>) {
+      state.download.url = action.payload;
+      state.download.isValid = isValidURL(action.payload);
     },
+
   },
   selectors: {
-    selectFiles(state) {
-      return state.items;
+    selectDownloadUrl(state) {
+      return state.download.url;
     },
-    selectIsUploading(state) {
-      return state.isUploading;
+    selectIsDownloadUrlValid(state) {
+      return state.download.isValid;
     },
-    selectUploaderAvailableSpace(state) {
-      return state.availableSpace;
+    selectDownloadStatus(state) {
+      return state.download.status;
     },
     selectFileCount(state) {
       return state.items.length;
     },
-  },
-  extraReducers(builder) {
-    builder.addMatcher(isAnyOf(addFile, removeFile), (state) => {
-      state.availableSpace = config.uploader.maxFiles - state.items.length;
-    });
-    builder.addAsyncThunk(uploadLocalFiles, {
-      pending(state) {
-        state.isUploading = true;
-      },
-      settled(state) {
-        state.isUploading = false;
-      },
-    });
+    selectIsDownloading(state) {
+      const status = state.download.status;
+      return status === "preparing" || status === "loading" || status === "finishing";
+    },
+    selectUploaderAvailableSpace(state) {
+      return state.availableSpace;
+    },
+    selectIsUploading(state) {
+      return state.isUploading;
+    },
   },
 });
 
 export const uploaderReducer = uploaderSlice.reducer;
-export const { addFile, removeFile } = uploaderSlice.actions;
-export const { selectFiles, selectFileCount, selectIsUploading, selectUploaderAvailableSpace } = uploaderSlice.selectors;
+export const { setDownloadUrl, addFile, removeFile } = uploaderSlice.actions;
 
-export const selectCanUpload = createSelector(
-  [selectUploaderAvailableSpace, selectIsUploading, selectIsDownloading],
-  (availableSpace, isUploading, isDownloading) =>{
-    return !isUploading && (availableSpace - (isDownloading ? 1 : 0) <= 0);
-  },
+export const {
+  selectDownloadUrl,
+  selectIsDownloadUrlValid,
+  selectDownloadStatus,
+  selectFileCount,
+  selectIsDownloading,
+  selectUploaderAvailableSpace,
+  selectIsUploading,
+} = uploaderSlice.selectors;
+
+export const selectCanAddFiles = createSelector(
+  [selectUploaderAvailableSpace, selectIsDownloading],
+  (availableSpace, isDownloading) => (availableSpace - (isDownloading ? 1 : 0)) > 0,
+);
+
+export const selectCanUploadFiles = createSelector(
+  [selectIsUploading, selectCanAddFiles],
+  (isUploading, canAddFiles) => !isUploading && canAddFiles,
 );
 
 export * from "./thunks";

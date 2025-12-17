@@ -10,15 +10,13 @@ import styles from "./style.module.scss";
 export function UploaderAddFiles() {
   const fileCount = useAppSelector(selectUploaderItemsCount);
   const canUpload = useAppSelector(selectCanUploadFiles);
-  const { uploadFiles } = useUploadFiles();
+  const uploadFiles = useUploadFiles();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
 
     if (canUpload && files) {
-      uploadFiles(files).catch((error) => {
-        console.log(error);
-      }).finally(() => {
+      void uploadFiles(files).finally(() => {
         event.target.value = "";
       });
     }

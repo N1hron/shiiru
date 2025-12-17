@@ -12,7 +12,6 @@ type UploaderState = {
   isUploading: boolean;
   download: {
     url: string;
-    isValid: boolean;
     status: DownloadStatus;
     size: number | null;
     progress: number;
@@ -25,7 +24,6 @@ const initialState: UploaderState = {
   isUploading: false,
   download: {
     url: "",
-    isValid: false,
     status: "idle",
     size: null,
     progress: 0,
@@ -48,7 +46,6 @@ const uploaderSlice = createSlice({
     },
     setDownloadUrl(state, action: PayloadAction<string>) {
       state.download.url = action.payload;
-      state.download.isValid = isValidURL(action.payload);
     },
   },
   selectors: {
@@ -59,16 +56,22 @@ const uploaderSlice = createSlice({
       return state.items.length;
     },
     selectUploaderAvailableSpace(state) {
-      return config.uploader.maxFiles - state.items.length;
+      const selectors = uploaderSlice.getSelectors();
+      const isDownloading = selectors.selectIsDownloading(state);
+
+      return config.uploader.maxFiles - state.items.length - (isDownloading ? 1 : 0);
+    },
+    selectCanUploadFiles(state): boolean {
+      const selectors = uploaderSlice.getSelectors();
+      const availableSpace = selectors.selectUploaderAvailableSpace(state);
+
+      return !state.isUploading && availableSpace > 0;
     },
     selectIsUploading(state) {
       return state.isUploading;
     },
     selectDownloadUrl(state) {
       return state.download.url;
-    },
-    selectIsDownloadUrlValid(state) {
-      return state.download.isValid;
     },
     selectDownloadStatus(state) {
       return state.download.status;
@@ -94,12 +97,13 @@ export const {
   selectUploaderAvailableSpace,
   selectIsUploading,
   selectDownloadUrl,
-  selectIsDownloadUrlValid,
   selectDownloadStatus,
   selectIsDownloading,
+  selectCanUploadFiles,
 } = uploaderSlice.selectors;
 
-export const selectCanUploadFiles = createSelector(
-  [selectIsUploading, selectIsDownloading, selectUploaderAvailableSpace],
-  (isUploading, isDownloading, availableSpace) => !isUploading && (availableSpace - (isDownloading ? 1 : 0) > 0),
-);
+export const selectIsDownloadUrlValid = createSelector([selectDownloadUrl], (url) => {
+  return isValidURL(url);
+});
+
+export * from "./thunks";

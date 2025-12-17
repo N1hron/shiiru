@@ -1,140 +1,42 @@
-import { useCallback, useMemo } from "react";
-import { nanoid } from "@reduxjs/toolkit";
-import { ALL_FORMATS, BlobSource, Input } from "mediabunny";
+import { useCallback } from "react";
 
-import { hasImageType, hasVideoType } from "@/utils";
 import { useFilesContext } from "@/context";
-import {
-  addUploaderItem,
-  selectCanUploadFiles,
-  selectUploaderAvailableSpace,
-  setIsUploading,
-  useAppDispatch,
-  useAppSelector,
-} from "@/store";
-import type { InputFile, UploaderItem } from "@/types";
+import { selectIsUploading, setIsUploading, uploadFile, useAppDispatch, useAppSelector } from "@/store";
+import type { SerializedUploadError } from "@/store/slices/uploader/utils";
 
 export function useUploadFiles() {
   const dispatch = useAppDispatch();
   const files = useFilesContext();
-  const availableSpace = useAppSelector(selectUploaderAvailableSpace);
-  const canUpload = useAppSelector(selectCanUploadFiles);
+  const isUploading = useAppSelector(selectIsUploading);
 
-  const uploadFile = useCallback(async (file: File) => {
-    let isSuccess = false;
+  return useCallback(async (items: File | Iterable<File>): Promise<boolean> => {
+    let isOk = false;
 
-    if (canUpload) {
+    if (!isUploading) {
       dispatch(setIsUploading(true));
 
-      await createUploaderItem(file).then((item) => {
-        dispatch(addUploaderItem(item));
-        files.filesRef.current.set(item.id, file);
-        isSuccess = true;
-      }).catch((error) => {
-        console.log(error);
-      });
+      const itemsIterable = items instanceof File ? [items] : items;
+
+      for (const file of itemsIterable) {
+        const result = await dispatch(uploadFile(file));
+        const hasError = result.meta.requestStatus === "rejected";
+
+        if (hasError) {
+          if ((result.payload as SerializedUploadError).type === "full") {
+            break;
+          }
+          continue;
+        }
+
+        files.filesRef.current.set(result.payload as string, file);
+        isOk = true;
+      }
 
       dispatch(setIsUploading(false));
     }
 
-    return isSuccess;
+    return isOk;
+
     // eslint-disable-next-line
-  }, [canUpload]);
-
-  const uploadFiles = useCallback(async (fileList: Iterable<File>) => {
-    if (!canUpload) return;
-
-    dispatch(setIsUploading(true));
-
-    let spaceLeft = availableSpace;
-    for (const file of fileList ) {
-      if (spaceLeft <= 0) {
-        break;
-      }
-
-      await createUploaderItem(file).then((item) => {
-        dispatch(addUploaderItem(item));
-        files.filesRef.current.set(item.id, file);
-        spaceLeft--;
-      }).catch(console.log);
-    };
-
-    dispatch(setIsUploading(false));
-    // eslint-disable-next-line
-  }, [canUpload, availableSpace]);
-
-  return useMemo(() => ({
-    uploadFile,
-    uploadFiles,
-  }), [uploadFile, uploadFiles]);
-}
-
-async function createUploaderItem(file: File): Promise<UploaderItem> {
-  const inputFile = await getInputFile(file);
-
-  return {
-    id: nanoid(),
-    previewStatus: "loading",
-    ...inputFile,
-  };
-}
-
-function getInputFile(file: File): Promise<InputFile> {
-  if (hasImageType(file)) {
-    return getInputFileFromImage(file);
-  }
-
-  if (hasVideoType(file)) {
-    return getInputFileFromVideo(file);
-  }
-
-  throw new Error("Unsupported file type");
-}
-
-function getInputFileFromImage(file: File): Promise<InputFile> {
-  const image = document.createElement("img");
-  const url = URL.createObjectURL(file);
-
-  image.src = url;
-
-  return new Promise((resolve, reject) => {
-    image.onload = () => resolve({
-      name: file.name,
-      mime: file.type,
-      type: "image",
-      width: image.naturalWidth,
-      height: image.naturalHeight,
-      duration: 0,
-      url,
-    });
-
-    image.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("Could not load received file as image"));
-    };
-  });
-}
-
-async function getInputFileFromVideo(file: File): Promise<InputFile> {
-  const input = new Input({
-    source: new BlobSource(file),
-    formats: ALL_FORMATS,
-  });
-
-  const duration = await input.computeDuration();
-  const videoTrack = await input.getPrimaryVideoTrack();
-
-  if (!videoTrack) {
-    throw new Error("Empty video track");
-  }
-
-  return {
-    name: file.name,
-    mime: file.type,
-    type: "video",
-    width: videoTrack.codedWidth,
-    height: videoTrack.codedHeight,
-    url: URL.createObjectURL(file),
-    duration,
-  };
+  }, [isUploading]);
 }

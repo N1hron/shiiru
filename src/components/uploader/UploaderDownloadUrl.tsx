@@ -1,11 +1,12 @@
 import type { ChangeEvent } from "react";
 
-import { setDownloadUrl, useAppDispatch } from "@/store";
+import { selectDownloadUrl, setDownloadUrl, useAppDispatch, useAppSelector } from "@/store";
 
 import styles from "./style.module.scss";
 
 export function UploaderDownloadUrl() {
   const dispatch = useAppDispatch();
+  const url = useAppSelector(selectDownloadUrl);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(setDownloadUrl(event.target.value));
@@ -16,6 +17,7 @@ export function UploaderDownloadUrl() {
       className={styles.downloadUrl}
       type="text"
       placeholder="Download from URL"
+      value={url}
       onChange={handleChange}
     />
   );

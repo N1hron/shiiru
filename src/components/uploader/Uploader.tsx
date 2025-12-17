@@ -1,4 +1,4 @@
-import { memo, useRef, type ClipboardEvent } from "react";
+import { useRef, type ClipboardEvent } from "react";
 
 import { UploaderDownload } from "./UploaderDownload";
 import { UploaderDivider } from "./UploaderDivider";
@@ -9,9 +9,24 @@ import { useUploadFiles } from "@/hooks";
 
 import styles from "./style.module.scss";
 
-function UploaderContentInner() {
+export function Uploader() {
+  const uploaderRef = useRef<HTMLElement>(null);
+  const uploadFiles = useUploadFiles();
+
+  function handlePaste(event: ClipboardEvent<HTMLElement>) {
+    const file = event.clipboardData.files[0];
+
+    if (file) {
+      void uploadFiles(file).then((isOk) => {
+        if (!isOk && uploaderRef.current) {
+          playErrorAnimation(uploaderRef.current);
+        }
+      });
+    }
+  }
+
   return (
-    <>
+    <section className={styles.uploader} ref={uploaderRef} onPaste={handlePaste}>
       <h2 className={styles.title}>Uploader</h2>
       <UploaderDownload />
       <UploaderDivider />
@@ -19,31 +34,6 @@ function UploaderContentInner() {
       <UploaderDroparea />
       <UploaderDivider />
       <UploaderAddFiles />
-    </>
-  );
-}
-
-const UploaderContent = memo(UploaderContentInner);
-
-export function Uploader() {
-  const uploaderRef = useRef<HTMLElement>(null);
-  const { uploadFile } = useUploadFiles();
-
-  function handlePaste(event: ClipboardEvent<HTMLElement>) {
-    const file = event.clipboardData.files[0];
-
-    if (file) {
-      uploadFile(file).then((isSuccess) => {
-        if (!isSuccess && uploaderRef.current) {
-          playErrorAnimation(uploaderRef.current);
-        }
-      }).catch(console.log);
-    }
-  }
-
-  return (
-    <section className={styles.uploader} ref={uploaderRef} onPaste={handlePaste}>
-      <UploaderContent />
     </section>
   );
 }

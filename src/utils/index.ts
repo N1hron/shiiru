@@ -7,3 +7,5 @@ export { satisfiesAccept } from "./satisfiesAccept";
 export { throttle } from "./throttle";
 export { formatFileSize } from "./formatFileSize";
 export { seekVideo } from "./seekVideo";
+export { hasImageType } from "./hasImageType";
+export { hasVideoType } from "./hasVideoType";

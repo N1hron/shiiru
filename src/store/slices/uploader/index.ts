@@ -1,21 +1,15 @@
-import { createSelector, nanoid, type PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, type PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { config } from "@/config";
 import { isValidURL } from "./utils";
-import type { InputFile } from "@/types";
-
-type UploaderItem = InputFile & {
-  id: string;
-  previewStatus: "loading" | "success" | "error";
-};
+import type { UploaderItem } from "@/types";
 
 type DownloadStatus = "idle" | "preparing" | "loading" | "finishing" | "success" | "error";
 
 type UploaderState = {
   items: UploaderItem[];
   isUploading: boolean;
-  availableSpace: number;
   download: {
     url: string;
     isValid: boolean;
@@ -29,7 +23,6 @@ type UploaderState = {
 const initialState: UploaderState = {
   items: [],
   isUploading: false,
-  availableSpace: config.uploader.maxFiles,
   download: {
     url: "",
     isValid: false,
@@ -44,32 +37,33 @@ const uploaderSlice = createSlice({
   name: "uploader",
   initialState,
   reducers: {
-    addFile: {
-      reducer(state, action: PayloadAction<UploaderItem>) {
-        state.items.push(action.payload);
-        state.availableSpace = config.uploader.maxFiles - state.items.length;
-      },
-      prepare(file: InputFile): { payload: UploaderItem } {
-        return {
-          payload: {
-            ...file,
-            id: nanoid(),
-            previewStatus: "loading",
-          },
-        };
-      },
+    addUploaderItem(state, action: PayloadAction<UploaderItem>) {
+      state.items.push(action.payload);
     },
-    removeFile(state, action: PayloadAction<string>) {
+    removeUploaderItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== action.payload);
-      state.availableSpace = config.uploader.maxFiles - state.items.length;
+    },
+    setIsUploading(state, action: PayloadAction<boolean>) {
+      state.isUploading = action.payload;
     },
     setDownloadUrl(state, action: PayloadAction<string>) {
       state.download.url = action.payload;
       state.download.isValid = isValidURL(action.payload);
     },
-
   },
   selectors: {
+    selectUploaderItems(state) {
+      return state.items;
+    },
+    selectUploaderItemsCount(state) {
+      return state.items.length;
+    },
+    selectUploaderAvailableSpace(state) {
+      return config.uploader.maxFiles - state.items.length;
+    },
+    selectIsUploading(state) {
+      return state.isUploading;
+    },
     selectDownloadUrl(state) {
       return state.download.url;
     },
@@ -79,43 +73,33 @@ const uploaderSlice = createSlice({
     selectDownloadStatus(state) {
       return state.download.status;
     },
-    selectFileCount(state) {
-      return state.items.length;
-    },
     selectIsDownloading(state) {
       const status = state.download.status;
-      return status === "preparing" || status === "loading" || status === "finishing";
-    },
-    selectUploaderAvailableSpace(state) {
-      return state.availableSpace;
-    },
-    selectIsUploading(state) {
-      return state.isUploading;
+
+      return (
+        status === "preparing" ||
+        status === "loading" ||
+        status === "finishing"
+      );
     },
   },
 });
 
 export const uploaderReducer = uploaderSlice.reducer;
-export const { setDownloadUrl, addFile, removeFile } = uploaderSlice.actions;
+export const { addUploaderItem, removeUploaderItem, setIsUploading, setDownloadUrl } = uploaderSlice.actions;
 
 export const {
+  selectUploaderItems,
+  selectUploaderItemsCount,
+  selectUploaderAvailableSpace,
+  selectIsUploading,
   selectDownloadUrl,
   selectIsDownloadUrlValid,
   selectDownloadStatus,
-  selectFileCount,
   selectIsDownloading,
-  selectUploaderAvailableSpace,
-  selectIsUploading,
 } = uploaderSlice.selectors;
 
-export const selectCanAddFiles = createSelector(
-  [selectUploaderAvailableSpace, selectIsDownloading],
-  (availableSpace, isDownloading) => (availableSpace - (isDownloading ? 1 : 0)) > 0,
-);
-
 export const selectCanUploadFiles = createSelector(
-  [selectIsUploading, selectCanAddFiles],
-  (isUploading, canAddFiles) => !isUploading && canAddFiles,
+  [selectIsUploading, selectIsDownloading, selectUploaderAvailableSpace],
+  (isUploading, isDownloading, availableSpace) => !isUploading && (availableSpace - (isDownloading ? 1 : 0) > 0),
 );
-
-export * from "./thunks";

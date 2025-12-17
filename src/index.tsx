@@ -1,8 +1,9 @@
 import { StrictMode } from "react";
-import { Provider } from "react-redux";
+import { Provider as StoreProvider } from "react-redux";
 import { createRoot } from "react-dom/client";
 
 import { App } from "@/app/App";
+import { FilesProvider } from "./context";
 import { store } from "@/store";
 
 import "./index.scss";
@@ -12,8 +13,10 @@ const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <StoreProvider store={store}>
+      <FilesProvider>
+        <App />
+      </FilesProvider>
+    </StoreProvider>
   </StrictMode>,
 );

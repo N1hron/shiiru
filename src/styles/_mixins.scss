@@ -26,12 +26,10 @@
   background: repeating-linear-gradient(-45deg, $color-1 0, $color-1 0.3rem, $color-2 0.3rem, $color-2 0.6rem);
 }
 
-@mixin background-dashed-animated($color-1: var(--color-blue-500), $color-2: hsl(from $color-1 h s calc(l - 5))) {
-  @include background-dashed($color-1, $color-2);
-
-  background-size: 200% 100%;
+@mixin moving-background {
+  background-size: 1000% 200%;
   animation-name: move-bg;
-  animation-duration: 5s;
+  animation-duration: 40s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;
@@ -43,5 +41,23 @@
     to {
       background-position: 0 0;
     }
+  }
+}
+
+@mixin background-dashed-animated($color-1: var(--color-blue-500), $color-2: hsl(from $color-1 h s calc(l - 5))) {
+  @include background-dashed($color-1, $color-2);
+  @include moving-background;
+}
+
+@mixin visual-border($color: hsl(from var(--color-blue-500) h s calc(l - 5))) {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    border-width: var(--border-width-thin);
+    border-color: $color;
+    border-style: solid;
   }
 }

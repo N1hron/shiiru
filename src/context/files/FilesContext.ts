@@ -1,6 +1,6 @@
 import { createContext, use, type RefObject } from "react";
 
-export type Files = Record<string, File>;
+export type Files = Map<string, File>;
 
 export type FilesContextValue = {
   filesRef: RefObject<Files>;

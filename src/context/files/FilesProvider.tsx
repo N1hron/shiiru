@@ -7,7 +7,7 @@ type FilesProviderProps = {
 };
 
 export function FilesProvider({ children }: FilesProviderProps) {
-  const filesRef = useRef<Files>({});
+  const filesRef = useRef<Files>(new Map());
   const contextValue = useMemo<FilesContextValue>(() => ({ filesRef }), []);
 
   return <FilesContext value={contextValue}>{children}</FilesContext>;

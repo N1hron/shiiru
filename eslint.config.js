@@ -56,6 +56,7 @@ export default defineConfig([
           requireLast: true,
         },
       }],
+      "react-hooks/preserve-manual-memoization": "off",
     },
   },
 ]);

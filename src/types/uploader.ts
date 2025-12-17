@@ -7,3 +7,8 @@ export type InputFile = {
   duration: number;
   url: string;
 };
+
+export type UploaderItem = InputFile & {
+  id: string;
+  previewStatus: "loading" | "success" | "error";
+};

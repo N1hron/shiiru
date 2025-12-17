@@ -1,27 +1,26 @@
 import type { ChangeEvent } from "react";
 
 import { FileInput } from "@/ui";
-import { selectCanUploadFiles, selectFileCount, uploadFiles, useAppDispatch, useAppSelector } from "@/store";
+import { selectCanUploadFiles, selectUploaderItemsCount, useAppSelector } from "@/store";
+import { useUploadFiles } from "@/hooks";
 import { config } from "@/config";
 
 import styles from "./style.module.scss";
 
 export function UploaderAddFiles() {
-  const dispatch = useAppDispatch();
-  const fileCount = useAppSelector(selectFileCount);
+  const fileCount = useAppSelector(selectUploaderItemsCount);
   const canUpload = useAppSelector(selectCanUploadFiles);
+  const { uploadFiles } = useUploadFiles();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
 
     if (canUpload && files) {
-      dispatch(uploadFiles(files)).finally(() => {
-        event.target.value = "";
-      }).catch((error) => {
+      uploadFiles(files).catch((error) => {
         console.log(error);
+      }).finally(() => {
+        event.target.value = "";
       });
-    } else {
-      event.target.value = "";
     }
   }
 

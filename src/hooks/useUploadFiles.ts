@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { useFilesContext } from "@/context";
 import { selectIsUploading, setIsUploading, uploadFile, useAppDispatch, useAppSelector } from "@/store";
-import type { SerializedUploadError } from "@/store/slices/uploader/utils";
+import type { SerializedUploadError } from "@/store/slices/uploader/errors";
 
 export function useUploadFiles() {
   const dispatch = useAppDispatch();

@@ -3,6 +3,8 @@ import { createSelector, type PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { config } from "@/config";
 import { isValidURL } from "./utils";
+import { downloadFile } from "./thunks";
+import { isAbortError } from "./errors";
 import type { UploaderItem } from "@/types";
 
 type DownloadStatus = "idle" | "preparing" | "loading" | "finishing" | "success" | "error";
@@ -13,9 +15,11 @@ type UploaderState = {
   download: {
     url: string;
     status: DownloadStatus;
-    size: number | null;
+    errorMessage: string | null;
+    size: number;
     progress: number;
     speed: number;
+    lastUrl: string | null;
   };
 };
 
@@ -25,9 +29,11 @@ const initialState: UploaderState = {
   download: {
     url: "",
     status: "idle",
-    size: null,
+    errorMessage: null,
+    size: 0,
     progress: 0,
     speed: 0,
+    lastUrl: null,
   },
 };
 
@@ -46,6 +52,18 @@ const uploaderSlice = createSlice({
     },
     setDownloadUrl(state, action: PayloadAction<string>) {
       state.download.url = action.payload;
+    },
+    setDownloadStatus(state, action: PayloadAction<DownloadStatus>) {
+      state.download.status = action.payload;
+    },
+    setDownloadSize(state, action: PayloadAction<number>) {
+      state.download.size = action.payload;
+    },
+    setDownloadSpeed(state, action: PayloadAction<number>) {
+      state.download.speed = action.payload;
+    },
+    setDownloadProgress(state, action: PayloadAction<number>) {
+      state.download.progress = action.payload;
     },
   },
   selectors: {
@@ -85,11 +103,60 @@ const uploaderSlice = createSlice({
         status === "finishing"
       );
     },
+    selectIsLastDownloadUrl(state) {
+      return state.download.url === state.download.lastUrl;
+    },
+    selectDownloadSize(state) {
+      return state.download.size;
+    },
+    selectDownloadProgress(state) {
+      return state.download.progress;
+    },
+  },
+  extraReducers(builder) {
+    builder.addAsyncThunk(downloadFile, {
+      pending(state) {
+        state.download.status = "preparing";
+        state.download.errorMessage = null;
+        state.download.size = 0;
+        state.download.speed = 0;
+        state.download.progress = 0;
+      },
+      fulfilled(state) {
+        state.download.status = "success";
+      },
+      rejected(state, action) {
+        if (isAbortError(action.error)) {
+          state.download.status = "idle";
+        } else {
+          state.download.status = "error";
+
+          if (action.payload?.error.type === "invalid") {
+            state.download.errorMessage = "invalid file";
+          }
+        }
+      },
+      settled(state, action) {
+        if (action.payload) {
+          state.download.lastUrl = action.payload.url;
+        }
+      },
+    });
   },
 });
 
 export const uploaderReducer = uploaderSlice.reducer;
-export const { addUploaderItem, removeUploaderItem, setIsUploading, setDownloadUrl } = uploaderSlice.actions;
+
+export const {
+  addUploaderItem,
+  removeUploaderItem,
+  setIsUploading,
+  setDownloadUrl,
+  setDownloadSize,
+  setDownloadStatus,
+  setDownloadSpeed,
+  setDownloadProgress,
+} = uploaderSlice.actions;
 
 export const {
   selectUploaderItems,
@@ -100,6 +167,9 @@ export const {
   selectDownloadStatus,
   selectIsDownloading,
   selectCanUploadFiles,
+  selectIsLastDownloadUrl,
+  selectDownloadSize,
+  selectDownloadProgress,
 } = uploaderSlice.selectors;
 
 export const selectIsDownloadUrlValid = createSelector([selectDownloadUrl], (url) => {

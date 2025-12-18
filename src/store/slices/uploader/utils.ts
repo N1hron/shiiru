@@ -1,37 +1,15 @@
-import { nanoid, type SerializedError } from "@reduxjs/toolkit";
+import mime from "mime";
+import { nanoid } from "@reduxjs/toolkit";
 import { ALL_FORMATS, BlobSource, Input } from "mediabunny";
 
 import { hasImageType, hasVideoType } from "@/utils";
+import { fileTypeFromStream } from "file-type";
 import type { InputFile, UploaderItem } from "@/types";
 
-const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()[\]@:%_+.~#?&/=]*)$/;
+const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()[\]@:%_+.,~#?&/=]*)$/;
 
 export function isValidURL(url: string) {
   return urlRegex.test(url);
-}
-
-export type UploadErrorType = "full" | "invalid";
-
-export class UploadError extends Error {
-  type: UploadErrorType;
-
-  constructor(type: UploadErrorType) {
-    super();
-    this.type = type;
-  }
-}
-
-export type SerializedUploadError = SerializedError & {
-  type: UploadErrorType;
-};
-
-export function serializeUploadError(error: UploadError): SerializedUploadError {
-  return {
-    name: error.name,
-    message: error.message,
-    stack: error.stack,
-    type: error.type,
-  };
 }
 
 export async function createUploaderItem(file: File): Promise<UploaderItem> {
@@ -103,3 +81,46 @@ async function getInputFileFromVideo(file: File): Promise<InputFile> {
     duration,
   };
 }
+
+export async function fileTypeFromResponse(response: Response) {
+  const contentType = response.headers.get("Content-Type");
+
+  if (contentType) {
+    const ext = mime.getExtension(contentType);
+
+    if (ext) {
+      return { mime: contentType, ext };
+    };
+  }
+
+  try {
+    const abortController = new AbortController();
+    const responseInner = await fetch(response.url, { signal: abortController.signal });
+
+    const type = await fileTypeFromStream(responseInner.body).finally(() => {
+      abortController.abort();
+    });
+
+    return type || null;
+  } catch {
+    return null;
+  }
+}
+
+// export function createFileFromChunks(chunks: Uint8Array<ArrayBuffer>[], mime: string, ext: string) {
+//   const date = new Date();
+
+//   const dateParts = [
+//     date.getFullYear(),
+//     date.getMonth() + 1,
+//     date.getDate(),
+//     date.getHours(),
+//     date.getMinutes(),
+//     date.getSeconds(),
+//   ].map((part) => String(part).padStart(2, "0"));
+
+//   const fileName = `file-${dateParts.join("-")}.${ext}`;
+//   const file = new File(chunks, fileName, { type: mime });
+
+//   return file;
+// }

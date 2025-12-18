@@ -1,6 +1,6 @@
 import type { SerializedError } from "vitest";
 
-export type UploadErrorType = "full" | "invalid";
+export type UploadErrorType = "no-space" | "unsupported-file";
 
 export class UploadError extends Error {
   type: UploadErrorType;
@@ -11,7 +11,7 @@ export class UploadError extends Error {
   }
 }
 
-export type DownloadErrorType = "invalid" | "network";
+export type DownloadErrorType = "unsupported-file" | "network";
 
 export class DownloadError extends Error {
   type: DownloadErrorType;
@@ -38,7 +38,7 @@ export function serializeUploaderError<E extends UploadError | DownloadError>(er
   };
 }
 
-export function isAbortError(value: unknown) {
+export function isSerializedAbortError(value: unknown) {
   return (
     !!value &&
     typeof value === "object" &&

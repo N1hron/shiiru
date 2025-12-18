@@ -1,34 +1,56 @@
 import { useRef } from "react";
 
 import { Button } from "@/ui";
-import { downloadFile, selectDownloadStatus, selectIsDownloading, selectIsDownloadUrlValid, selectIsLastDownloadUrl, useAppDispatch, useAppSelector } from "@/store";
+import { useDownloadFile } from "@/hooks";
+
+import {
+  selectDownloadStatus,
+  selectIsDownloading,
+  selectIsDownloadUrlValid,
+  selectIsLastDownloadUrl,
+  useAppSelector,
+} from "@/store";
 
 import styles from "./style.module.scss";
 
 export function UploaderDownloadButton() {
-  const dispatch = useAppDispatch();
   const abortRef = useRef<() => void>(null);
   const isUrlValid = useAppSelector(selectIsDownloadUrlValid);
+  const isLastUrl = useAppSelector(selectIsLastDownloadUrl);
   const isDownloading = useAppSelector(selectIsDownloading);
   const status = useAppSelector(selectDownloadStatus);
-  const isLastUrl = useAppSelector(selectIsLastDownloadUrl);
+  const downloadFile = useDownloadFile();
 
-  if (!isUrlValid) return null;
+  if (!isUrlValid && !isDownloading) return null;
 
   const handleClick = () => {
-    if (isDownloading && abortRef.current) {
-      abortRef.current();
-    } else if (!isDownloading) {
-      const promise = dispatch(downloadFile());
-      abortRef.current = () => promise.abort();
-
-      void promise.finally(() => {
-        abortRef.current = null;
-      });
+    if (isDownloading) {
+      cancel();
+    } else {
+      download();
     }
   };
 
+  const cancel = () => {
+    if (abortRef.current) {
+      abortRef.current();
+    }
+  };
+
+  const download = () => {
+    const promise = downloadFile();
+    abortRef.current = () => promise.abort();
+
+    promise.catch(console.log).finally(() => {
+      abortRef.current = null;
+    });
+  };
+
   const renderLabel = () => {
+    if (isDownloading) {
+      return "cancel";
+    }
+
     if (isLastUrl) {
       if (status === "success") {
         return "reload";
@@ -37,10 +59,6 @@ export function UploaderDownloadButton() {
       if (status === "error") {
         return "retry";
       }
-    }
-
-    if (isDownloading) {
-      return "cancel";
     }
 
     return "load";

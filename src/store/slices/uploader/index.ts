@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { config } from "@/config";
 import { isValidURL } from "./utils";
 import { downloadFile } from "./thunks";
-import { isAbortError } from "./errors";
+import { isSerializedAbortError } from "./errors";
 import type { UploaderItem } from "@/types";
 
 type DownloadStatus = "idle" | "preparing" | "loading" | "finishing" | "success" | "error";
@@ -112,33 +112,34 @@ const uploaderSlice = createSlice({
     selectDownloadProgress(state) {
       return state.download.progress;
     },
+    selectDownloadSpeed(state) {
+      return state.download.speed;
+    },
+    selectDownloadErrorMessage(state) {
+      return state.download.errorMessage;
+    },
   },
   extraReducers(builder) {
     builder.addAsyncThunk(downloadFile, {
-      pending(state) {
-        state.download.status = "preparing";
-        state.download.errorMessage = null;
-        state.download.size = 0;
-        state.download.speed = 0;
-        state.download.progress = 0;
-      },
-      fulfilled(state) {
+      fulfilled(state, action) {
         state.download.status = "success";
+        state.download.lastUrl = action.payload.url;
       },
       rejected(state, action) {
-        if (isAbortError(action.error)) {
+        if (isSerializedAbortError(action.error)) {
           state.download.status = "idle";
         } else {
           state.download.status = "error";
 
-          if (action.payload?.error.type === "invalid") {
-            state.download.errorMessage = "invalid file";
+          const result = action.payload;
+
+          if (result) {
+            state.download.lastUrl = result.url;
+            state.download.errorMessage = result.error.type === "unsupported-file" ? "invalid file" : null;
+          } else {
+            state.download.lastUrl = null;
+            state.download.errorMessage = null;
           }
-        }
-      },
-      settled(state, action) {
-        if (action.payload) {
-          state.download.lastUrl = action.payload.url;
         }
       },
     });
@@ -170,6 +171,8 @@ export const {
   selectIsLastDownloadUrl,
   selectDownloadSize,
   selectDownloadProgress,
+  selectDownloadSpeed,
+  selectDownloadErrorMessage,
 } = uploaderSlice.selectors;
 
 export const selectIsDownloadUrlValid = createSelector([selectDownloadUrl], (url) => {

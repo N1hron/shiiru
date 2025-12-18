@@ -1,4 +1,4 @@
-import { useRef, type ClipboardEvent } from "react";
+import { useRef, type ClipboardEvent, type ReactNode } from "react";
 
 import { UploaderDownload } from "./UploaderDownload";
 import { UploaderDivider } from "./UploaderDivider";
@@ -10,6 +10,14 @@ import { useUploadFiles } from "@/hooks";
 import styles from "./style.module.scss";
 
 export function Uploader() {
+  return (
+    <UploaderWrapper>
+      <UploaderContent />
+    </UploaderWrapper>
+  );
+}
+
+function UploaderWrapper({ children}: { children: ReactNode }) {
   const uploaderRef = useRef<HTMLElement>(null);
   const uploadFiles = useUploadFiles();
 
@@ -28,13 +36,21 @@ export function Uploader() {
   return (
     <section className={styles.uploader} ref={uploaderRef} onPaste={handlePaste}>
       <h2 className={styles.title}>Uploader</h2>
+      {children}
+    </section>
+  );
+}
+
+export function UploaderContent() {
+  return (
+    <>
       <UploaderDownload />
       <UploaderDivider />
       <UploaderFileList />
       <UploaderDroparea />
       <UploaderDivider />
       <UploaderAddFiles />
-    </section>
+    </>
   );
 }
 

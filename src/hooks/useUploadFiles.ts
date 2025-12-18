@@ -22,7 +22,7 @@ export function useUploadFiles() {
         const hasError = result.meta.requestStatus === "rejected";
 
         if (hasError) {
-          if ((result.payload as SerializedUploadError).type === "full") {
+          if ((result.payload as SerializedUploadError).type === "no-space") {
             break;
           }
           continue;

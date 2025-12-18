@@ -1,4 +1,16 @@
-import { selectDownloadStatus, selectIsDownloading, selectIsDownloadUrlValid, selectIsLastDownloadUrl, useAppSelector } from "@/store";
+import clsx from "clsx";
+
+import { formatFileSize } from "@/utils";
+
+import {
+  selectDownloadErrorMessage,
+  selectDownloadSpeed,
+  selectDownloadStatus,
+  selectIsDownloading,
+  selectIsDownloadUrlValid,
+  selectIsLastDownloadUrl,
+  useAppSelector,
+} from "@/store";
 
 import styles from "./style.module.scss";
 
@@ -7,14 +19,20 @@ export function UploaderDownloadStatus() {
   const status = useAppSelector(selectDownloadStatus);
   const isDownloading = useAppSelector(selectIsDownloading);
   const isLastUrl = useAppSelector(selectIsLastDownloadUrl);
+  const downloadSpeed = useAppSelector(selectDownloadSpeed);
+  const errorMessage = useAppSelector(selectDownloadErrorMessage);
+  const cl = clsx(styles.downloadStatus, isDownloading && styles.downloadStatusDownloading);
 
   function renderStatusText() {
-    if (!isURLValid) {
-      return "invalid url";
+    if (isDownloading) {
+      if (status === "loading") {
+        return formatFileSize(downloadSpeed) + "/s";
+      }
+      return status;
     }
 
-    if (isDownloading) {
-      return status;
+    if (!isURLValid) {
+      return "invalid url";
     }
 
     if (isLastUrl) {
@@ -23,12 +41,12 @@ export function UploaderDownloadStatus() {
       }
 
       if (status === "error") {
-        return "error";
+        return errorMessage || "error";
       }
     }
 
     return "ready";
   }
 
-  return <p className={styles.downloadStatus}>{renderStatusText()}</p>;
+  return <p className={cl}>{renderStatusText()}</p>;
 }

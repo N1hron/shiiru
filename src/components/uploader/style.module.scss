@@ -65,6 +65,11 @@
   &:has(+ .downloadButton) {
     grid-column: 1/2;
   }
+
+  &Downloading {
+    @include m.background-dashed-animated;
+    animation-play-state: running;
+  }
 }
 
 .downloadButton {
@@ -72,6 +77,9 @@
 }
 
 .downloadProgress {
+  @include m.background-dashed-animated;
+
+  animation-play-state: running;
   grid-column: 1/3;
   height: 1.5rem;
 }

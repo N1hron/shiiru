@@ -13,5 +13,7 @@ export function useDownloadFile() {
     }));
 
     return promise;
+
+    // eslint-disable-next-line
   }, [uploadFiles]);
 }

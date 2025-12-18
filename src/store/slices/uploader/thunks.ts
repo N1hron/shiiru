@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { createUploaderItem, fileTypeFromResponse } from "./utils";
+import { createFileName, createUploaderItem, fileTypeFromResponse } from "./utils";
 import { throttle } from "@/utils";
 
 import {
@@ -155,7 +155,7 @@ export const downloadFile = createAsyncThunk<
     try {
       const file = new File(
         chunks,
-        `downloaded-file.${type.ext}`,
+        createFileName(type.ext),
         { type: type.mime },
       );
 

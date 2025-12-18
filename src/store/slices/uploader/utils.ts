@@ -107,20 +107,18 @@ export async function fileTypeFromResponse(response: Response) {
   }
 }
 
-// export function createFileFromChunks(chunks: Uint8Array<ArrayBuffer>[], mime: string, ext: string) {
-//   const date = new Date();
+export function createFileName(ext: string) {
+  const date = new Date();
 
-//   const dateParts = [
-//     date.getFullYear(),
-//     date.getMonth() + 1,
-//     date.getDate(),
-//     date.getHours(),
-//     date.getMinutes(),
-//     date.getSeconds(),
-//   ].map((part) => String(part).padStart(2, "0"));
+  const dateParts = [
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds(),
+    date.getMilliseconds(),
+  ].map((part) => String(part).padStart(2, "0"));
 
-//   const fileName = `file-${dateParts.join("-")}.${ext}`;
-//   const file = new File(chunks, fileName, { type: mime });
-
-//   return file;
-// }
+  return `file-${dateParts.join("-")}.${ext}`;
+}

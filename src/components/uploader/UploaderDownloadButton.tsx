@@ -2,26 +2,18 @@ import { useRef } from "react";
 
 import { Button } from "@/ui";
 import { useDownloadFile } from "@/hooks";
-
-import {
-  selectDownloadStatus,
-  selectIsDownloading,
-  selectIsDownloadUrlValid,
-  selectIsLastDownloadUrl,
-  useAppSelector,
-} from "@/store";
+import { selectDownloadStatus, selectIsDownloading, selectIsUploaderFull, useAppSelector } from "@/store";
 
 import styles from "./style.module.scss";
 
 export function UploaderDownloadButton() {
   const abortRef = useRef<() => void>(null);
-  const isUrlValid = useAppSelector(selectIsDownloadUrlValid);
-  const isLastUrl = useAppSelector(selectIsLastDownloadUrl);
   const isDownloading = useAppSelector(selectIsDownloading);
+  const isDisabled = useAppSelector(selectIsUploaderFull);
   const status = useAppSelector(selectDownloadStatus);
   const downloadFile = useDownloadFile();
 
-  if (!isUrlValid && !isDownloading) return null;
+  if (status === "invalid url" && !isDownloading) return null;
 
   const handleClick = () => {
     if (isDownloading) {
@@ -38,12 +30,8 @@ export function UploaderDownloadButton() {
   };
 
   const download = () => {
-    const promise = downloadFile();
-    abortRef.current = () => promise.abort();
-
-    promise.catch(console.log).finally(() => {
-      abortRef.current = null;
-    });
+    const abort = downloadFile();
+    abortRef.current = abort;
   };
 
   const renderLabel = () => {
@@ -51,14 +39,12 @@ export function UploaderDownloadButton() {
       return "cancel";
     }
 
-    if (isLastUrl) {
-      if (status === "success") {
-        return "reload";
-      }
+    if (status === "success") {
+      return "reload";
+    }
 
-      if (status === "error") {
-        return "retry";
-      }
+    if (status === "error") {
+      return "retry";
     }
 
     return "load";
@@ -68,6 +54,8 @@ export function UploaderDownloadButton() {
     <Button
       className={styles.downloadButton}
       size="medium"
+      disabled={isDisabled}
+      title={isDisabled ? "File limit reached" : undefined}
       onClick={handleClick}
     >
       {renderLabel()}

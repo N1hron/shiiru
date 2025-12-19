@@ -3,7 +3,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { createRoot } from "react-dom/client";
 
 import { App } from "@/app/App";
-import { FilesProvider } from "./context";
+import { UploadedFilesProvider } from "./context";
 import { store } from "@/store";
 
 import "./index.scss";
@@ -14,9 +14,9 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <StoreProvider store={store}>
-      <FilesProvider>
+      <UploadedFilesProvider>
         <App />
-      </FilesProvider>
+      </UploadedFilesProvider>
     </StoreProvider>
   </StrictMode>,
 );

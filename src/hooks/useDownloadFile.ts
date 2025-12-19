@@ -1,19 +1,16 @@
 import { useCallback } from "react";
 
+import { useUploadedFiles } from "./useUploadedFiles";
 import { downloadFile, useAppDispatch } from "@/store";
-import { useUploadFiles } from "./useUploadFiles";
 
 export function useDownloadFile() {
   const dispatch = useAppDispatch();
-  const uploadFiles = useUploadFiles();
+  const { addFile } = useUploadedFiles();
 
   return useCallback(() => {
-    const promise = dispatch(downloadFile((file) => {
-      void uploadFiles(file);
-    }));
+    const promise = dispatch(downloadFile(addFile));
+    const abort = () => promise.abort();
 
-    return promise;
-
-    // eslint-disable-next-line
-  }, [uploadFiles]);
+    return abort;
+  }, [dispatch, addFile]);
 }

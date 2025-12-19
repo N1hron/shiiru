@@ -20,9 +20,111 @@
   @include m.visually-hidden;
 }
 
-.fileCount,
-.downloadStatus,
-.downloadProgress,
+.download {
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  display: grid;
+  gap: 0.25rem;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1.5rem;
+
+  &Url {
+    padding: 0;
+    border: 0;
+    height: 1.5rem;
+    padding-bottom: 0.25rem;
+    grid-column: 1/3;
+
+    &::placeholder {
+      text-align: center;
+      color: var(--color-slate-300);
+      font: inherit;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &Status {
+    @include m.background-dashed-animated;
+    @include m.unselectable;
+
+    grid-column: 1/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    color: #fff;
+
+    &Downloading {
+      @include m.background-dashed-animated;
+      animation-play-state: running;
+    }
+
+    &:has(+ .downloadButton) {
+      grid-column: 1/2;
+    }
+  }
+
+  &Button {
+    grid-column: 2/3;
+  }
+
+  &Progress {
+    @include m.background-dashed-animated;
+    @include m.unselectable;
+
+    grid-column: 1/3;
+    animation-play-state: running;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    color: #fff;
+  }
+}
+
+.divider {
+  padding: 0.5rem;
+
+  &:has(+ .files) {
+    padding-bottom: 0;
+  }
+}
+
+.files {
+  padding: 0.5rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.file {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  box-shadow: var(--shadow-elevation-low);
+}
+
+.filePreview {
+  @include m.background-dashed(#fff, var(--color-blue-050));
+
+  position: relative;
+  grid-column: 1/3;
+  grid-row: 1/2;
+  aspect-ratio: 1920/1080;
+  border-radius: 0.25rem;
+}
+
 .fileName {
   @include m.background-dashed;
   @include m.unselectable;
@@ -33,70 +135,31 @@
   justify-content: center;
   border-radius: 0.25rem;
   color: #fff;
-}
+  grid-column: 1/2;
+  grid-row: 2/3;
+  overflow: hidden;
+  padding: 0 0.25rem;
 
-.download {
-  padding: 0.5rem 0.5rem 0 0.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.25rem;
-}
-
-.downloadUrl {
-  grid-column: 1/3;
-  padding: 0;
-  border: 0;
-  height: 1.5rem;
-  padding-bottom: 0.25rem;
-
-  &::placeholder {
-    text-align: center;
-    color: var(--color-slate-300);
-    font: inherit;
-  }
-
-  &:focus {
-    outline: none;
+  span {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
-.downloadStatus {
-  grid-column: 1/3;
-  height: 1.5rem;
-
-  &:has(+ .downloadButton) {
-    grid-column: 1/2;
-  }
-
-  &Downloading {
-    @include m.background-dashed-animated;
-    animation-play-state: running;
-  }
-}
-
-.downloadButton {
+.removeFile {
   grid-column: 2/3;
-}
+  grid-row: 2/3;
 
-.downloadProgress {
-  @include m.background-dashed-animated;
+  svg {
+    height: 100%;
+  }
 
-  animation-play-state: running;
-  grid-column: 1/3;
-  height: 1.5rem;
-}
-
-.fileInput,
-.fileCount {
-  flex-basis: 50%;
-}
-
-.divider {
-  flex-shrink: 0;
-  padding: 0.5rem;
-
-  &:has(+ .fileList) {
-    padding-bottom: 0;
+  path {
+    stroke: #fff;
+    stroke-width: 1.75;
   }
 }
 
@@ -105,7 +168,7 @@
   padding: 0 0.5rem 0.5rem;
 
   &:empty {
-    padding-bottom: 0;
+    padding: 0 0.5rem;
   }
 
   + .divider {
@@ -135,67 +198,23 @@
   }
 }
 
-.fileList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.fileListItem {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: 1fr auto;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  background-color: #fff;
-  box-shadow: var(--shadow-elevation-low);
-}
-
-.preview {
-  @include m.background-dashed(#fff, var(--color-blue-050));
-
-  position: relative;
-  grid-column: 1/3;
-  grid-row: 1/2;
-  aspect-ratio: 1920/1080;
-  border-radius: 0.25rem;
-}
-
-.fileName {
-  grid-column: 1/2;
-  grid-row: 2/3;
-  overflow: hidden;
-  padding: 0 0.25rem;
-
-  span {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.removeFile {
-  grid-column: 2/3;
-  grid-row: 2/3;
-
-  svg {
-    height: 100%;
-  }
-
-  path {
-    stroke: #fff;
-    stroke-width: 1.75;
-  }
-}
-
 .addFiles {
   padding: 0 0.5rem 0.5rem 0.5rem;
   display: flex;
   gap: 0.25rem;
+
+  > * {
+    flex-basis: 50%;
+  }
+}
+
+.count {
+  @include m.background-dashed;
+  @include m.unselectable;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  color: #fff;
 }

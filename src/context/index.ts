@@ -1,2 +1,2 @@
-export { useFilesContext } from "./files/FilesContext";
-export { FilesProvider } from "./files/FilesProvider";
+export { useUploadedFilesContext } from "./uploaded-files/UploadedFilesContext";
+export { UploadedFilesProvider } from "./uploaded-files/UploadedFilesProvider";

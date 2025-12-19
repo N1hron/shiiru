@@ -1,16 +1,14 @@
 import { useCallback } from "react";
 
-import { useFilesContext } from "@/context";
 import { removeUploaderItem, useAppDispatch } from "@/store";
+import { useUploadedFiles } from "./useUploadedFiles";
 
 export function useRemoveFile() {
   const dispatch = useAppDispatch();
-  const files = useFilesContext();
+  const { removeFile } = useUploadedFiles();
 
   return useCallback((id: string) => {
     dispatch(removeUploaderItem(id));
-    files.filesRef.current.delete(id);
-
-    // eslint-disable-next-line
-  }, []);
+    removeFile(id);
+  }, [dispatch, removeFile]);
 }

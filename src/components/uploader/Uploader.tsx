@@ -1,56 +1,62 @@
-import { useRef, type ClipboardEvent, type ReactNode } from "react";
+import { useRef, type ClipboardEvent } from "react";
 
-import { UploaderDownload } from "./UploaderDownload";
 import { UploaderDivider } from "./UploaderDivider";
+import { UploaderFiles } from "./UploaderFiles";
 import { UploaderFileList } from "./UploaderFileList";
 import { UploaderDroparea } from "./UploaderDroparea";
-import { UploaderAddFiles } from "./UploaderAddFiles";
-import { useUploadFiles } from "@/hooks";
+import { UploaderInput } from "./UploaderInput";
+import { UploaderCount } from "./UploaderCount";
+import { UploaderDownloadButton } from "./UploaderDownloadButton";
+import { UploaderDownloadStatus } from "./UploaderDownloadStatus";
+import { UploaderDownloadProgress } from "./UploaderDownloadProgress";
+import { UploaderDownloadUrl } from "./UploaderDownloadUrl";
+import { useUploadFile } from "@/hooks";
+import { devLog } from "@/utils";
 
 import styles from "./style.module.scss";
 
 export function Uploader() {
-  return (
-    <UploaderWrapper>
-      <UploaderContent />
-    </UploaderWrapper>
-  );
-}
-
-function UploaderWrapper({ children}: { children: ReactNode }) {
   const uploaderRef = useRef<HTMLElement>(null);
-  const uploadFiles = useUploadFiles();
+  const uploadFile = useUploadFile();
 
   function handlePaste(event: ClipboardEvent<HTMLElement>) {
     const file = event.clipboardData.files[0];
 
     if (file) {
-      void uploadFiles(file).then((isOk) => {
-        if (!isOk && uploaderRef.current) {
-          playErrorAnimation(uploaderRef.current);
+      uploadFile(file).then((isOk) => {
+        const uploader = uploaderRef.current;
+
+        if (!isOk && uploader) {
+          playErrorAnimation(uploader);
         }
-      });
+      }).catch(devLog);
     }
   }
 
   return (
     <section className={styles.uploader} ref={uploaderRef} onPaste={handlePaste}>
       <h2 className={styles.title}>Uploader</h2>
-      {children}
-    </section>
-  );
-}
 
-export function UploaderContent() {
-  return (
-    <>
-      <UploaderDownload />
+      <div className={styles.download}>
+        <UploaderDownloadUrl />
+        <UploaderDownloadStatus />
+        <UploaderDownloadButton />
+        <UploaderDownloadProgress />
+      </div>
+
       <UploaderDivider />
-      <UploaderFileList />
+      <UploaderFiles>
+        <UploaderFileList />
+      </UploaderFiles>
       <UploaderDroparea />
       <UploaderDivider />
-      <UploaderAddFiles />
-    </>
+
+      <div className={styles.addFiles}>
+        <UploaderCount />
+        <UploaderInput />
+      </div>
+
+    </section>
   );
 }
 

@@ -9,3 +9,4 @@ export { formatFileSize } from "./formatFileSize";
 export { seekVideo } from "./seekVideo";
 export { hasImageType } from "./hasImageType";
 export { hasVideoType } from "./hasVideoType";
+export { devLog } from "./devLog";

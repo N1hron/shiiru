@@ -13,7 +13,7 @@ export function UploaderDroparea() {
 
     if (droparea) {
       const observer = new ResizeObserver(throttle(() => {
-        setShowPad(droparea.clientHeight >= droparea.clientWidth / 3);
+        setShowPad(droparea.clientHeight >= droparea.clientWidth / 2);
       }, 250));
 
       observer.observe(droparea);

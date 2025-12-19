@@ -1,13 +1,12 @@
-import { createSelector, type PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { config } from "@/config";
-import { isValidURL } from "./utils";
+import { isSerializedAbortError, isValidURL } from "./utils";
 import { downloadFile } from "./thunks";
-import { isSerializedAbortError } from "./errors";
 import type { UploaderItem } from "@/types";
+import { config } from "@/config";
 
-type DownloadStatus = "idle" | "preparing" | "loading" | "finishing" | "success" | "error";
+type DownloadStatus = "ready" | "invalid url" | "preparing" | "downloading" | "finishing" | "success" | "error";
 
 type UploaderState = {
   items: UploaderItem[];
@@ -15,11 +14,9 @@ type UploaderState = {
   download: {
     url: string;
     status: DownloadStatus;
-    errorMessage: string | null;
     size: number;
     progress: number;
     speed: number;
-    lastUrl: string | null;
   };
 };
 
@@ -28,12 +25,10 @@ const initialState: UploaderState = {
   isUploading: false,
   download: {
     url: "",
-    status: "idle",
-    errorMessage: null,
+    status: "invalid url",
     size: 0,
     progress: 0,
     speed: 0,
-    lastUrl: null,
   },
 };
 
@@ -52,6 +47,7 @@ const uploaderSlice = createSlice({
     },
     setDownloadUrl(state, action: PayloadAction<string>) {
       state.download.url = action.payload;
+      state.download.status = isValidURL(action.payload) ? "ready" : "invalid url";
     },
     setDownloadStatus(state, action: PayloadAction<DownloadStatus>) {
       state.download.status = action.payload;
@@ -73,18 +69,6 @@ const uploaderSlice = createSlice({
     selectUploaderItemsCount(state) {
       return state.items.length;
     },
-    selectUploaderAvailableSpace(state) {
-      const selectors = uploaderSlice.getSelectors();
-      const isDownloading = selectors.selectIsDownloading(state);
-
-      return config.uploader.maxFiles - state.items.length - (isDownloading ? 1 : 0);
-    },
-    selectCanUploadFiles(state): boolean {
-      const selectors = uploaderSlice.getSelectors();
-      const availableSpace = selectors.selectUploaderAvailableSpace(state);
-
-      return !state.isUploading && availableSpace > 0;
-    },
     selectIsUploading(state) {
       return state.isUploading;
     },
@@ -99,12 +83,9 @@ const uploaderSlice = createSlice({
 
       return (
         status === "preparing" ||
-        status === "loading" ||
+        status === "downloading" ||
         status === "finishing"
       );
-    },
-    selectIsLastDownloadUrl(state) {
-      return state.download.url === state.download.lastUrl;
     },
     selectDownloadSize(state) {
       return state.download.size;
@@ -115,31 +96,33 @@ const uploaderSlice = createSlice({
     selectDownloadSpeed(state) {
       return state.download.speed;
     },
-    selectDownloadErrorMessage(state) {
-      return state.download.errorMessage;
+    selectCanAddUploaderItems(state): boolean {
+      const selectors = uploaderSlice.getSelectors();
+      const itemsCount = selectors.selectUploaderItemsCount(state);
+      const isDownloading = selectors.selectIsDownloading(state);
+
+      return config.uploader.maxFiles - (itemsCount + (isDownloading ? 1 : 0)) > 0;
+    },
+    selectIsUploaderDisabled(state) {
+      const selectors = uploaderSlice.getSelectors();
+      const canAddItems = selectors.selectCanAddUploaderItems(state);
+
+      return state.isUploading || !canAddItems;
+    },
+    selectIsUploaderFull(state) {
+      return config.uploader.maxFiles - state.items.length <= 0;
     },
   },
   extraReducers(builder) {
     builder.addAsyncThunk(downloadFile, {
-      fulfilled(state, action) {
+      fulfilled(state) {
         state.download.status = "success";
-        state.download.lastUrl = action.payload.url;
       },
       rejected(state, action) {
         if (isSerializedAbortError(action.error)) {
-          state.download.status = "idle";
+          state.download.status = isValidURL(state.download.url) ? "ready" : "invalid url";
         } else {
           state.download.status = "error";
-
-          const result = action.payload;
-
-          if (result) {
-            state.download.lastUrl = result.url;
-            state.download.errorMessage = result.error.type === "unsupported-file" ? "invalid file" : null;
-          } else {
-            state.download.lastUrl = null;
-            state.download.errorMessage = null;
-          }
         }
       },
     });
@@ -162,21 +145,16 @@ export const {
 export const {
   selectUploaderItems,
   selectUploaderItemsCount,
-  selectUploaderAvailableSpace,
   selectIsUploading,
   selectDownloadUrl,
   selectDownloadStatus,
   selectIsDownloading,
-  selectCanUploadFiles,
-  selectIsLastDownloadUrl,
   selectDownloadSize,
   selectDownloadProgress,
   selectDownloadSpeed,
-  selectDownloadErrorMessage,
+  selectCanAddUploaderItems,
+  selectIsUploaderDisabled,
+  selectIsUploaderFull,
 } = uploaderSlice.selectors;
-
-export const selectIsDownloadUrlValid = createSelector([selectDownloadUrl], (url) => {
-  return isValidURL(url);
-});
 
 export * from "./thunks";

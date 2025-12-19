@@ -7,11 +7,11 @@ import type { UploaderItem } from "@/types";
 
 import styles from "./style.module.scss";
 
-type UploaderFileListItemProps = {
+type UploaderFileProps = {
   item: UploaderItem;
 };
 
-function UploaderFileListItemInner({ item }: UploaderFileListItemProps) {
+function UploaderFileInner({ item }: UploaderFileProps) {
   const removeFile = useRemoveFile();
 
   function handleRemoveClick() {
@@ -19,8 +19,8 @@ function UploaderFileListItemInner({ item }: UploaderFileListItemProps) {
   }
 
   return (
-    <li className={styles.fileListItem}>
-      <div className={styles.preview}></div>
+    <li className={styles.file}>
+      <div className={styles.filePreview}></div>
       <p className={styles.fileName} title={item.name}><span>{item.name}</span></p>
       <Button
         className={styles.removeFile}
@@ -35,4 +35,4 @@ function UploaderFileListItemInner({ item }: UploaderFileListItemProps) {
   );
 }
 
-export const UploaderFileListItem = memo(UploaderFileListItemInner);
+export const UploaderFile = memo(UploaderFileInner);

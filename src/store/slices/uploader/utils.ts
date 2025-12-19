@@ -122,3 +122,12 @@ export function createFileName(ext: string) {
 
   return `file-${dateParts.join("-")}.${ext}`;
 }
+
+export function isSerializedAbortError(value: unknown) {
+  return (
+    !!value &&
+    typeof value === "object" &&
+    "name" in value &&
+    value.name === "AbortError"
+  );
+}

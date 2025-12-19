@@ -57,6 +57,7 @@ export default defineConfig([
         },
       }],
       "react-hooks/preserve-manual-memoization": "off",
+      "@typescript-eslint/unbound-method": "off",
     },
   },
 ]);

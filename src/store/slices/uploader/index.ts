@@ -3,13 +3,14 @@ import { type PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { isSerializedAbortError, isValidURL } from "./utils";
 import { downloadFile } from "./thunks";
-import type { UploaderItem } from "@/types";
 import { config } from "@/config";
+import type { UploaderItem } from "@/types";
 
 type DownloadStatus = "ready" | "invalid url" | "preparing" | "downloading" | "finishing" | "success" | "error";
 
 type UploaderState = {
   items: UploaderItem[];
+  previewsQueue: string[];
   isUploading: boolean;
   download: {
     url: string;
@@ -22,6 +23,7 @@ type UploaderState = {
 
 const initialState: UploaderState = {
   items: [],
+  previewsQueue: [],
   isUploading: false,
   download: {
     url: "",
@@ -38,9 +40,11 @@ const uploaderSlice = createSlice({
   reducers: {
     addUploaderItem(state, action: PayloadAction<UploaderItem>) {
       state.items.push(action.payload);
+      state.previewsQueue.push(action.payload.id);
     },
     removeUploaderItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      state.previewsQueue = state.previewsQueue.filter((id) => id !== action.payload);
     },
     setIsUploading(state, action: PayloadAction<boolean>) {
       state.isUploading = action.payload;
@@ -60,6 +64,9 @@ const uploaderSlice = createSlice({
     },
     setDownloadProgress(state, action: PayloadAction<number>) {
       state.download.progress = action.payload;
+    },
+    shiftPreviewQueue(state) {
+      state.previewsQueue.shift();
     },
   },
   selectors: {
@@ -140,6 +147,7 @@ export const {
   setDownloadStatus,
   setDownloadSpeed,
   setDownloadProgress,
+  shiftPreviewQueue,
 } = uploaderSlice.actions;
 
 export const {

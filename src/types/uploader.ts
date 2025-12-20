@@ -10,7 +10,6 @@ export type InputFile = {
 
 export type UploaderItem = InputFile & {
   id: string;
-  previewStatus: "loading" | "success" | "error";
 };
 
 export type UploadErrorType = "no-space" | "unsupported-file";

@@ -17,7 +17,6 @@ export async function createUploaderItem(file: File): Promise<UploaderItem> {
 
   return {
     id: nanoid(),
-    previewStatus: "loading",
     ...inputFile,
   };
 }

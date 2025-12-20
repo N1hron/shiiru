@@ -4,11 +4,11 @@ import { selectIsDownloading, selectIsUploading, selectUploaderItemsCount, useAp
 
 import styles from "./style.module.scss";
 
-type UploaderFilesProps = {
+type UploaderFileListWrapperProps = {
   children: ReactNode;
 };
 
-export function UploaderFiles({ children }: UploaderFilesProps) {
+export function UploaderFileListWrapper({ children }: UploaderFileListWrapperProps) {
   const fileListRef = useRef<HTMLDivElement>(null);
   const isUploading = useAppSelector(selectIsUploading);
   const isDownloading = useAppSelector(selectIsDownloading);
@@ -37,8 +37,9 @@ export function UploaderFiles({ children }: UploaderFilesProps) {
   }, [isUploading, isDownloading]);
 
   if (itemsCount <= 0) return null;
+
   return (
-    <div className={styles.files} ref={fileListRef}>
+    <div className={styles.fileListWrapper} ref={fileListRef}>
       {children}
     </div>
   );

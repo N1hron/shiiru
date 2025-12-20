@@ -2,6 +2,7 @@ import { memo } from "react";
 
 import XMarkIcon from "@/assets/icons/xmark.svg?react";
 import { Button } from "@/ui";
+import { UploaderFilePreview } from "./UploaderFilePreview";
 import { useRemoveFile } from "@/hooks";
 import type { UploaderItem } from "@/types";
 
@@ -20,7 +21,7 @@ function UploaderFileInner({ item }: UploaderFileProps) {
 
   return (
     <li className={styles.file}>
-      <div className={styles.filePreview}></div>
+      <UploaderFilePreview item={item} />
       <p className={styles.fileName} title={item.name}><span>{item.name}</span></p>
       <Button
         className={styles.removeFile}

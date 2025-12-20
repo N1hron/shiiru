@@ -1,7 +1,7 @@
 import { useRef, type ClipboardEvent } from "react";
 
 import { UploaderDivider } from "./UploaderDivider";
-import { UploaderFiles } from "./UploaderFiles";
+import { UploaderFileListWrapper } from "./UploaderFileListWrapper";
 import { UploaderFileList } from "./UploaderFileList";
 import { UploaderDroparea } from "./UploaderDroparea";
 import { UploaderInput } from "./UploaderInput";
@@ -45,9 +45,9 @@ export function Uploader() {
       </div>
 
       <UploaderDivider />
-      <UploaderFiles>
+      <UploaderFileListWrapper>
         <UploaderFileList />
-      </UploaderFiles>
+      </UploaderFileListWrapper>
       <UploaderDroparea />
       <UploaderDivider />
 

@@ -10,3 +10,5 @@ export { seekVideo } from "./seekVideo";
 export { hasImageType } from "./hasImageType";
 export { hasVideoType } from "./hasVideoType";
 export { devLog } from "./devLog";
+export { loadVideo } from "./loadVideo";
+export { wait } from "./wait";

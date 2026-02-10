@@ -1,0 +1,12 @@
+@use "style/normalize";
+@use "style/reset";
+@use "style/fonts";
+@use "style/theme";
+
+body {
+  font-family: "Roboto";
+}
+
+#root {
+  height: 100dvh;
+}

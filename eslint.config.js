@@ -44,7 +44,7 @@ export default defineConfig([
       "@stylistic/comma-style": ["error", "last"],
       "@stylistic/computed-property-spacing": ["error", "never"],
       "@stylistic/curly-newline": ["error", "always"],
-      "@stylistic/dot-location": ["error", "object"],
+      "@stylistic/dot-location": ["error", "property"],
       "@stylistic/eol-last": ["error", "always"],
       "@stylistic/function-call-argument-newline": ["error", "consistent"],
       "@stylistic/function-call-spacing": ["error", "never"],

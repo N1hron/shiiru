@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import react from "@vitejs/plugin-react";
 import path from "path";
 import svgr from "vite-plugin-svgr";
@@ -16,5 +17,12 @@ export default defineConfig({
   },
   server: {
     host: true
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    coverage: {
+      include: ["src/**/*.{ts,tsx}"]
+    }
   }
 });

@@ -1,8 +1,8 @@
 import { useLayoutEffect, type ReactNode } from "react";
 
 import { useAppSelector } from "@/store";
-import { uiSelectors } from "@/store/slices/ui";
 import { usePreferredTheme } from "@/hooks/usePreferredTheme";
+import { uiSelectors } from "@/store/slices/ui";
 
 type ThemeProviderProps = {
   children: ReactNode;

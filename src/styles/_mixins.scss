@@ -1,0 +1,52 @@
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+@mixin unselectable() {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin focus-outline($color) {
+  outline: dotted var(--border-width-medium) $color;
+  outline-offset: var(--border-width-thin);
+}
+
+@mixin background-dashed($color-1, $color-2, $rotation: -45deg) {
+  background: repeating-linear-gradient($rotation, $color-1 0, $color-1 0.3rem, $color-2 0.3rem, $color-2 0.6rem);
+}
+
+@mixin background-dashed-animated($color-1, $color-2, $rotation: -45deg) {
+  @include background-dashed($color-1, $color-2, $rotation);
+
+  @keyframes move-bg {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  background-size: 200% 100%;
+  animation-name: move-bg;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+
+@mixin border-3d($color) {
+  border: solid var(--border-width-thin) $color;
+  border-bottom-width: var(--border-width-thick);
+}

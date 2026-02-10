@@ -1,3 +1,8 @@
 .app {
   height: 100%;
+  display: grid;
+  grid-template-columns: 15rem minmax(auto, 35rem);
+  grid-template-rows: auto 1fr auto;
+  justify-content: center;
+  gap: 0.5rem;
 }

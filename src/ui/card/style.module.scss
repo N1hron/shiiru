@@ -1,0 +1,36 @@
+@use "../../styles/mixins" as m;
+
+$heading-height: 1.4rem;
+$heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium));
+
+.card {
+  @include m.border-3d(var(--card-border));
+
+  position: relative;
+  background-color: var(--card-background);
+  padding: 0.75rem;
+
+  &:has(.heading) {
+    padding-top: calc(0.75rem + $heading-height + $heading-offset);
+  }
+}
+
+.heading {
+  @include m.border-3d(var(--color-accent-09));
+  @include m.background-dashed(var(--color-accent-07), var(--color-accent-06));
+
+  position: absolute;
+  padding: 0 0.25rem;
+  height: 1.4rem;
+  display: flex;
+  align-items: center;
+  left: $heading-offset;
+  top: $heading-offset;
+  color: var(--text-alt);
+  cursor: default;
+
+  &::selection {
+    background-color: var(--selection-alt-background);
+    color: var(--selection-alt-text);
+  }
+}

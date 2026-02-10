@@ -1,0 +1,17 @@
+@use "../../styles/mixins" as m;
+
+.header {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  height: fit-content;
+}
+
+.logo {
+  @include m.unselectable;
+
+  color: var(--logo-text);
+  text-shadow: 0 var(--border-width-thick) 0 var(--logo-shadow);
+  font-size: 2.25rem;
+  text-align: center;
+  line-height: 1;
+}

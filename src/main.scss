@@ -1,12 +1,23 @@
-@use "style/normalize";
-@use "style/reset";
-@use "style/fonts";
-@use "style/theme";
+@use "styles/normalize";
+@use "styles/reset";
+@use "styles/fonts";
+@use "styles/theme";
 
 body {
   font-family: "Roboto";
+  background-color: var(--background);
+  color: var(--text);
+  font-size: var(--font-size);
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 #root {
   height: 100dvh;
+  padding: 0.5rem;
+}
+
+*::selection {
+  background-color: var(--selection-background);
+  color: var(--selection-text);
 }

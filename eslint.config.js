@@ -64,7 +64,7 @@ export default defineConfig([
       "@stylistic/jsx-function-call-newline": ["error", "multiline"],
       "@stylistic/jsx-indent-props": ["error", "first"],
       "@stylistic/jsx-max-props-per-line": ["error", { maximum: 3 }],
-      "@stylistic/jsx-newline": ["error", { prevent: true }],
+      "@stylistic/jsx-newline": "off",
       "@stylistic/jsx-one-expression-per-line": "off",
       "@stylistic/jsx-pascal-case": "error",
       "@stylistic/jsx-quotes": ["error", "prefer-double"],

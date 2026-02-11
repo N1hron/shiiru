@@ -16,7 +16,7 @@ $heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium)
 }
 
 .heading {
-  @include m.border-3d(var(--color-accent-09));
+  @include m.border-3d(var(--color-accent-08));
   @include m.background-dashed(var(--color-accent-07), var(--color-accent-06));
 
   position: absolute;

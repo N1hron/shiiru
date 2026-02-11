@@ -1,3 +1,4 @@
+import { Button } from "@/ui/button";
 import { useLanguage } from "@/hooks/useLanguage";
 
 import styles from "./style.module.scss";
@@ -10,8 +11,17 @@ export function LanguageSwitcher() {
 
   return (
     <div className={styles.languageSwitcher}>
-      <button onClick={() => setLanguage("en")} disabled={isEn}>en</button>
-      <button onClick={() => setLanguage("ru")} disabled={isRu}>ru</button>
+      <Button
+        sideways="bt" size="medium" onClick={() => setLanguage("en")}
+        disabled={isEn}
+      >en
+      </Button>
+      <Button
+        sideways="tb"
+        size="medium" onClick={() => setLanguage("ru")}
+        disabled={isRu}
+      >ru
+      </Button>
     </div>
   );
 }

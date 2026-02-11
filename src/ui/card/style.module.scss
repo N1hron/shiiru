@@ -3,11 +3,25 @@
 $heading-height: 1.4rem;
 $heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium));
 
+[data-theme="light"] {
+  .card {
+    --background-color: var(--color-accent-01);
+    --border-color: var(--color-accent-04);
+  }
+}
+
+[data-theme="dark"] {
+  .card {
+    --background-color: var(--color-main-12);
+    --border-color: var(--color-main-11);
+  }
+}
+
 .card {
-  @include m.border-3d(var(--card-border));
+  @include m.border-3d(var(--border-color));
 
   position: relative;
-  background-color: var(--card-background);
+  background-color: var(--background-color);
   padding: 0.75rem;
 
   &:has(.heading) {
@@ -16,7 +30,7 @@ $heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium)
 }
 
 .heading {
-  @include m.border-3d(var(--color-accent-08));
+  @include m.border-3d(var(--color-accent-09));
   @include m.background-dashed(var(--color-accent-07), var(--color-accent-06));
 
   position: absolute;
@@ -26,11 +40,12 @@ $heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium)
   align-items: center;
   left: $heading-offset;
   top: $heading-offset;
-  color: var(--text-alt);
+  color: var(--color-alt);
   cursor: default;
 
   &::selection {
-    background-color: var(--selection-alt-background);
-    color: var(--selection-alt-text);
+    background-color: var(--color-alt);
+    color: var(--color-accent-07);
+    text-shadow: none;
   }
 }

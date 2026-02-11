@@ -1,3 +1,4 @@
+import { Button } from "@/ui/button";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { uiActions, uiSelectors } from "@/store/slices/ui";
 
@@ -9,9 +10,29 @@ export function ThemeSwitcher() {
 
   return (
     <div className={styles.themeSwitcher}>
-      <button onClick={() => dispatch(uiActions.setTheme("system"))} disabled={theme === "system"}>system</button>
-      <button onClick={() => dispatch(uiActions.setTheme("dark"))} disabled={theme === "dark"}>dark</button>
-      <button onClick={() => dispatch(uiActions.setTheme("light"))} disabled={theme === "light"}>light</button>
+      <Button
+        size="medium"
+        onClick={() => dispatch(uiActions.setTheme("system"))}
+        disabled={theme === "system"}
+      >
+        system
+      </Button>
+
+      <Button
+        size="medium"
+        onClick={() => dispatch(uiActions.setTheme("dark"))}
+        disabled={theme === "dark"}
+      >
+        dark
+      </Button>
+
+      <Button
+        size="medium"
+        onClick={() => dispatch(uiActions.setTheme("light"))}
+        disabled={theme === "light"}
+      >
+        light
+      </Button>
     </div>
   );
 }

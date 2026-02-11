@@ -1,0 +1,134 @@
+@use "../../styles/mixins" as m;
+
+$wrapper-padding: calc(var(--border-width-thick) - var(--border-width-thin));
+$content-height: calc(var(--block-size) - $wrapper-padding);
+
+.button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-block;
+  width: fit-content;
+  height: fit-content;
+  flex-grow: 0;
+  cursor: pointer;
+
+  &Size {
+    &Large {
+      --block-size: 2rem;
+      --padding-inline: 0.5rem;
+      --gap: 0.5rem;
+      --font-size: var(--font-size-medium);
+    }
+
+    &Medium {
+      --block-size: 1.5rem;
+      --padding-inline: 0.25rem;
+      --gap: 0.25rem;
+      --font-size: var(--font-size-small);
+    }
+  }
+
+  &Color {
+    &Accent {
+      --background-color: var(--color-accent-07);
+      --background-color-hover: var(--color-accent-08);
+      --border-color: var(--color-accent-09);
+      --color: var(--color-alt);
+    }
+
+    &Error {
+      --background-color: var(--color-error-06);
+      --background-color-hover: var(--color-error-07);
+      --border-color: var(--color-error-08);
+      --color: var(--color-alt);
+    }
+  }
+
+  &Icon {
+    --padding-inline: 0;
+  }
+
+  &Sideways {
+    &Bt {
+      .wrapper {
+        writing-mode: vertical-lr;
+      }
+
+      .content {
+        rotate: 180deg;
+        transform-origin: center;
+      }
+    }
+
+    &Tb {
+      .wrapper {
+        writing-mode: vertical-lr;
+      }
+    }
+  }
+
+  &:hover:not(:disabled) {
+    .content {
+      background-color: var(--background-color-hover);
+    }
+  }
+
+  &:active:not(:disabled) {
+    .wrapper {
+      padding-top: $wrapper-padding;
+      padding-bottom: 0;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    --background-color: var(--color-main-06);
+    --background-color-hover: var(--color-main-07);
+    --border-color: var(--color-main-08);
+    --color: var(--color-accent-01);
+  }
+}
+
+.wrapper {
+  position: relative;
+  display: block;
+  padding-top: 0;
+  padding-bottom: $wrapper-padding;
+
+  transition-property: padding-top, padding-bottom;
+  transition-duration: var(--transition-duration-fastest);
+}
+
+.background {
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  background-color: var(--border-color);
+}
+
+.content {
+  @include m.unselectable;
+
+  position: relative;
+  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  block-size: $content-height;
+  min-inline-size: $content-height;
+  padding-inline: var(--padding-inline);
+  background-color: var(--background-color);
+  border: solid var(--border-width-thin) var(--border-color);
+  color: var(--color);
+  font-size: var(--font-size);
+  line-height: 0.5;
+  text-box-trim: trim-both;
+
+  transition-property: background-color, border-color;
+  transition-duration: var(--transition-duration-fast);
+}

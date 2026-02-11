@@ -1,7 +1,7 @@
 import { clamp } from "../clamp";
 
 describe("clamp", () => {
-  describe("should limit a value to a specified range", () => {
+  describe("should limit value to a specified range", () => {
     it.each([
       [-5, 0, 5, 0],
       [-5, 5, 5, 5],

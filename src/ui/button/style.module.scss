@@ -15,16 +15,20 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   &Size {
     &Large {
       --block-size: 2rem;
+      --inline-size: auto;
       --padding-inline: 0.5rem;
       --gap: 0.5rem;
       --font-size: var(--font-size-medium);
+      --svg-stroke-width: 2.25;
     }
 
     &Medium {
       --block-size: 1.5rem;
+      --inline-size: auto;
       --padding-inline: 0.25rem;
       --gap: 0.25rem;
       --font-size: var(--font-size-small);
+      --svg-stroke-width: 2.5;
     }
   }
 
@@ -95,6 +99,7 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   display: block;
   padding-top: 0;
   padding-bottom: $wrapper-padding;
+  inline-size: var(--inline-size);
 
   transition-property: padding-top, padding-bottom;
   transition-duration: var(--transition-duration-fastest);
@@ -127,8 +132,17 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   color: var(--color);
   font-size: var(--font-size);
   line-height: 0.5;
-  text-box-trim: trim-both;
 
   transition-property: background-color, border-color;
   transition-duration: var(--transition-duration-fast);
+
+  svg {
+    block-size: 80%;
+    inline-size: auto;
+  }
+
+  path {
+    stroke: var(--color);
+    stroke-width: var(--svg-stroke-width);
+  }
 }

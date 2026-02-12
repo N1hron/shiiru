@@ -1,26 +1,65 @@
 @use "../../styles/mixins" as m;
 
 [data-theme="light"] {
-  .logo {
+  .heading {
     --color: var(--color-accent-07);
     --shadow-color: var(--color-accent-04);
   }
 }
 
 [data-theme="dark"] {
-  .logo {
+  .heading {
     --color: var(--color-accent-06);
     --shadow-color: var(--color-accent-09);
   }
+}
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: var(--border-width-thick);
+  padding: var(--border-width-thick) 0 calc(var(--border-width-thick) + var(--border-width-medium));
+}
+
+.languageToggle {
+  --inline-size: 1.875rem;
+
+  span {
+    border-left: none;
+    padding-left: var(var(--border-width-thin));
+  }
+}
+
+.themeToggle {
+  span {
+    border-right: none;
+    padding-right: var(var(--border-width-thin));
+  }
+}
+
+.languageToggle,
+.themeToggle {
+  display: block;
 }
 
 .header {
   grid-row: 1/2;
   grid-column: 1/2;
   height: fit-content;
+  display: flex;
 }
 
 .logo {
+  position: relative;
+  flex-grow: 1;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
   @include m.unselectable;
 
   color: var(--color);

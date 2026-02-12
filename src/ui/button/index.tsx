@@ -7,7 +7,7 @@ import styles from "./style.module.scss";
 
 type ButtonElement = "a" | "button";
 
-type ButtonProps<E extends ButtonElement> = ComponentPropsWithRef<E> & {
+type ButtonProps<E extends ButtonElement = "button"> = ComponentPropsWithRef<E> & {
   as?: E;
   size?: "large" | "medium";
   color?: "accent";

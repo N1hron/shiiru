@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef } from "react";
 
 import styles from "./style.module.scss";
 
-type HeadingElement = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type HeadingElement = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 type HeadingProps<E extends HeadingElement> = { as: E } & ComponentPropsWithRef<E>;
 
 export function Heading<E extends HeadingElement>({ as, className, ...props }: HeadingProps<E>) {

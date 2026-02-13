@@ -9,7 +9,6 @@ export function Settings(props: SettingsProps) {
   return (
     <Frame {...props}>
       <Heading />
-      test
     </Frame>
   );
 }

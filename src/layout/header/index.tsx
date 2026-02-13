@@ -11,7 +11,7 @@ export function Header() {
         <li><ThemeToggle className={styles.themeToggle} size="medium" /></li>
         <li><LanguageToggle className={styles.languageToggle} size="medium" sideways="bt" /></li>
       </menu>
-      <Card as="h1" className={styles.logo}>
+      <Card as="div" className={styles.logo}>
         <h1 className={styles.heading}>Shiiru</h1>
       </Card>
     </header>

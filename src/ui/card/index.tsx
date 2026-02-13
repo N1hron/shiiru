@@ -6,10 +6,10 @@ import { Heading } from "./Heading";
 import styles from "./style.module.scss";
 
 type CardElement = ElementType<{ children?: ReactNode; className?: string }>;
-type CardProps<E extends CardElement> = { as: E } & ComponentPropsWithRef<E>;
+type CardProps<E extends CardElement> = { as?: E } & ComponentPropsWithRef<E>;
 
-function Card<E extends CardElement>({ as, className, ...props }: CardProps<E>) {
-  const Element: CardElement = as;
+function Card<E extends CardElement = "div">({ as, className, ...props }: CardProps<E>) {
+  const Element: CardElement = as || "div";
   const cn = clsx(styles.card, className);
 
   return <Element className={cn} {...props} />;

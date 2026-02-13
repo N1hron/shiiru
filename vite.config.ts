@@ -21,8 +21,17 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    setupFiles: [
+      "./src/__tests__/setup.ts"
+    ],
     coverage: {
-      include: ["src/**/*.{ts,tsx}"]
+      include: [
+        "src/components/**/*.{ts,tsx}",
+        "src/layout/**/*.{ts,tsx}",
+        "src/ui/**/*.{ts,tsx}",
+        "src/hooks/**/*.{ts,tsx}",
+        "src/utils/**/*.{ts,tsx}"
+      ]
     }
   }
 });

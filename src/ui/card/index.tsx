@@ -1,8 +1,6 @@
 import clsx from "clsx";
 import type { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 
-import { Heading } from "./Heading";
-
 import styles from "./style.module.scss";
 
 type CardElement = ElementType<{ children?: ReactNode; className?: string }>;
@@ -14,7 +12,5 @@ function Card<E extends CardElement = "div">({ as, className, ...props }: CardPr
 
   return <Element className={cn} {...props} />;
 }
-
-Card.Heading = Heading;
 
 export { Card };

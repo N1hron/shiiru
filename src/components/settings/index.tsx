@@ -1,4 +1,4 @@
-import type { ComponentPropsWithRef } from "react";
+import { type ComponentPropsWithRef } from "react";
 
 import { Frame } from "./Frame";
 import { Heading } from "./Heading";

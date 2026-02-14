@@ -1,8 +1,5 @@
 @use "../../styles/mixins" as m;
 
-$heading-height: 1.4rem;
-$heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium));
-
 [data-theme="light"] {
   .card {
     --background-color: var(--color-accent-01);
@@ -23,29 +20,4 @@ $heading-offset: calc(-1 * var(--border-width-thin) - var(--border-width-medium)
   position: relative;
   background-color: var(--background-color);
   padding: 0.75rem;
-
-  &:has(.heading) {
-    padding-top: calc(0.75rem + $heading-height + $heading-offset);
-  }
-}
-
-.heading {
-  @include m.border-3d(var(--color-accent-09));
-  @include m.background-dashed(var(--color-accent-07), var(--color-accent-06));
-
-  position: absolute;
-  padding: 0 0.25rem;
-  height: 1.4rem;
-  display: flex;
-  align-items: center;
-  left: $heading-offset;
-  top: $heading-offset;
-  color: var(--color-alt);
-  cursor: default;
-
-  &::selection {
-    background-color: var(--color-alt);
-    color: var(--color-accent-07);
-    text-shadow: none;
-  }
 }

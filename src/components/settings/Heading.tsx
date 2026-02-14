@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
-import { Card } from "@/ui/card";
+import { HiddenHeading } from "@/ui/hidden-heading";
 
 export function Heading() {
   const { t } = useTranslation();
-  return <Card.Heading as="h2">{ t("settings.heading") }</Card.Heading>;
+  return <HiddenHeading as="h2">{ t("settings.heading") }</HiddenHeading>;
 }

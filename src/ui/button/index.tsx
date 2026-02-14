@@ -31,6 +31,7 @@ export function Button<E extends ButtonElement = "button">({
     styles.button,
     styles[`buttonSize${capitalize(size)}`],
     styles[`buttonColor${capitalize(color)}`],
+    color && styles.buttonColored,
     sideways && styles[`buttonSideways${capitalize(sideways)}`],
     icon && styles.buttonIcon,
     className

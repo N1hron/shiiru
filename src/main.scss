@@ -5,24 +5,24 @@
 
 [data-theme="light"] {
   body {
-    --background-color: var(--color-accent-02);
-    --color: var(--color-main-08);
-    --color-alt: var(--color-accent-01);
+    --color-background: var(--color-accent-02);
+    --color-text: var(--color-main-07);
+    --color-text-alt: var(--color-accent-01);
   }
 }
 
 [data-theme="dark"] {
   body {
-    --background-color: var(--color-main-13);
-    --color: var(--color-main-01);
-    --color-alt: var(--color);
+    --color-background: var(--color-main-13);
+    --color-text: var(--color-main-01);
+    --color-text-alt: var(--color-text);
   }
 }
 
 body {
   font-family: "Roboto";
-  background-color: var(--background-color);
-  color: var(--color);
+  background-color: var(--color-background);
+  color: var(--color-text);
   font-size: var(--font-size-small);
   text-transform: uppercase;
   font-weight: 500;
@@ -35,5 +35,5 @@ body {
 
 *::selection {
   background-color: var(--color-accent-07);
-  color: var(--color-alt);
+  color: var(--color-text-alt);
 }

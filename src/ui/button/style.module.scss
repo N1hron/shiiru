@@ -32,19 +32,16 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     }
   }
 
+  &Colored {
+    --color-background: var(--color-state-07);
+    --color-background-hover: var(--color-state-08);
+    --border-color: var(--color-state-09);
+    --color-text: var(--color-state-01);
+  }
+
   &Color {
     &Accent {
-      --background-color: var(--color-accent-07);
-      --background-color-hover: var(--color-accent-08);
-      --border-color: var(--color-accent-09);
-      --color: var(--color-alt);
-    }
-
-    &Error {
-      --background-color: var(--color-error-06);
-      --background-color-hover: var(--color-error-07);
-      --border-color: var(--color-error-08);
-      --color: var(--color-alt);
+      @include m.state-color("accent");
     }
   }
 
@@ -73,7 +70,7 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
 
   &:hover:not(:disabled) {
     .content {
-      background-color: var(--background-color-hover);
+      background-color: var(--color-background-hover);
     }
   }
 
@@ -84,13 +81,14 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     }
   }
 
-  &:disabled {
-    cursor: not-allowed;
+  &:focus-visible:not(:disabled) {
+    @include m.focus-outline(var(--color-accent-07));
+  }
 
-    --background-color: var(--color-main-06);
-    --background-color-hover: var(--color-main-07);
-    --border-color: var(--color-main-08);
-    --color: var(--color-accent-01);
+  &:disabled {
+    @include m.state-color("main");
+
+    cursor: not-allowed;
   }
 }
 
@@ -127,9 +125,9 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   block-size: $content-height;
   min-inline-size: $content-height;
   padding-inline: var(--padding-inline);
-  background-color: var(--background-color);
+  background-color: var(--color-background);
+  color: var(--color-text);
   border: solid var(--border-width-thin) var(--border-color);
-  color: var(--color);
   font-size: var(--font-size);
   line-height: 0.5;
 
@@ -142,7 +140,7 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   }
 
   path {
-    stroke: var(--color);
+    stroke: var(--color-text);
     stroke-width: var(--svg-stroke-width);
   }
 }

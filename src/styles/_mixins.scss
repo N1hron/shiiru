@@ -50,3 +50,13 @@
   border: solid var(--border-width-thin) $color;
   border-bottom-width: var(--border-width-thick);
 }
+
+@mixin state-color($color) {
+  @for $i from 1 through 13 {
+    @if $i < 10 {
+      --color-state-0#{$i}: var(--color-#{$color}-0#{$i});
+    } @else {
+      --color-state-#{$i}: var(--color-#{$color}-#{$i});
+    }
+  }
+}

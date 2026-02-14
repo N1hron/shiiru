@@ -27,6 +27,7 @@ export function LanguageToggle(props: ThemeToggleProps) {
       values={["en", "ru"]}
       aria-label={t("language.toggle")}
       title={t(`language.${language}`)}
+      color="accent"
       setValue={setLanguage}
       {...props}
     />

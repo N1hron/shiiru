@@ -19,7 +19,7 @@ export function Button<E extends ButtonElement = "button">({
   as,
   className,
   size = "large",
-  color = "accent",
+  color,
   icon = false,
   sideways,
   children,
@@ -30,8 +30,8 @@ export function Button<E extends ButtonElement = "button">({
   const cn = clsx(
     styles.button,
     styles[`buttonSize${capitalize(size)}`],
-    styles[`buttonColor${capitalize(color)}`],
     color && styles.buttonColored,
+    color && styles[`buttonColor${capitalize(color)}`],
     sideways && styles[`buttonSideways${capitalize(sideways)}`],
     icon && styles.buttonIcon,
     className

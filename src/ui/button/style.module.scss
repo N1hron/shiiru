@@ -3,7 +3,51 @@
 $wrapper-padding: calc(var(--border-width-thick) - var(--border-width-thin));
 $content-height: calc(var(--block-size) - $wrapper-padding);
 
+[data-theme="dark"] {
+  .button {
+    --color-background: var(--color-main-07);
+    --color-background-hover: var(--color-main-08);
+    --border-color: var(--color-main-09);
+    --color-text: var(--color-main-01);
+
+    &:disabled {
+      --color-background: var(--color-main-07);
+      --color-background-hover: var(--color-main-08);
+      --border-color: var(--color-main-09);
+      --color-text: var(--color-main-01);
+    }
+  }
+}
+
+[data-theme="light"] {
+  .button {
+    --color-background: var(--color-accent-02);
+    --color-background-hover: var(--color-accent-03);
+    --border-color: var(--color-accent-04);
+    --color-text: var(--color-main-07);
+
+    &:disabled {
+      --color-background: var(--color-main-06);
+      --color-background-hover: var(--color-main-07);
+      --border-color: var(--color-main-08);
+      --color-text: var(--color-main-01);
+    }
+  }
+}
+
+[data-theme="dark"],
+[data-theme="light"] {
+  .buttonColored {
+    --color-background: var(--color-state-07);
+    --color-background-hover: var(--color-state-08);
+    --border-color: var(--color-state-09);
+    --color-text: var(--color-state-01);
+  }
+}
+
 .button {
+  @include m.state-color("main");
+
   all: unset;
   box-sizing: border-box;
   display: inline-block;
@@ -30,13 +74,6 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
       --font-size: var(--font-size-small);
       --svg-stroke-width: 2.5;
     }
-  }
-
-  &Colored {
-    --color-background: var(--color-state-07);
-    --color-background-hover: var(--color-state-08);
-    --border-color: var(--color-state-09);
-    --color-text: var(--color-state-01);
   }
 
   &Color {
@@ -68,27 +105,31 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     }
   }
 
-  &:hover:not(:disabled) {
-    .content {
-      background-color: var(--color-background-hover);
+  &:not(:disabled) {
+    &:hover {
+      .content {
+        background-color: var(--color-background-hover);
+      }
     }
-  }
 
-  &:active:not(:disabled) {
-    .wrapper {
-      padding-top: $wrapper-padding;
-      padding-bottom: 0;
+    &:active {
+      .wrapper {
+        padding-top: $wrapper-padding;
+        padding-bottom: 0;
+      }
     }
-  }
 
-  &:focus-visible:not(:disabled) {
-    @include m.focus-outline(var(--color-accent-07));
+    &:focus-visible {
+      @include m.focus-outline(var(--color-accent-07));
+    }
   }
 
   &:disabled {
-    @include m.state-color("main");
-
     cursor: not-allowed;
+
+    .content {
+      @include m.background-dashed(var(--color-background), var(--color-background-hover));
+    }
   }
 }
 

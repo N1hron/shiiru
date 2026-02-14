@@ -51,6 +51,7 @@ export function ThemeToggle({ className, ...props }: ThemeToggleProps) {
       aria-live="polite"
       value={theme}
       values={["light", "dark", "system"]}
+      color="accent"
       setValue={setTheme}
       render={render}
       {...props}

@@ -162,6 +162,9 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   height: 50%;
   width: 100%;
   background-color: var(--border-color);
+
+  transition-property: background-color;
+  transition-duration: var(--transition-duration-fast);
 }
 
 .content {

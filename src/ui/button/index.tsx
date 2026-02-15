@@ -9,7 +9,7 @@ type ButtonElement = "a" | "button";
 
 type ButtonProps<E extends ButtonElement = "button"> = ComponentPropsWithRef<E> & {
   as?: E;
-  size?: "large" | "medium";
+  size?: "large" | "medium" | "small";
   color?: "accent" | "success" | "error";
   icon?: boolean;
   sideways?: "bt" | "tb";

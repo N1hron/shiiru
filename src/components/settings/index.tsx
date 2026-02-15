@@ -1,14 +1,14 @@
 import { type ComponentPropsWithRef } from "react";
 
-import { Frame } from "./Frame";
-import { Heading } from "./Heading";
+import { SettingsFrame } from "./Frame";
+import { SettingsHeading } from "./Heading";
 
-type SettingsProps = Omit<ComponentPropsWithRef<typeof Frame>, "children">;
+type SettingsProps = Omit<ComponentPropsWithRef<typeof SettingsFrame>, "children">;
 
 export function Settings(props: SettingsProps) {
   return (
-    <Frame {...props}>
-      <Heading />
-    </Frame>
+    <SettingsFrame {...props}>
+      <SettingsHeading />
+    </SettingsFrame>
   );
 }

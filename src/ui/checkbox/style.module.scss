@@ -1,0 +1,17 @@
+.checkbox {
+  svg {
+    height: 100%;
+  }
+
+  &Checked {
+    svg {
+      opacity: 1;
+    }
+  }
+
+  &Unchecked {
+    svg {
+      opacity: 0;
+    }
+  }
+}

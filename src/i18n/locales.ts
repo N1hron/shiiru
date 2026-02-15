@@ -12,6 +12,11 @@ export const en = {
   },
   settings: {
     heading: "Settings"
+  },
+  spinSelect: {
+    prev: "Previous value",
+    next: "Next value",
+    reset: "Reset value"
   }
 };
 
@@ -29,5 +34,10 @@ export const ru = {
   },
   settings: {
     heading: "Настройки"
+  },
+  spinSelect: {
+    prev: "Предыдущее значение",
+    next: "Следующее значение",
+    reset: "Сбросить значение"
   }
 } satisfies typeof en;

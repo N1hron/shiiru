@@ -1,0 +1,69 @@
+@use "../../styles/mixins" as m;
+
+.spinSelect {
+  display: flex;
+  gap: 0.25rem;
+
+  &Disabled {
+    @include m.state-color("main");
+
+    .label {
+      cursor: not-allowed;
+    }
+  }
+
+  &:not(.spinSelectDisabled) {
+    @include m.state-color("accent");
+
+    .label {
+      cursor: pointer;
+
+      &:hover {
+        animation-play-state: running;
+      }
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      .label {
+        @include m.focus-outline(var(--color-state-06));
+
+        animation-play-state: running;
+      }
+    }
+  }
+}
+
+.label {
+  @include m.border-3d(var(--color-state-08));
+  @include m.background-dashed-animated(var(--color-state-06), var(--color-state-05));
+  @include m.unselectable;
+
+  flex-grow: 1;
+  padding: 0 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-state-01);
+  text-shadow: 0 0 1rem var(--color-state-10);
+  overflow: hidden;
+}
+
+.button {
+  flex-shrink: 0;
+
+  svg {
+    height: 100%;
+  }
+
+  path {
+    stroke-width: 2;
+  }
+}
+
+.buttonNext {
+  svg {
+    rotate: 180deg;
+  }
+}

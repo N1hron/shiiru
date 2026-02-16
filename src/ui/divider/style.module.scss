@@ -1,0 +1,17 @@
+[data-theme="light"] {
+  .divider {
+    --color-border: var(--color-accent-04);
+  }
+}
+
+[data-theme="dark"] {
+  .divider {
+    --color-border: var(--color-main-11);
+  }
+}
+
+.divider {
+  height: var(--border-width-thin);
+  border-bottom: solid var(--border-width-thin) var(--color-border);
+  width: 100%;
+}

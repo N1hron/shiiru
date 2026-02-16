@@ -21,9 +21,9 @@ const settingsSlice = createSlice({
   name: "settings",
   initialState: getInitialState,
   reducers: {
-    setItem<K extends keyof Settings>(state: SettingsState, action: PayloadAction<[key: K, value: Settings[K]]>) {
-      const [key, value] = action.payload;
-      state.items[key] = value;
+    setItem<N extends keyof Settings>(state: SettingsState, action: PayloadAction<[name: N, value: Settings[N]]>) {
+      const [name, value] = action.payload;
+      state.items[name] = value;
     },
     resetItems(state) {
       state.items = defaultState.items;

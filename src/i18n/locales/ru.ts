@@ -1,24 +1,4 @@
-export const en = {
-  theme: {
-    toggle: "Toggle theme",
-    light: "Light theme",
-    dark: "Dark theme",
-    system: "System theme"
-  },
-  language: {
-    toggle: "Toggle language",
-    en: "English language",
-    ru: "Russian language"
-  },
-  settings: {
-    heading: "Settings"
-  },
-  spinSelect: {
-    prev: "Previous value",
-    next: "Next value",
-    reset: "Reset value"
-  }
-};
+import type { en } from "./en";
 
 export const ru = {
   theme: {
@@ -33,7 +13,9 @@ export const ru = {
     ru: "Русский язык"
   },
   settings: {
-    heading: "Настройки"
+    heading: "Настройки",
+    remember: "Запомнить выбор",
+    reset: "Сбросить настройки"
   },
   spinSelect: {
     prev: "Предыдущее значение",

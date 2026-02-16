@@ -2,7 +2,8 @@ import i18next from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
-import { en, ru } from "./locales";
+import { en } from "./locales/en";
+import { ru } from "./locales/ru";
 import { LS_LANG } from "@/constants";
 import type { Language } from "@/types";
 

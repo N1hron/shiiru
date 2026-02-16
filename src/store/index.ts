@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 
 import { uiReducer } from "./slices/ui";
+import { settingsReducer } from "./slices/settings";
 import { saveThemeMiddleware } from "./middleware/saveThemeMiddleware";
 
 const reducer = combineReducers({
-  ui: uiReducer
+  ui: uiReducer,
+  settings: settingsReducer
 });
 
 export const store = configureStore({

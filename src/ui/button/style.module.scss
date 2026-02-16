@@ -5,15 +5,15 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
 
 [data-theme="dark"] {
   .button {
-    --color-background: var(--color-main-07);
-    --color-background-hover: var(--color-main-08);
-    --border-color: var(--color-main-09);
+    --color-background: var(--color-main-08);
+    --color-background-hover: var(--color-main-09);
+    --border-color: var(--color-main-10);
     --color-text: var(--color-main-01);
 
     &:disabled {
-      --color-background: var(--color-main-07);
-      --color-background-hover: var(--color-main-08);
-      --border-color: var(--color-main-09);
+      --color-background: var(--color-main-08);
+      --color-background-hover: var(--color-main-09);
+      --border-color: var(--color-main-10);
       --color-text: var(--color-main-01);
     }
   }
@@ -27,9 +27,9 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     --color-text: var(--color-main-07);
 
     &:disabled {
-      --color-background: var(--color-main-06);
-      --color-background-hover: var(--color-main-07);
-      --border-color: var(--color-main-08);
+      --color-background: var(--color-main-05);
+      --color-background-hover: var(--color-main-06);
+      --border-color: var(--color-main-07);
       --color-text: var(--color-main-01);
     }
   }

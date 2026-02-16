@@ -1,7 +1,6 @@
-import { useTranslation } from "react-i18next";
-
 import { Label } from "@/ui/label";
 import { Checkbox } from "@/ui/checkbox";
+import { Translation } from "@/ui/translation";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { settingsActions, settingsSelectors } from "@/store/slices/settings";
 
@@ -9,7 +8,6 @@ import styles from "./style.module.scss";
 
 export function SettingsRemember() {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
   const value = useAppSelector(settingsSelectors.selectRemember);
 
   function setValue(value: boolean) {
@@ -19,7 +17,7 @@ export function SettingsRemember() {
   return (
     <Label className={styles.remember} horizontal>
       <Checkbox value={value} setValue={setValue} />
-      { t("settings.remember") }
+      <Translation k="settings.remember" />
     </Label>
   );
 }

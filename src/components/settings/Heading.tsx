@@ -1,8 +1,10 @@
-import { useTranslation } from "react-i18next";
-
 import { HiddenHeading } from "@/ui/hidden-heading";
+import { Translation } from "@/ui/translation";
 
 export function SettingsHeading() {
-  const { t } = useTranslation();
-  return <HiddenHeading as="h2">{ t("settings.heading") }</HiddenHeading>;
+  return (
+    <HiddenHeading as="h2">
+      <Translation k="settings.heading" />
+    </HiddenHeading>
+  );
 }

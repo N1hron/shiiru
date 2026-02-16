@@ -3,19 +3,19 @@
 [data-theme="light"] {
   .card {
     --color-background: var(--color-accent-01);
-    --border-color: var(--color-accent-04);
+    --color-border: var(--color-accent-04);
   }
 }
 
 [data-theme="dark"] {
   .card {
     --color-background: var(--color-main-12);
-    --border-color: var(--color-main-11);
+    --color-border: var(--color-main-11);
   }
 }
 
 .card {
-  @include m.border-3d(var(--border-color));
+  @include m.border-3d(var(--color-border));
 
   position: relative;
   background-color: var(--color-background);

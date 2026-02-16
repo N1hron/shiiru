@@ -12,5 +12,9 @@ export const config = {
       removeSpaces: true,
       antialiasing: false
     } satisfies Settings
+  },
+  storage: {
+    theme: "theme",
+    language: "language"
   }
 } as const;

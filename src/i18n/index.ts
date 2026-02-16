@@ -4,7 +4,7 @@ import { initReactI18next } from "react-i18next";
 
 import { en } from "./locales/en";
 import { ru } from "./locales/ru";
-import { LS_LANG } from "@/constants";
+import { config } from "@/config";
 import type { Language } from "@/types";
 
 void i18next
@@ -16,7 +16,7 @@ void i18next
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
-      lookupLocalStorage: LS_LANG
+      lookupLocalStorage: config.storage.language
     },
     resources: {
       en: { translation: en },

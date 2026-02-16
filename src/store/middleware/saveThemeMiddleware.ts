@@ -1,12 +1,12 @@
 import type { ListenerMiddleware } from "@reduxjs/toolkit";
 
-import type { AppState } from "@/store";
 import { uiActions } from "@/store/slices/ui";
-import { LS_THEME } from "@/constants";
+import { config } from "@/config";
+import type { AppState } from "@/store";
 
 export const saveThemeMiddleware: ListenerMiddleware<AppState> = () => (next) => (action) => {
   if (uiActions.setTheme.match(action)) {
-    localStorage.setItem(LS_THEME, action.payload);
+    localStorage.setItem(config.storage.theme, action.payload);
   }
   next(action);
 };

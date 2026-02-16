@@ -1,4 +1,4 @@
-import { LS_THEME } from "@/constants";
+import { config } from "@/config";
 import type { Theme } from "@/types";
 
 function isTheme(value: unknown): value is Theme {
@@ -6,7 +6,7 @@ function isTheme(value: unknown): value is Theme {
 }
 
 export function getInitialTheme(): Theme {
-  const savedTheme = localStorage.getItem(LS_THEME);
+  const savedTheme = localStorage.getItem(config.storage.theme);
 
   if (isTheme(savedTheme)) {
     return savedTheme;

@@ -5,6 +5,13 @@
   gap: 0.25rem;
   cursor: default;
 
+  &:has(:disabled) {
+    &::selection {
+      background-color: var(--color-main-07);
+      color: var(--color-text-alt);
+    }
+  }
+
   &Horizontal {
     flex-direction: row;
     align-items: center;

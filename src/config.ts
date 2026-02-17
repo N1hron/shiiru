@@ -15,6 +15,8 @@ export const config = {
   },
   storage: {
     theme: "theme",
-    language: "language"
+    language: "language",
+    settings: "settings",
+    rememberSettings: "rememberSettings"
   }
 } as const;

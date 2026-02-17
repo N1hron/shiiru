@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiReducer } from "./slices/ui";
 import { settingsReducer } from "./slices/settings";
 import { saveThemeMiddleware } from "./middleware/saveTheme";
+import { saveSettingsMiddleware } from "./middleware/saveSettings";
 
 const reducer = combineReducers({
   ui: uiReducer,
@@ -12,7 +13,7 @@ const reducer = combineReducers({
 
 export const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat([saveThemeMiddleware]),
+  middleware: (gDM) => gDM().concat([saveThemeMiddleware, saveSettingsMiddleware]),
   devTools: import.meta.env.DEV
 });
 

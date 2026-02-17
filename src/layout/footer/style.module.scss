@@ -1,0 +1,15 @@
+.footer {
+  grid-row: -2/-1;
+  grid-column: 1/2;
+  width: 15rem;
+  justify-self: flex-end;
+  text-align: center;
+}
+
+.link {
+  font-size: var(--font-size-medium);
+
+  &:focus-visible {
+    padding-inline: 0.125rem;
+  }
+}

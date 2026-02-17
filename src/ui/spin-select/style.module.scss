@@ -27,7 +27,7 @@
       outline: none;
 
       .label {
-        @include m.focus-outline(var(--color-state-06));
+        @include m.focus-outline(var(--color-state-07));
 
         animation-play-state: running;
       }

@@ -1,5 +1,11 @@
+import type { ReactNode } from "react";
+
 import styles from "./style.module.scss";
 
-export function SettingsList() {
-  return <ul className={styles.list}>{ null }</ul>;
+type SettingsListProps = {
+  children: ReactNode;
+};
+
+export function SettingsList({ children }: SettingsListProps) {
+  return <ul className={styles.list}>{ children }</ul>;
 }

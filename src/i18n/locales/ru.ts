@@ -15,7 +15,65 @@ export const ru = {
   settings: {
     heading: "Настройки",
     remember: "Запомнить выбор",
-    reset: "Сбросить настройки"
+    reset: "Сбросить настройки",
+    items: {
+      type: {
+        label: "Тип стикера",
+        options: {
+          sticker: "Стикер",
+          emoji: "Эмодзи"
+        }
+      },
+      verticalAlignment: {
+        label: "Верт. выравнивание",
+        options: {
+          top: "Сверху",
+          middle: "По центру",
+          bottom: "Снизу"
+        }
+      },
+      horizontalAlignment: {
+        label: "Гориз. выравнивание",
+        options: {
+          left: "Слева",
+          middle: "По центру",
+          right: "Справа"
+        }
+      },
+      resize: {
+        label: "Масштабирование",
+        options: {
+          contain: "Вписать",
+          "scale-down": "Уменьшить",
+          cover: "Заполнить",
+          fill: "Растянуть"
+        }
+      },
+      quality: {
+        label: "Качество",
+        options: {
+          auto: "Авто",
+          "very-low": "Очень низкое",
+          low: "Низкое",
+          medium: "Среднее",
+          high: "Высокое",
+          "very-high": "Очень высокое"
+        }
+      },
+      staticFormat: {
+        label: "Статичный формат",
+        options: {
+          webp: "Webp",
+          png: "Png"
+        }
+      },
+      removeSpaces: {
+        label: "Удалять пробелы"
+      },
+      antialiasing: {
+        label: "Включить сглаживание"
+      }
+    }
   },
   spinSelect: {
     prev: "Предыдущее значение",

@@ -1,3 +1,5 @@
+import type { PickValues } from "./utils";
+
 export type Theme = "light" | "dark" | "system";
 export type Language = "en" | "ru";
 
@@ -24,3 +26,6 @@ export type Settings = {
   removeSpaces: boolean;
   antialiasing: boolean;
 };
+
+export type StringSettings = PickValues<Settings, string>;
+export type BooleanSettings = PickValues<Settings, boolean>;

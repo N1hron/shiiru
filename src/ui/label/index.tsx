@@ -4,6 +4,7 @@ import type { ComponentPropsWithRef, ElementType } from "react";
 import styles from "./style.module.scss";
 
 type LabelElement = "label" | "span";
+
 type LabelProps<E extends LabelElement> = ComponentPropsWithRef<E> & {
   as?: E;
   horizontal?: boolean;

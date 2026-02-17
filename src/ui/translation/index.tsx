@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 
 type TranslationProps = {
-  k: Parameters<TFunction<"translation", undefined>>[0];
+  params: Parameters<TFunction<"translation", undefined>>;
 };
 
-export function Translation({ k }: TranslationProps) {
+export function Translation({ params }: TranslationProps) {
   const { t } = useTranslation();
-  return t(k as "theme.light");
+  return t(...params);
 }

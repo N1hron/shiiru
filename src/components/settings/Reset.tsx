@@ -20,7 +20,7 @@ export function SettingsReset() {
       disabled={isDisabled}
       onClick={handleClick}
     >
-      <Translation k="settings.reset" />
+      <Translation params={["settings.reset"]} />
     </Button>
   );
 }

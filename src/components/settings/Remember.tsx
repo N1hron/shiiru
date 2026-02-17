@@ -17,7 +17,7 @@ export function SettingsRemember() {
   return (
     <Label className={styles.remember} horizontal>
       <Checkbox value={value} setValue={setValue} />
-      <Translation k="settings.remember" />
+      <Translation params={["settings.remember"]} />
     </Label>
   );
 }

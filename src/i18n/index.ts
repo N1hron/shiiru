@@ -21,5 +21,8 @@ void i18next
     resources: {
       en: { translation: en },
       ru: { translation: ru }
+    },
+    interpolation: {
+      escapeValue: false
     }
   });

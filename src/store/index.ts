@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { uiReducer } from "./slices/ui";
 import { settingsReducer } from "./slices/settings";
-import { saveThemeMiddleware } from "./middleware/saveThemeMiddleware";
+import { saveThemeMiddleware } from "./middleware/saveTheme";
 
 const reducer = combineReducers({
   ui: uiReducer,

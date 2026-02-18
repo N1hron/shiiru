@@ -33,13 +33,6 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     --border-color: var(--color-accent-04);
     --color-text: var(--color-main-07);
 
-    &:disabled {
-      --color-background: var(--color-main-02);
-      --color-background-hover: var(--color-main-03);
-      --border-color: var(--color-main-04);
-      --color-text: var(--color-main-07);
-    }
-
     &Colored {
       --color-background: var(--color-state-07);
       --color-background-hover: var(--color-state-08);

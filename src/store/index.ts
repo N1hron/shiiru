@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { uiReducer } from "./slices/ui";
 import { settingsReducer } from "./slices/settings";
+import { uploaderReducer } from "./slices/uploader";
 import { saveThemeMiddleware } from "./middleware/saveTheme";
 import { saveSettingsMiddleware } from "./middleware/saveSettings";
 
 const reducer = combineReducers({
   ui: uiReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  uploader: uploaderReducer
 });
 
 export const store = configureStore({

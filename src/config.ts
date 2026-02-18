@@ -14,6 +14,10 @@ export const config = {
       allowDuplicates: false
     } satisfies Settings
   },
+  uploader: {
+    fileLimit: 25,
+    accept: "image/*, video/*"
+  },
   storage: {
     theme: "theme",
     language: "language",

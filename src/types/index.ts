@@ -33,3 +33,50 @@ export type Settings = StickerSettings & {
 
 export type StringSettings = PickValues<Settings, string>;
 export type BooleanSettings = PickValues<Settings, boolean>;
+
+export type FileName = { stem: string; ext: string };
+export type FileType = "image" | "video";
+
+export type FileElement<T extends FileType = FileType> =
+  T extends "image" ? HTMLImageElement : T extends "video" ? HTMLVideoElement : never;
+
+export type Dimensions = {
+  width: number;
+  height: number;
+};
+
+export type Rect = {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+};
+
+export type Range = {
+  start: number;
+  end: number;
+};
+
+export type InputFileData = {
+  name: FileName;
+  type: FileType;
+  mime: string;
+  size: number;
+  dimensions: Dimensions;
+  duration: number;
+};
+
+export type InputFileConfig = {
+  name: FileName;
+  crop: Rect;
+  trim: Range;
+};
+
+export type InputFile = {
+  id: string;
+  signature: string;
+  data: InputFileData;
+  config: InputFileConfig;
+  url: string;
+};
+

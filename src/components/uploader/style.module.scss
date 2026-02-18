@@ -1,0 +1,80 @@
+@use "../../styles/mixins" as m;
+
+$drop-border: dashed var(--border-width-medium) var(--drop-border-color);
+
+[data-theme="light"] {
+  .uploader {
+    --drop-border-color: var(--color-accent-05);
+    --drop-background-color: var(--color-accent-03);
+    --drop-background-border-color: var(--color-accent-04);
+
+    &DraggingOver {
+      &.uploader {
+        &DragValid {
+          --drop-border-color: var(--color-success-05);
+          --drop-background-color: var(--color-success-03);
+          --drop-background-border-color: var(--color-success-04);
+        }
+
+        &DragInvalid {
+          --drop-border-color: var(--color-error-05);
+          --drop-background-color: var(--color-error-03);
+          --drop-background-border-color: var(--color-error-04);
+        }
+      }
+    }
+  }
+}
+
+[data-theme="dark"] {
+  .uploader {
+    --drop-border-color: var(--color-accent-07);
+    --drop-background-color: var(--color-main-11);
+    --drop-background-border-color: var(--color-accent-07);
+
+    &DraggingOver {
+      &.uploader {
+        &DragValid {
+          --drop-border-color: var(--color-success-07);
+          --drop-background-border-color: var(--color-success-07);
+        }
+
+        &DragInvalid {
+          --drop-border-color: var(--color-error-07);
+          --drop-background-border-color: var(--color-error-07);
+        }
+      }
+    }
+  }
+}
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  transition-property: padding;
+  transition-duration: var(--transition-duration-fast);
+
+  &DraggingOver {
+    &.uploader {
+      &DragValid {
+        padding: 0.5rem;
+      }
+    }
+  }
+}
+
+.dropzone {
+  flex-grow: 1;
+  border: $drop-border;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropBackground {
+  @include m.background-dashed-animated(var(--color-background), var(--drop-background-color));
+
+  position: relative;
+  flex-grow: 1;
+  border: solid var(--border-width-thin) var(--drop-background-border-color);
+}

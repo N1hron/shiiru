@@ -9,6 +9,20 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     --color-background-hover: var(--color-main-09);
     --border-color: var(--color-main-10);
     --color-text: var(--color-main-01);
+
+    &Colored {
+      --color-background: var(--color-state-07);
+      --color-background-hover: var(--color-state-08);
+      --border-color: var(--color-state-09);
+      --color-text: var(--color-state-01);
+
+      &:disabled {
+        --color-background: var(--color-main-08);
+        --color-background-hover: var(--color-main-09);
+        --border-color: var(--color-main-10);
+        --color-text: var(--color-main-01);
+      }
+    }
   }
 }
 
@@ -18,22 +32,26 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     --color-background-hover: var(--color-accent-03);
     --border-color: var(--color-accent-04);
     --color-text: var(--color-main-07);
-  }
-}
-
-[data-theme="dark"],
-[data-theme="light"] {
-  .buttonColored {
-    --color-background: var(--color-state-07);
-    --color-background-hover: var(--color-state-08);
-    --border-color: var(--color-state-09);
-    --color-text: var(--color-state-01);
 
     &:disabled {
-      --color-background: var(--color-state-06);
-      --color-background-hover: var(--color-state-07);
-      --border-color: var(--color-state-08);
+      --color-background: var(--color-main-02);
+      --color-background-hover: var(--color-main-03);
+      --border-color: var(--color-main-04);
+      --color-text: var(--color-main-07);
+    }
+
+    &Colored {
+      --color-background: var(--color-state-07);
+      --color-background-hover: var(--color-state-08);
+      --border-color: var(--color-state-09);
       --color-text: var(--color-state-01);
+
+      &:disabled {
+        --color-background: var(--color-main-05);
+        --color-background-hover: var(--color-main-06);
+        --border-color: var(--color-main-07);
+        --color-text: var(--color-main-01);
+      }
     }
   }
 }

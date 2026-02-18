@@ -10,7 +10,8 @@ export const config = {
       quality: "auto",
       staticFormat: "webp",
       removeSpaces: true,
-      antialiasing: false
+      antialiasing: false,
+      allowDuplicates: false
     } satisfies Settings
   },
   storage: {

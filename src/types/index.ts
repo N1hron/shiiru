@@ -16,7 +16,7 @@ export type StickerSize<T extends StickerType = StickerType> =
 export type StickerFormat<M extends StickerMode = StickerMode> =
   M extends "static" ? "png" | "webp" : M extends "video" ? "webm" : never;
 
-export type Settings = {
+export type StickerSettings = {
   type: StickerType;
   verticalAlignment: StickerVerticalAlignment;
   horizontalAlignment: StickerHorizontalAlignment;
@@ -25,6 +25,10 @@ export type Settings = {
   staticFormat: StickerFormat<"static">;
   removeSpaces: boolean;
   antialiasing: boolean;
+};
+
+export type Settings = StickerSettings & {
+  allowDuplicates: boolean;
 };
 
 export type StringSettings = PickValues<Settings, string>;

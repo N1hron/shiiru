@@ -31,7 +31,9 @@ export function isSettings(value: unknown): value is Settings {
     "removeSpaces" in value &&
     typeof value.removeSpaces === "boolean" &&
     "antialiasing" in value &&
-    typeof value.antialiasing === "boolean"
+    typeof value.antialiasing === "boolean" &&
+    "allowDuplicates" in value &&
+    typeof value.allowDuplicates === "boolean"
   );
 }
 

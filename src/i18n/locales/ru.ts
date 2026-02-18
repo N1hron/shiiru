@@ -72,6 +72,9 @@ export const ru = {
       },
       antialiasing: {
         label: "Включить сглаживание"
+      },
+      allowDuplicates: {
+        label: "Разрешить дубликаты"
       }
     }
   },

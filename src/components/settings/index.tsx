@@ -24,6 +24,7 @@ export function Settings(props: SettingsProps) {
         <SettingsItemString name="staticFormat" values={["webp", "png"]} />
         <SettingsItemBoolean name="removeSpaces" />
         <SettingsItemBoolean name="antialiasing" />
+        <SettingsItemBoolean name="allowDuplicates" />
       </SettingsList>
       <SettingsDivider />
       <SettingsRemember />

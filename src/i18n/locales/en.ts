@@ -72,6 +72,9 @@ export const en = {
       },
       antialiasing: {
         label: "Enable antialiasing"
+      },
+      allowDuplicates: {
+        label: "Allow duplicates"
       }
     } satisfies SettingsItemsTranslation
   },

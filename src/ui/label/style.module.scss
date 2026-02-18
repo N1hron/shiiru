@@ -1,15 +1,41 @@
+[data-theme="dark"] {
+  .label {
+    --color-text: var(--color-text);
+    --color-selection-background: var(--color-accent-07);
+    --color-selection-text: var(--color-text);
+
+    &:has(:disabled) {
+      --color-text: var(--color-main-03);
+      --color-selection-background: var(--color-main-07);
+      --color-selection-text: var(--color-main-01);
+    }
+  }
+}
+
+[data-theme="light"] {
+  .label {
+    --color-text: var(--color-text);
+    --color-selection-background: var(--color-accent-07);
+    --color-selection-text: var(--color-text-alt);
+
+    &:has(:disabled) {
+      --color-text: var(--color-main-05);
+      --color-selection-background: var(--color-main-06);
+    }
+  }
+}
+
 .label {
   display: inline-flex;
   line-height: 1;
   flex-direction: column;
   gap: 0.25rem;
+  color: var(--color-text);
   cursor: default;
 
-  &:has(:disabled) {
-    &::selection {
-      background-color: var(--color-main-07);
-      color: var(--color-text-alt);
-    }
+  &::selection {
+    background-color: var(--color-selection-background);
+    color: var(--color-selection-text);
   }
 
   &Horizontal {

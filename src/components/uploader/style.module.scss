@@ -1,6 +1,7 @@
 @use "../../styles/mixins" as m;
 
 $drop-border: dashed var(--border-width-medium) var(--drop-color-border-outer);
+$drop-background-border: solid var(--border-width-thin) var(--drop-color-border-inner);
 
 [data-theme="light"] {
   .uploader {
@@ -19,10 +20,13 @@ $drop-border: dashed var(--border-width-medium) var(--drop-color-border-outer);
 }
 
 .uploader {
+  --padding: 0.75rem;
+
   @include m.state-color("accent");
 
   display: flex;
   flex-direction: column;
+  padding: var(--padding);
   transition-property: padding;
   transition-duration: var(--transition-duration-fast);
 
@@ -32,7 +36,7 @@ $drop-border: dashed var(--border-width-medium) var(--drop-color-border-outer);
         @include m.state-color("success");
 
         &:not(.uploaderDisabled) {
-          padding: 0.5rem;
+          --padding: 0.5rem;
 
           .dropBackground {
             animation-play-state: running;
@@ -70,7 +74,7 @@ $drop-border: dashed var(--border-width-medium) var(--drop-color-border-outer);
 
   position: relative;
   flex-grow: 1;
-  border: solid var(--border-width-thin) var(--drop-color-border-inner);
+  border: $drop-background-border;
   animation-duration: 7.5s;
 }
 
@@ -82,17 +86,64 @@ $drop-border: dashed var(--border-width-medium) var(--drop-color-border-outer);
   top: 0;
   padding: var(--border-width-medium) 0.25rem;
   background-color: var(--color-background);
-  border-bottom: solid var(--border-width-thin) var(--drop-color-border-inner);
+  border-bottom: $drop-background-border;
   color: var(--drop-color-border-outer);
   line-height: 1;
 }
 
 .status {
   left: 0;
-  border-right: solid var(--border-width-thin) var(--drop-color-border-inner);
+  border-right: $drop-background-border;
 }
 
 .fileCount {
   right: 0;
-  border-left: solid var(--border-width-thin) var(--drop-color-border-inner);
+  border-left: $drop-background-border;
+}
+
+.fileInput {
+  $padding: calc(0.25rem + var(--border-width-medium));
+
+  position: absolute;
+  left: var(--padding);
+  bottom: var(--padding);
+  background-color: var(--color-background);
+  padding: $padding $padding 0 0;
+  transition-property: left, bottom;
+  transition-duration: var(--transition-duration-fast);
+
+  &Button {
+    z-index: 3;
+    position: relative;
+
+    &:has(+ input:focus-visible) {
+      @include m.focus-outline(var(--color-state-07));
+    }
+  }
+
+  input {
+    @include m.visually-hidden;
+  }
+
+  &::before {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    left: $padding;
+    bottom: $padding;
+    right: calc(-0.25rem - var(--border-width-thin));
+    top: calc(-0.25rem - var(--border-width-thin));
+    background-color: var(--color-background);
+    border-right: $drop-background-border;
+    border-top: $drop-background-border;
+  }
+
+  &::after {
+    content: "";
+    z-index: 2;
+    position: absolute;
+    inset: 0;
+    border-top: $drop-border;
+    border-right: $drop-border;
+  }
 }

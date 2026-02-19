@@ -1,7 +1,10 @@
+import type { ParseKeys, TOptions } from "i18next";
 import type { PickValues } from "./utils";
 
 export type Theme = "light" | "dark" | "system";
 export type Language = "en" | "ru";
+
+export type TranslationKey = ParseKeys<["translation"], TOptions>;
 
 export type StickerType = "sticker" | "emoji";
 export type StickerMode = "static" | "video";

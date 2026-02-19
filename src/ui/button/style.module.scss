@@ -93,6 +93,14 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     &Accent {
       @include m.state-color("accent");
     }
+
+    &Error {
+      @include m.state-color("error");
+    }
+
+    &Success {
+      @include m.state-color("success");
+    }
   }
 
   &Icon {
@@ -133,7 +141,7 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     }
 
     &:focus-visible {
-      @include m.focus-outline(var(--color-accent-07));
+      @include m.focus-outline(var(--color-state-07));
     }
   }
 

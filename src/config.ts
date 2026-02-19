@@ -23,5 +23,8 @@ export const config = {
     language: "language",
     settings: "settings",
     rememberSettings: "rememberSettings"
+  },
+  sticker: {
+    maxDuration: 3
   }
 } as const;

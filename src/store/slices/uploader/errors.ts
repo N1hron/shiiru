@@ -1,6 +1,6 @@
 import type { SerializedError } from "@reduxjs/toolkit";
 
-export type UploadErrorType = "limit-reached" | "invalid-format" | "already-exists";
+export type UploadErrorType = "limit-reached" | "unsupported-format" | "already-exists";
 
 export type SerializedUploadError = Pick<SerializedError, "name" | "message"> & {
   type: UploadErrorType;

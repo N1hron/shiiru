@@ -117,7 +117,7 @@ export default defineConfig([
       }],
       "@stylistic/multiline-comment-style": ["error", "separate-lines"],
       "@stylistic/multiline-ternary": ["error", "always-multiline"],
-      "@stylistic/new-parens": ["error", "never"],
+      "@stylistic/new-parens": ["error", "always"],
       "@stylistic/newline-per-chained-calls": "off",
       "@stylistic/no-confusing-arrow": "error",
       "@stylistic/no-extra-parens": "off",

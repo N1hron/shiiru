@@ -4,6 +4,8 @@ import { UploaderFrame } from "./Frame";
 import { UploaderHeading } from "./Heading";
 import { UploaderDropzone } from "./Dropzone";
 import { UploaderDropBackground } from "./DropBackground";
+import { UploaderStatus } from "./Status";
+import { UploaderFileCount } from "./FileCount";
 
 type UploaderProps = Omit<ComponentPropsWithRef<typeof UploaderFrame>, "children">;
 
@@ -13,7 +15,8 @@ export function Uploader(props: UploaderProps) {
       <UploaderHeading />
       <UploaderDropzone>
         <UploaderDropBackground>
-          { null }
+          <UploaderStatus />
+          <UploaderFileCount />
         </UploaderDropBackground>
       </UploaderDropzone>
     </UploaderFrame>

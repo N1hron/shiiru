@@ -1,54 +1,26 @@
 @use "../../styles/mixins" as m;
 
-$drop-border: dashed var(--border-width-medium) var(--drop-border-color);
+$drop-border: dashed var(--border-width-medium) var(--drop-color-border-outer);
 
 [data-theme="light"] {
   .uploader {
-    --drop-border-color: var(--color-accent-05);
-    --drop-background-color: var(--color-accent-03);
-    --drop-background-border-color: var(--color-accent-04);
-
-    &DraggingOver {
-      &.uploader {
-        &DragValid {
-          --drop-border-color: var(--color-success-05);
-          --drop-background-color: var(--color-success-03);
-          --drop-background-border-color: var(--color-success-04);
-        }
-
-        &DragInvalid {
-          --drop-border-color: var(--color-error-05);
-          --drop-background-color: var(--color-error-03);
-          --drop-background-border-color: var(--color-error-04);
-        }
-      }
-    }
+    --drop-color-border-outer: var(--color-state-05);
+    --drop-color-border-inner: var(--color-state-04);
+    --drop-color-background: var(--color-state-03);
   }
 }
 
 [data-theme="dark"] {
   .uploader {
-    --drop-border-color: var(--color-accent-07);
-    --drop-background-color: var(--color-main-11);
-    --drop-background-border-color: var(--color-accent-07);
-
-    &DraggingOver {
-      &.uploader {
-        &DragValid {
-          --drop-border-color: var(--color-success-07);
-          --drop-background-border-color: var(--color-success-07);
-        }
-
-        &DragInvalid {
-          --drop-border-color: var(--color-error-07);
-          --drop-background-border-color: var(--color-error-07);
-        }
-      }
-    }
+    --drop-color-border-outer: var(--color-state-07);
+    --drop-color-border-inner: var(--color-state-07);
+    --drop-color-background: var(--color-main-11);
   }
 }
 
 .uploader {
+  @include m.state-color("accent");
+
   display: flex;
   flex-direction: column;
   transition-property: padding;
@@ -57,8 +29,30 @@ $drop-border: dashed var(--border-width-medium) var(--drop-border-color);
   &DraggingOver {
     &.uploader {
       &DragValid {
-        padding: 0.5rem;
+        @include m.state-color("success");
+
+        &:not(.uploaderDisabled) {
+          padding: 0.5rem;
+
+          .dropBackground {
+            animation-play-state: running;
+          }
+        }
       }
+
+      &DragInvalid {
+        @include m.state-color("error");
+      }
+
+      &Disabled {
+        @extend .uploaderDragInvalid;
+      }
+    }
+  }
+
+  &Uploading {
+    .dropBackground {
+      animation-play-state: running;
     }
   }
 }
@@ -72,9 +66,33 @@ $drop-border: dashed var(--border-width-medium) var(--drop-border-color);
 }
 
 .dropBackground {
-  @include m.background-dashed-animated(var(--color-background), var(--drop-background-color));
+  @include m.background-dashed-animated(var(--color-background), var(--drop-color-background));
 
   position: relative;
   flex-grow: 1;
-  border: solid var(--border-width-thin) var(--drop-background-border-color);
+  border: solid var(--border-width-thin) var(--drop-color-border-inner);
+  animation-duration: 7.5s;
+}
+
+.status,
+.fileCount {
+  @include m.unselectable;
+
+  position: absolute;
+  top: 0;
+  padding: var(--border-width-medium) 0.25rem;
+  background-color: var(--color-background);
+  border-bottom: solid var(--border-width-thin) var(--drop-color-border-inner);
+  color: var(--drop-color-border-outer);
+  line-height: 1;
+}
+
+.status {
+  left: 0;
+  border-right: solid var(--border-width-thin) var(--drop-color-border-inner);
+}
+
+.fileCount {
+  right: 0;
+  border-left: solid var(--border-width-thin) var(--drop-color-border-inner);
 }

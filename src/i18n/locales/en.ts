@@ -78,6 +78,20 @@ export const en = {
       }
     } satisfies SettingsItemsTranslation
   },
+  uploader: {
+    status: {
+      ready: "Drop images and videos",
+      uploading: "Uploading files",
+      valid: "Files valid",
+      invalid: "Files invalid",
+      limitReached: "File limit reached",
+      added_zero: "No files added",
+      added_one: "Added {{count}} file",
+      added_few: "Added {{count}} files",
+      added_many: "Added {{count}} files",
+      added_other: "Added {{count}} files"
+    }
+  },
   spinSelect: {
     prev: "Previous value",
     next: "Next value",

@@ -78,6 +78,20 @@ export const ru = {
       }
     }
   },
+  uploader: {
+    status: {
+      ready: "Перетащите картинки и видео",
+      uploading: "Загрузка файлов",
+      valid: "Файлы валидны",
+      invalid: "Файлы невалидны",
+      limitReached: "Достигнут лимит файлов",
+      added_zero: "Новых файлов не добавлено",
+      added_one: "Добавлен {{count}} файл",
+      added_few: "Добавлено {{count}} файла",
+      added_many: "Добавлено {{count}} файлов",
+      added_other: "Добавлено {{count}} файлов"
+    }
+  },
   spinSelect: {
     prev: "Предыдущее значение",
     next: "Следующее значение",

@@ -1,7 +1,7 @@
 import type { DragEvent, ReactNode } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/store";
-import { uploaderActions, uploaderSelectors } from "@/store/slices/uploader";
+import { uploaderActions, uploaderSelectors, uploaderThunks } from "@/store/slices/uploader";
 import { checkDataTransfer } from "./utils";
 
 import styles from "./style.module.scss";
@@ -42,7 +42,7 @@ export function UploaderDropzone({ children }: UploaderDropzoneProps) {
 
     if (canDrop) {
       const files = event.dataTransfer.files;
-      console.log(files);
+      void dispatch(uploaderThunks.uploadFiles(files));
     }
   }
 

@@ -7,4 +7,4 @@ export const selectIsUploading = ({ uploader }: AppState) => uploader.isUploadin
 export const selectFileCount = ({ uploader }: AppState) => uploader.files.length;
 export const selectIsFull = (state: AppState) => selectFileCount(state) >= config.uploader.fileLimit;
 export const selectIsDisabled = (state: AppState) => !selectIsFull(state) && !selectIsUploading(state);
-export const selectCanDrop = (state: AppState) => selectIsDisabled(state) && selectIsDragValid(state);
+export const selectCanDrop = (state: AppState) => !selectIsDisabled(state) && selectIsDragValid(state);

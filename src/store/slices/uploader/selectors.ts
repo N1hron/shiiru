@@ -17,7 +17,7 @@ export const selectIsDisabled = (state: AppState) => selectIsFull(state) || sele
 export const selectCanDrop = (state: AppState) => !selectIsDisabled(state) && selectIsDragValid(state);
 export const selectUploadedLast = ({ uploader }: AppState) => uploader.uploadedLast;
 
-export const selectSignatureCount = (signature: string) => ({ uploader }: AppState) => {
+export const selectSignatureCount = ({ uploader }: AppState, signature: string) => {
   return uploader.signatures[signature] || 0;
 };
 

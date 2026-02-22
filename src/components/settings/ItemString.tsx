@@ -23,7 +23,7 @@ export function SettingsItemString<N extends keyof StringSettings>({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const labelId = useId();
-  const value = useAppSelector(settingsSelectors.selectItem(name));
+  const value = useAppSelector((state) => settingsSelectors.selectItem(state, name));
   const defaultValue = config.settings.default[name];
   const valueLabel = t(`settings.items.${name}.options.${value}` as "theme.dark");
 

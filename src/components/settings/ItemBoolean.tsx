@@ -14,7 +14,7 @@ type SettingsItemBooleanProps<N extends keyof BooleanSettings> = {
 
 export function SettingsItemBoolean<N extends keyof BooleanSettings>({ name }: SettingsItemBooleanProps<N>) {
   const dispatch = useAppDispatch();
-  const value = useAppSelector(settingsSelectors.selectItem(name));
+  const value = useAppSelector((state) => settingsSelectors.selectItem(state, name));
 
   function setValue(value: boolean) {
     dispatch(settingsActions.setItem([name, value]));

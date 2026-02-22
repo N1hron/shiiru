@@ -20,8 +20,8 @@ export const uploadOne = createAsyncThunk<
   }
 
   const signature = getFileSignature(file);
-  const signatureCount = uploaderSelectors.selectSignatureCount(signature)(state);
-  const allowDuplicates = settingsSelectors.selectItem("allowDuplicates")(state);
+  const signatureCount = uploaderSelectors.selectSignatureCount(state, signature);
+  const allowDuplicates = settingsSelectors.selectItem(state, "allowDuplicates");
 
   if (!allowDuplicates && signatureCount > 0) {
     return reject(new UploadError("already-exists", `Unable to upload file ${file.name}: file already exists`));

@@ -51,7 +51,7 @@ export default defineConfig([
       "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
       "@stylistic/generator-star-spacing": ["error", "after"],
       "@stylistic/implicit-arrow-linebreak": ["error", "beside"],
-      "@stylistic/indent": ["error", 2, { VariableDeclarator: "first" }],
+      "@stylistic/indent": ["error", 2, { VariableDeclarator: "first", flatTernaryExpressions: true }],
       "@stylistic/indent-binary-ops": ["error", 2],
       "@stylistic/jsx-child-element-spacing": "error",
       "@stylistic/jsx-closing-bracket-location": ["error", "line-aligned"],

@@ -6,5 +6,5 @@ import styles from "./style.module.scss";
 
 export function UploaderFileCount() {
   const fileCount = useAppSelector(uploaderSelectors.selectFileCount);
-  return <div className={styles.fileCount}>{ fileCount }/{ config.uploader.fileLimit }</div>;
+  return <div className={styles.fileCount}>{ fileCount }/{ config.uploader.maxFiles }</div>;
 }

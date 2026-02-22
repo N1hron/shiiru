@@ -11,7 +11,7 @@ type SettingsState = {
 };
 
 export const defaultState: SettingsState = {
-  items: config.settings.defaults,
+  items: config.settings.default,
   remember: true
 };
 

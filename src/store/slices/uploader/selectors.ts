@@ -11,7 +11,7 @@ export const selectIsUploadingOne = ({ uploader }: AppState) => uploader.isUploa
 export const selectIsUploadingMany = ({ uploader }: AppState) => uploader.isUploadingMany;
 export const selectIsUploading = (state: AppState) => selectIsUploadingOne(state) || selectIsUploadingMany(state);
 export const selectFileCount = ({ uploader }: AppState) => uploader.files.length;
-export const selectIsFull = (state: AppState) => selectFileCount(state) >= config.uploader.fileLimit;
+export const selectIsFull = (state: AppState) => selectFileCount(state) >= config.uploader.maxFiles;
 export const selectIsEmpty = (state: AppState) => selectFileCount(state) === 0;
 export const selectIsDisabled = (state: AppState) => selectIsFull(state) || selectIsUploading(state);
 export const selectCanDrop = (state: AppState) => !selectIsDisabled(state) && selectIsDragValid(state);

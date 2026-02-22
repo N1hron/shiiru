@@ -1,8 +1,8 @@
 import { ALL_FORMATS, BlobSource, Input } from "mediabunny";
 
-import { config } from "@/config";
 import { loadImage } from "@/utils/loadImage";
 import { parseFileName } from "@/utils/parseFileName";
+import { VIDEO_STICKER_MAX_DURATION } from "@/constants";
 import type { InputFileConfig, InputFileData } from "@/types";
 
 export function getInputFileConfig(data: InputFileData): InputFileConfig {
@@ -16,7 +16,7 @@ export function getInputFileConfig(data: InputFileData): InputFileConfig {
     },
     trim: {
       start: 0,
-      end: Math.min(data.duration, config.sticker.maxDuration)
+      end: Math.min(data.duration, VIDEO_STICKER_MAX_DURATION)
     }
   };
 }

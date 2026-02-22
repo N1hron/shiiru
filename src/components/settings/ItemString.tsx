@@ -24,7 +24,7 @@ export function SettingsItemString<N extends keyof StringSettings>({
   const { t } = useTranslation();
   const labelId = useId();
   const value = useAppSelector(settingsSelectors.selectItem(name));
-  const defaultValue = config.settings.defaults[name];
+  const defaultValue = config.settings.default[name];
   const valueLabel = t(`settings.items.${name}.options.${value}` as "theme.dark");
 
   const options = useMemo(() => {

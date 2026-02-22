@@ -11,5 +11,5 @@ export const selectRemember = ({ settings }: AppState) => settings.remember;
 
 export const selectIsDefaultItems = createSelector(
   [selectItems],
-  (items) => createItemsSignature(items) === createItemsSignature(config.settings.defaults)
+  (items) => createItemsSignature(items) === createItemsSignature(config.settings.default)
 );

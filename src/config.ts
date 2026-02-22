@@ -1,8 +1,14 @@
 import type { Config } from "./types";
 
 export const config: Config = {
+  storage: {
+    theme: "theme",
+    language: "language",
+    settings: "settings",
+    rememberSettings: "rememberSettings"
+  },
   settings: {
-    defaults: {
+    default: {
       type: "sticker",
       verticalAlignment: "middle",
       horizontalAlignment: "middle",
@@ -15,16 +21,7 @@ export const config: Config = {
     }
   },
   uploader: {
-    fileLimit: 25,
+    maxFiles: 25,
     accept: "image/*, video/*"
-  },
-  storage: {
-    theme: "theme",
-    language: "language",
-    settings: "settings",
-    rememberSettings: "rememberSettings"
-  },
-  sticker: {
-    maxDuration: 3
   }
 };

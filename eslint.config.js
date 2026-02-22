@@ -89,14 +89,7 @@ export default defineConfig([
       "@stylistic/keyword-spacing": ["error", { before: true, after: true }],
       "@stylistic/line-comment-position": ["error", { position: "above" }],
       "@stylistic/linebreak-style": "off",
-      "@stylistic/lines-around-comment": ["error", {
-        beforeBlockComment: true,
-        beforeLineComment: true,
-        allowBlockStart: true,
-        allowClassStart: true,
-        allowObjectStart: true,
-        allowArrayStart: true
-      }],
+      "@stylistic/lines-around-comment": "off",
       "@stylistic/lines-between-class-members": [
         "error",
         { enforce: [{ blankLine: "always", prev: "*", next: "method" }] },

@@ -1,4 +1,4 @@
-import type { Dimensions, Rect } from "./common";
+import type { Dimensions, Range, Rect } from "./common";
 
 export type FileName = { stem: string; ext: string };
 export type FileType = "image" | "video";

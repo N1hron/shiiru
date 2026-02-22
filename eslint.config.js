@@ -87,7 +87,7 @@ export default defineConfig([
       }],
       "@stylistic/key-spacing": ["error", { afterColon: true, mode: "strict" }],
       "@stylistic/keyword-spacing": ["error", { before: true, after: true }],
-      "@stylistic/line-comment-position": ["error", { position: "above" }],
+      "@stylistic/line-comment-position": "off",
       "@stylistic/linebreak-style": "off",
       "@stylistic/lines-around-comment": "off",
       "@stylistic/lines-between-class-members": [

@@ -1,6 +1,6 @@
-import type { Settings } from "./types";
+import type { Config } from "./types";
 
-export const config = {
+export const config: Config = {
   settings: {
     defaults: {
       type: "sticker",
@@ -12,7 +12,7 @@ export const config = {
       removeSpaces: true,
       antialiasing: false,
       allowDuplicates: false
-    } satisfies Settings
+    }
   },
   uploader: {
     fileLimit: 25,
@@ -27,4 +27,4 @@ export const config = {
   sticker: {
     maxDuration: 3
   }
-} as const;
+};

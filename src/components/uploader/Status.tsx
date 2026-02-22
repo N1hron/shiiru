@@ -5,12 +5,11 @@ import { uploaderSelectors } from "@/store/slices/uploader";
 import styles from "./style.module.scss";
 
 export function UploaderStatus() {
-  const translationKey = useAppSelector(uploaderSelectors.selectStatusTranslationKey);
-  const uploadedLast = useAppSelector(uploaderSelectors.selectUploadedLast);
+  const { key, count } = useAppSelector(uploaderSelectors.selectStatus);
 
   return (
     <div className={styles.status}>
-      <Translation params={[`uploader.status.${translationKey}`, { count: uploadedLast }]} />
+      <Translation params={[`uploader.status.${key}`, { count }]} />
     </div>
   );
 }

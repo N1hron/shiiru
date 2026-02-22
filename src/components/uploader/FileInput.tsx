@@ -23,7 +23,7 @@ export function UploaderFileInput() {
       const files = target.files;
 
       if (files) {
-        void dispatch(uploaderThunks.uploadFiles(files)).finally(() => {
+        void dispatch(uploaderThunks.upload(files)).finally(() => {
           target.value = "";
         });
       }

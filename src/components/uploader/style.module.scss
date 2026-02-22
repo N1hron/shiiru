@@ -30,6 +30,10 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   transition-property: padding;
   transition-duration: var(--transition-duration-fast);
 
+  &Disabled {
+    @include m.state-color("main");
+  }
+
   &DraggingOver {
     &.uploader {
       &DragValid {

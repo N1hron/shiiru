@@ -81,15 +81,18 @@ export const ru = {
   uploader: {
     status: {
       ready: "Перетащите картинки и видео",
+      supported: "Поддерживаемые файлы",
+      supported_one: "Поддерживаемый файл",
+      unsupported: "Неподдерживаемые файлы",
+      unsupported_one: "Неподдерживаемый файл",
       uploading: "Загрузка файлов",
-      valid: "Файлы валидны",
-      invalid: "Файлы невалидны",
-      limitReached: "Достигнут лимит файлов",
+      uploading_one: "Загрузка файла",
       added_zero: "Новых файлов не добавлено",
       added_one: "Добавлен {{count}} файл",
       added_few: "Добавлено {{count}} файла",
       added_many: "Добавлено {{count}} файлов",
-      added_other: "Добавлено {{count}} файлов"
+      added_other: "Добавлено {{count}} файлов",
+      limitReached: "Достигнут лимит файлов"
     }
   },
   spinSelect: {

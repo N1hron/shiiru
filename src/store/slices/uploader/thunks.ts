@@ -6,10 +6,11 @@ import { getFileSignature } from "@/utils/getFileSignature";
 import { settingsSelectors } from "../settings";
 import { getInputFileConfig, getInputFileData } from "./utils";
 import type { AppDispatch, AppState } from "@/store";
+import type { IterableArrayLike } from "@/types/utils";
 
-export const uploadFile = createAsyncThunk<
+export const uploadOne = createAsyncThunk<
   void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploadError }
->("uploader/uploadFile", async (file, { getState, dispatch, rejectWithValue }) => {
+>("uploader/uploadOne", async (file, { getState, dispatch, rejectWithValue }) => {
   const state = getState();
   const isFull = uploaderSelectors.selectIsFull(state);
   const reject = (error: UploadError) => rejectWithValue(error.serialize());
@@ -42,13 +43,13 @@ export const uploadFile = createAsyncThunk<
   }
 });
 
-export const uploadFiles = createAsyncThunk<
-  number, Iterable<File>, { dispatch: AppDispatch }
->("uploader/uploadFiles", async (files, { dispatch }) => {
+export const uploadMany = createAsyncThunk<
+  number, IterableArrayLike<File>, { dispatch: AppDispatch }
+>("uploader/uploadMany", async (files, { dispatch }) => {
   let count = 0;
 
   for (const file of files) {
-    const result = await dispatch(uploadFile(file));
+    const result = await dispatch(uploadOne(file));
 
     if (result.meta.requestStatus === "fulfilled") {
       count += 1;
@@ -61,4 +62,16 @@ export const uploadFiles = createAsyncThunk<
   }
 
   return count;
+});
+
+export const upload = createAsyncThunk<
+  void, File | IterableArrayLike<File>, { dispatch: AppDispatch }
+>("uploader/upload", async (f, { dispatch }) => {
+  if (f instanceof File) {
+    await dispatch(uploadOne(f));
+  } else if (f.length === 1) {
+    await dispatch(uploadOne(f[0]));
+  } else {
+    await dispatch(uploadMany(f));
+  }
 });

@@ -23,11 +23,12 @@ export function UploaderDropzone({ children }: UploaderDropzoneProps) {
   function handleDragEnter(event: DragEvent) {
     event.preventDefault();
     event.dataTransfer.effectAllowed = "move";
+
     dispatch(uploaderActions.incrementDragOverCount());
 
     if (!isDraggingOver) {
-      const isValid = checkDataTransfer(event.dataTransfer);
-      dispatch(uploaderActions.setIsDragValid(isValid));
+      dispatch(uploaderActions.setIsDragValid(checkDataTransfer(event.dataTransfer)));
+      dispatch(uploaderActions.setDataTransferSize(event.dataTransfer.items.length));
     }
   }
 
@@ -42,7 +43,7 @@ export function UploaderDropzone({ children }: UploaderDropzoneProps) {
 
     if (canDrop) {
       const files = event.dataTransfer.files;
-      void dispatch(uploaderThunks.uploadFiles(files));
+      void dispatch(uploaderThunks.upload(files));
     }
   }
 

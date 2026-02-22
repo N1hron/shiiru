@@ -81,15 +81,18 @@ export const en = {
   uploader: {
     status: {
       ready: "Drop images and videos",
+      supported: "Files supported",
+      supported_one: "File supported",
+      unsupported: "Files unsupported",
+      unsupported_one: "File unsupported",
       uploading: "Uploading files",
-      valid: "Files valid",
-      invalid: "Files invalid",
-      limitReached: "File limit reached",
+      uploading_one: "Uploading file",
       added_zero: "No files added",
       added_one: "Added {{count}} file",
       added_few: "Added {{count}} files",
       added_many: "Added {{count}} files",
-      added_other: "Added {{count}} files"
+      added_other: "Added {{count}} files",
+      limitReached: "File limit reached"
     }
   },
   spinSelect: {

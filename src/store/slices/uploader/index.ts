@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { uploadFile, uploadFiles } from "./thunks";
+import { uploadOne, uploadMany } from "./thunks";
 import type { InputFile } from "@/types";
 
 type UploaderState = {
@@ -8,6 +8,7 @@ type UploaderState = {
   isUploadingMany: boolean;
   isDragValid: boolean;
   dragOverCount: number;
+  dataTransferSize: number;
   uploadedLast: number;
   files: InputFile[];
   signatures: Record<string, number>;
@@ -19,6 +20,7 @@ const initialState: UploaderState = {
   isUploadingMany: false,
   isDragValid: false,
   dragOverCount: 0,
+  dataTransferSize: 0,
   uploadedLast: 0,
   files: [],
   signatures: {},
@@ -40,6 +42,9 @@ const uploaderSlice = createSlice({
     },
     resetDragOverCount(state) {
       state.dragOverCount = 0;
+    },
+    setDataTransferSize(state, action: PayloadAction<number>) {
+      state.dataTransferSize = action.payload;
     },
     addFile(state, action: PayloadAction<InputFile>) {
       state.files.push(action.payload);
@@ -66,15 +71,25 @@ const uploaderSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addAsyncThunk(uploadFile, {
+      .addAsyncThunk(uploadOne, {
         pending(state) {
           state.isUploadingOne = true;
+        },
+        fulfilled(state) {
+          if (!state.isUploadingMany) {
+            state.uploadedLast = 1;
+          }
+        },
+        rejected(state) {
+          if (!state.isUploadingMany) {
+            state.uploadedLast = 0;
+          }
         },
         settled(state) {
           state.isUploadingOne = false;
         }
       })
-      .addAsyncThunk(uploadFiles, {
+      .addAsyncThunk(uploadMany, {
         pending(state) {
           state.isUploadingMany = true;
         },

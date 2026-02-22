@@ -1,10 +1,15 @@
+import { createSelector } from "@reduxjs/toolkit";
+
 import { config } from "@/config";
 import type { AppState } from "@/store";
 import type { UploaderStatusTranslationKey } from "./types";
 
 export const selectIsDragValid = ({ uploader }: AppState) => uploader.isDragValid;
 export const selectIsDraggingOver = ({ uploader }: AppState) => uploader.dragOverCount > 0;
-export const selectIsUploading = ({ uploader }: AppState) => uploader.isUploadingOne || uploader.isUploadingMany;
+export const selectDataTransferSize = ({ uploader }: AppState) => uploader.dataTransferSize;
+export const selectIsUploadingOne = ({ uploader }: AppState) => uploader.isUploadingOne;
+export const selectIsUploadingMany = ({ uploader }: AppState) => uploader.isUploadingMany;
+export const selectIsUploading = (state: AppState) => selectIsUploadingOne(state) || selectIsUploadingMany(state);
 export const selectFileCount = ({ uploader }: AppState) => uploader.files.length;
 export const selectIsFull = (state: AppState) => selectFileCount(state) >= config.uploader.fileLimit;
 export const selectIsEmpty = (state: AppState) => selectFileCount(state) === 0;
@@ -16,28 +21,47 @@ export const selectSignatureCount = (signature: string) => ({ uploader }: AppSta
   return uploader.signatures[signature] || 0;
 };
 
-export const selectStatusTranslationKey = (state: AppState): UploaderStatusTranslationKey => {
-  if (selectIsUploading(state)) {
-    return "uploading";
-  }
-
-  if (selectIsDraggingOver(state)) {
-    if (selectIsFull(state)) {
-      return "limitReached";
-    } else if (selectIsDragValid(state)) {
-      return "valid";
-    } else {
-      return "invalid";
+export const selectStatus = createSelector(
+  [
+    selectIsUploadingOne,
+    selectIsUploadingMany,
+    selectIsDraggingOver,
+    selectIsFull,
+    selectIsDragValid,
+    selectDataTransferSize,
+    selectIsEmpty,
+    selectUploadedLast
+  ],
+  (
+    isUploadingOne,
+    isUploadingMany,
+    isDraggingOver,
+    isFull,
+    isDragValid,
+    dataTransferSize,
+    isEmpty,
+    uploadedLast
+  ): { key: UploaderStatusTranslationKey; count?: number } => {
+    if (isUploadingMany) {
+      return { key: "uploading" };
     }
-  }
 
-  if (selectIsEmpty(state)) {
-    return "ready";
-  }
+    if (isUploadingOne) {
+      return { key: "uploading_one" };
+    }
 
-  if (selectUploadedLast(state) === 1) {
-    return "added";
-  } else {
-    return "added";
+    if (isDraggingOver) {
+      if (isFull) {
+        return { key: "limitReached" };
+      }
+
+      return { key: isDragValid ? "supported" : "unsupported", count: dataTransferSize };
+    }
+
+    if (isEmpty) {
+      return { key: "ready" };
+    }
+
+    return { key: "added", count: uploadedLast };
   }
-};
+);

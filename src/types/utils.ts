@@ -5,3 +5,5 @@ export type KeysMatching<O extends object, V> = {
 export type PickValues<O extends object, V> = Pick<O, KeysMatching<O, V>>;
 
 export type Values<O extends object> = O[keyof O][];
+
+export type IterableArrayLike<V> = Iterable<V> & ArrayLike<V>;

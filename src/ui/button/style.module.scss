@@ -8,19 +8,16 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     --color-background: var(--color-main-08);
     --color-background-hover: var(--color-main-09);
     --border-color: var(--color-main-10);
-    --color-text: var(--color-main-01);
 
     &Colored {
       --color-background: var(--color-state-07);
       --color-background-hover: var(--color-state-08);
       --border-color: var(--color-state-09);
-      --color-text: var(--color-state-01);
 
       &:disabled {
         --color-background: var(--color-main-08);
         --color-background-hover: var(--color-main-09);
         --border-color: var(--color-main-10);
-        --color-text: var(--color-main-01);
       }
     }
   }
@@ -31,19 +28,16 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     --color-background: var(--color-accent-02);
     --color-background-hover: var(--color-accent-03);
     --border-color: var(--color-accent-04);
-    --color-text: var(--color-main-07);
 
     &Colored {
       --color-background: var(--color-state-07);
       --color-background-hover: var(--color-state-08);
       --border-color: var(--color-state-09);
-      --color-text: var(--color-state-01);
 
       &:disabled {
         --color-background: var(--color-main-05);
         --color-background-hover: var(--color-main-06);
         --border-color: var(--color-main-07);
-        --color-text: var(--color-main-01);
       }
     }
   }
@@ -162,7 +156,6 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   padding-top: 0;
   padding-bottom: $wrapper-padding;
   inline-size: var(--inline-size);
-
   transition-property: padding-top, padding-bottom;
   transition-duration: var(--transition-duration-fastest);
 }
@@ -176,7 +169,6 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   height: 50%;
   width: 100%;
   background-color: var(--border-color);
-
   transition-property: background-color;
   transition-duration: var(--transition-duration-fast);
 }
@@ -193,11 +185,10 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   min-inline-size: $content-height;
   padding-inline: var(--padding-inline);
   background-color: var(--color-background);
-  color: var(--color-text);
+  color: var(--color-text-alt);
   border: solid var(--border-width-thin) var(--border-color);
   font-size: var(--font-size);
   line-height: 0.5;
-
   transition-property: background-color, border-color;
   transition-duration: var(--transition-duration-fast);
 
@@ -207,7 +198,7 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   }
 
   path {
-    stroke: var(--color-text);
+    stroke: var(--color-text-alt);
     stroke-width: var(--svg-stroke-width);
   }
 }

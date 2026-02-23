@@ -69,3 +69,8 @@ export const selectStatus = createSelector(
     return { key: "uploader.status.added", count: uploadedLast };
   }
 );
+
+export const selectFile = createSelector(
+  [selectFiles, (_, id: string) => id],
+  (files, id) => files.find((file) => file.id === id) || null
+);

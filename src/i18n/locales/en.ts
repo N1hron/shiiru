@@ -79,6 +79,7 @@ export const en = {
     } satisfies SettingsItemsTranslation
   },
   uploader: {
+    selectFiles: "Select files",
     status: {
       ready: "Drop images and videos",
       supported: "Files supported",

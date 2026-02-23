@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { uploaderSelectors, uploaderThunks } from "@/store/slices/uploader";
 
 import styles from "./style.module.scss";
+import { Translation } from "@/ui/translation";
 
 export function UploaderFileInput() {
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ export function UploaderFileInput() {
         disabled={isDisabled}
         onClick={handleClick}
       >
-        Select files
+        <Translation params={["uploader.selectFiles"]} />
       </Button>
 
       <input

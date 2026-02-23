@@ -79,6 +79,7 @@ export const ru = {
     }
   },
   uploader: {
+    selectFiles: "Выбрать файлы",
     status: {
       ready: "Перетащите картинки и видео",
       supported: "Поддерживаемые файлы",

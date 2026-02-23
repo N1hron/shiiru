@@ -16,6 +16,7 @@ export const selectIsEmpty = (state: AppState) => selectFileCount(state) === 0;
 export const selectIsDisabled = (state: AppState) => selectIsFull(state) || selectIsUploading(state);
 export const selectCanDrop = (state: AppState) => !selectIsDisabled(state) && selectIsDragValid(state);
 export const selectUploadedLast = ({ uploader }: AppState) => uploader.uploadedLast;
+export const selectFiles = ({ uploader }: AppState) => uploader.files;
 
 export const selectSignatureCount = ({ uploader }: AppState, signature: string) => {
   return uploader.signatures[signature] || 0;
@@ -43,25 +44,28 @@ export const selectStatus = createSelector(
     uploadedLast
   ): { key: UploaderStatusTranslationKey; count?: number } => {
     if (isUploadingMany) {
-      return { key: "uploading" };
+      return { key: "uploader.status.uploading" };
     }
 
     if (isUploadingOne) {
-      return { key: "uploading_one" };
+      return { key: "uploader.status.uploading_one" };
     }
 
     if (isDraggingOver) {
       if (isFull) {
-        return { key: "limitReached" };
+        return { key: "uploader.status.limitReached" };
       }
 
-      return { key: isDragValid ? "supported" : "unsupported", count: dataTransferSize };
+      return {
+        key: isDragValid ? "uploader.status.supported" : "uploader.status.unsupported",
+        count: dataTransferSize
+      };
     }
 
     if (isEmpty) {
-      return { key: "ready" };
+      return { key: "uploader.status.ready" };
     }
 
-    return { key: "added", count: uploadedLast };
+    return { key: "uploader.status.added", count: uploadedLast };
   }
 );

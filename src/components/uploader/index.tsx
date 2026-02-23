@@ -3,6 +3,9 @@ import type { ComponentPropsWithRef } from "react";
 import { UploaderFrame } from "./Frame";
 import { UploaderHeading } from "./Heading";
 import { UploaderDropzone } from "./Dropzone";
+import { UploaderTable } from "./Table";
+import { UploaderTableHeader } from "./TableHeader";
+import { UploaderTableBody } from "./TableBody";
 import { UploaderDropBackground } from "./DropBackground";
 import { UploaderStatus } from "./Status";
 import { UploaderFileCount } from "./FileCount";
@@ -15,6 +18,10 @@ export function Uploader(props: UploaderProps) {
     <UploaderFrame {...props}>
       <UploaderHeading />
       <UploaderDropzone>
+        <UploaderTable>
+          <UploaderTableHeader />
+          <UploaderTableBody />
+        </UploaderTable>
         <UploaderDropBackground>
           <UploaderStatus />
           <UploaderFileCount />

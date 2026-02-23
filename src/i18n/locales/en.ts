@@ -80,6 +80,16 @@ export const en = {
   },
   uploader: {
     selectFiles: "Select files",
+    file: {
+      name: "Name",
+      type: "Type",
+      remove: "Remove file",
+      edit: "Edit file",
+      preview: {
+        show: "Show file preview",
+        hide: "Hide file preview"
+      }
+    },
     status: {
       ready: "Drop images and videos",
       supported: "Files supported",

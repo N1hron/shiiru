@@ -8,6 +8,16 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
     --drop-color-border-outer: var(--color-state-05);
     --drop-color-border-inner: var(--color-state-04);
     --drop-color-background: var(--color-state-03);
+
+    &DraggingOver {
+      &.uploaderDragValid {
+        @include m.state-color("success-dimmed");
+      }
+
+      &.uploaderDragInvalid {
+        @include m.state-color("error-dimmed");
+      }
+    }
   }
 }
 
@@ -16,6 +26,18 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
     --drop-color-border-outer: var(--color-state-07);
     --drop-color-border-inner: var(--color-state-07);
     --drop-color-background: var(--color-main-11);
+
+    &DraggingOver {
+      &.uploader {
+        &DragValid {
+          @include m.state-color("success");
+        }
+
+        &DragInvalid {
+          @include m.state-color("error");
+        }
+      }
+    }
   }
 }
 
@@ -30,15 +52,9 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   transition-property: padding;
   transition-duration: var(--transition-duration-fast);
 
-  &Disabled {
-    @include m.state-color("main");
-  }
-
   &DraggingOver {
     &.uploader {
       &DragValid {
-        @include m.state-color("success");
-
         &:not(.uploaderDisabled) {
           --padding: 0.5rem;
 
@@ -46,10 +62,6 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
             animation-play-state: running;
           }
         }
-      }
-
-      &DragInvalid {
-        @include m.state-color("error");
       }
 
       &Disabled {
@@ -71,6 +83,8 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   padding: 0.25rem;
   display: flex;
   flex-direction: column;
+  gap: var(--border-width-medium);
+  overflow: hidden;
 }
 
 .dropBackground {
@@ -80,6 +94,7 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   flex-grow: 1;
   border: $drop-background-border;
   animation-duration: 7.5s;
+  min-height: 10rem;
 }
 
 .status,
@@ -149,5 +164,33 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
     inset: 0;
     border-top: $drop-border;
     border-right: $drop-border;
+  }
+}
+
+.table {
+}
+
+.tableRow {
+  grid-template-columns: 1.375rem 1fr 3.5rem 1.375rem 1.375rem;
+}
+
+.removeFile {
+  svg {
+    height: 100%;
+  }
+
+  path {
+    stroke-width: 2;
+  }
+}
+
+.previewFile,
+.editFile {
+  svg {
+    height: 95%;
+  }
+
+  path {
+    stroke-width: 2.125;
   }
 }

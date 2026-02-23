@@ -80,6 +80,16 @@ export const ru = {
   },
   uploader: {
     selectFiles: "Выбрать файлы",
+    file: {
+      name: "Имя",
+      type: "Тип",
+      remove: "Удалить файл",
+      edit: "Редактировать файл",
+      preview: {
+        show: "Показать превью файла",
+        hide: "Спрятать превью файла"
+      }
+    },
     status: {
       ready: "Перетащите картинки и видео",
       supported: "Поддерживаемые файлы",

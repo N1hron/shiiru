@@ -12,7 +12,6 @@ type UploaderState = {
   uploadedLast: number;
   files: InputFile[];
   signatures: Record<string, number>;
-  selectedFile: string | null;
 };
 
 const initialState: UploaderState = {
@@ -23,8 +22,7 @@ const initialState: UploaderState = {
   dataTransferSize: 0,
   uploadedLast: 0,
   files: [],
-  signatures: {},
-  selectedFile: null
+  signatures: {}
 };
 
 const uploaderSlice = createSlice({
@@ -63,10 +61,6 @@ const uploaderSlice = createSlice({
         }
         return true;
       });
-
-      if (state.selectedFile === action.payload) {
-        state.selectedFile = null;
-      }
     }
   },
   extraReducers(builder) {

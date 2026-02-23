@@ -6,6 +6,7 @@ import { settingsReducer } from "./slices/settings";
 import { uploaderReducer } from "./slices/uploader";
 import { saveThemeMiddleware } from "./middleware/saveTheme";
 import { saveSettingsMiddleware } from "./middleware/saveSettings";
+import { revokeUrlsMiddleware } from "./middleware/revokeUrls";
 
 const reducer = combineReducers({
   ui: uiReducer,
@@ -15,7 +16,7 @@ const reducer = combineReducers({
 
 export const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat([saveThemeMiddleware, saveSettingsMiddleware]),
+  middleware: (gDM) => gDM().concat([saveThemeMiddleware, saveSettingsMiddleware, revokeUrlsMiddleware]),
   devTools: import.meta.env.DEV
 });
 

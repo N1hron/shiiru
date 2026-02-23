@@ -21,7 +21,7 @@ export const config: Config = {
     }
   },
   uploader: {
-    maxFiles: 25,
+    maxFiles: 20,
     accept: "image/*, video/*"
   }
 };

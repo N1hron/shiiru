@@ -88,10 +88,10 @@ export const ru = {
       uploading: "Загрузка файлов",
       uploading_one: "Загрузка файла",
       added_zero: "Новых файлов не добавлено",
-      added_one: "Добавлен {{count}} файл",
-      added_few: "Добавлено {{count}} файла",
-      added_many: "Добавлено {{count}} файлов",
-      added_other: "Добавлено {{count}} файлов",
+      added_one: "Добавлен {{count}} новый файл",
+      added_few: "Добавлено {{count}} новых файла",
+      added_many: "Добавлено {{count}} новых файлов",
+      added_other: "Добавлено {{count}} новых файлов",
       limitReached: "Достигнут лимит файлов"
     }
   },

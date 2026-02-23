@@ -87,11 +87,11 @@ export const en = {
       unsupported_one: "File unsupported",
       uploading: "Uploading files",
       uploading_one: "Uploading file",
-      added_zero: "No files added",
-      added_one: "Added {{count}} file",
-      added_few: "Added {{count}} files",
-      added_many: "Added {{count}} files",
-      added_other: "Added {{count}} files",
+      added_zero: "No new files added",
+      added_one: "Added {{count}} new file",
+      added_few: "Added {{count}} new files",
+      added_many: "Added {{count}} new files",
+      added_other: "Added {{count}} new files",
       limitReached: "File limit reached"
     }
   },

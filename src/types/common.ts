@@ -15,3 +15,4 @@ export type Rect = {
   height: number;
 };
 
+export type WidthHeight = Dimensions;

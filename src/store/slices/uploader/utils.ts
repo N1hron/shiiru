@@ -1,6 +1,5 @@
 import { ALL_FORMATS, BlobSource, Input } from "mediabunny";
 
-import { loadImage } from "@/utils/loadImage";
 import { parseFileName } from "@/utils/parseFileName";
 import { VIDEO_STICKER_MAX_DURATION } from "@/constants";
 import type { InputFileConfig, InputFileData } from "@/types";
@@ -38,8 +37,10 @@ export function getInputFileData(file: File): Promise<InputFileData> {
 }
 
 async function getInputFileDataFromImage(file: File): Promise<InputFileData> {
-  const url = URL.createObjectURL(file);
-  const image = await loadImage(url).finally(() => URL.revokeObjectURL(url));
+  const bitmap = await createImageBitmap(file);
+  const { width, height } = bitmap;
+
+  bitmap.close();
 
   return {
     name: parseFileName(file.name),
@@ -47,10 +48,7 @@ async function getInputFileDataFromImage(file: File): Promise<InputFileData> {
     mime: file.type,
     size: file.size,
     duration: 0,
-    dimensions: {
-      width: image.naturalWidth,
-      height: image.naturalHeight
-    }
+    dimensions: { width, height }
   };
 }
 

@@ -4,9 +4,12 @@ import { UploadError, type SerializedUploadError } from "./errors";
 import { uploaderActions, uploaderSelectors } from ".";
 import { getFileSignature } from "@/utils/getFileSignature";
 import { settingsSelectors } from "../settings";
-import { getInputFileConfig, getInputFileData } from "./utils";
+import { getInputFileConfig } from "./utils";
 import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
+import type { UploaderWorkerRequest, UploaderWorkerResponse } from "./types";
+
+const worker = new Worker(new URL("worker.ts", import.meta.url), { type: "module" });
 
 export const uploadOne = createAsyncThunk<
   void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploadError }
@@ -27,8 +30,17 @@ export const uploadOne = createAsyncThunk<
     return reject(new UploadError("already-exists", `Unable to upload file ${file.name}: file already exists`));
   }
 
-  try {
-    const data = await getInputFileData(file);
+  worker.postMessage({ file } satisfies UploaderWorkerRequest);
+
+  const response = await new Promise<UploaderWorkerResponse>((resolve) => {
+    worker.onmessage = (event: MessageEvent<UploaderWorkerResponse>) => {
+      worker.onmessage = null;
+      resolve(event.data);
+    };
+  });
+
+  if (response.type === "success") {
+    const data = response.data;
     const config = getInputFileConfig(data);
 
     dispatch(uploaderActions.addFile({
@@ -38,7 +50,7 @@ export const uploadOne = createAsyncThunk<
       config,
       url: URL.createObjectURL(file)
     }));
-  } catch {
+  } else {
     return reject(new UploadError("unsupported-format", `Unable to upload file ${file.name}: unsupported format`));
   }
 });

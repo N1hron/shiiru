@@ -29,19 +29,17 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   .uploader {
     --drop-color-border-outer: var(--color-accent-07);
     --drop-color-border-inner: var(--color-accent-07);
-    --drop-color-background: var(--color-accent-11);
+    --drop-color-background: var(--color-main-11);
 
     &DraggingOver {
       &.uploaderDragValid {
-        --drop-color-border-outer: var(--color-success-05);
-        --drop-color-border-inner: var(--color-success-04);
-        --drop-color-background: var(--color-success-03);
+        --drop-color-border-outer: var(--color-success-07);
+        --drop-color-border-inner: var(--color-success-07);
       }
 
       &.uploaderDragInvalid {
-        --drop-color-border-outer: var(--color-error-05);
-        --drop-color-border-inner: var(--color-error-04);
-        --drop-color-background: var(--color-error-03);
+        --drop-color-border-outer: var(--color-error-07);
+        --drop-color-border-inner: var(--color-error-07);
       }
     }
   }

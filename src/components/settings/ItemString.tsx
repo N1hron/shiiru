@@ -41,7 +41,7 @@ export function SettingsItemString<N extends keyof StringSettings>({
   return (
     <li className={styles.itemString}>
       <Label as="span" id={labelId} className={styles.label}>
-        <Translation params={[`settings.items.${name}.label`]} />
+        <Translation translationKey={`settings.items.${name}.label`} />
       </Label>
       <SpinSelect
         options={options}

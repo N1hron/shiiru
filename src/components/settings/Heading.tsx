@@ -4,7 +4,7 @@ import { Translation } from "@/ui/translation";
 export function SettingsHeading() {
   return (
     <HiddenHeading as="h2">
-      <Translation params={["settings.heading"]} />
+      <Translation translationKey="settings.heading" />
     </HiddenHeading>
   );
 }

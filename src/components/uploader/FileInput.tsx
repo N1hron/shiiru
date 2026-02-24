@@ -41,7 +41,7 @@ export function UploaderFileInput() {
         disabled={isDisabled}
         onClick={handleClick}
       >
-        <Translation params={["uploader.selectFiles"]} />
+        <Translation translationKey="uploader.selectFiles" />
       </Button>
 
       <input

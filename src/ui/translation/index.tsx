@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
 
-import type { TFunction } from "i18next";
+import type { TOptions } from "i18next";
+import type { TranslationKey } from "@/types";
 
 type TranslationProps = {
-  params: Parameters<TFunction<"translation", undefined>>;
-};
+  translationKey: TranslationKey;
+} & TOptions;
 
-export function Translation({ params }: TranslationProps) {
+export function Translation({ translationKey, ...options }: TranslationProps) {
   const { t } = useTranslation();
-  return t(...params);
+  return t(translationKey, options);
 }

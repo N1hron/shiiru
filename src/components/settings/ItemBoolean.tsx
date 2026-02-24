@@ -28,7 +28,7 @@ export function SettingsItemBoolean<N extends keyof BooleanSettings>({ name }: S
           setValue={setValue}
           disabled={name === "antialiasing" && !support.imageSmoothingQuality}
         />
-        <Translation params={[`settings.items.${name}.label`]} />
+        <Translation translationKey={`settings.items.${name}.label`} />
       </Label>
     </li>
   );

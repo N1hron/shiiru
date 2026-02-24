@@ -9,7 +9,7 @@ export function UploaderStatus() {
 
   return (
     <div className={styles.status}>
-      <Translation params={[key, { count }]} />
+      <Translation translationKey={key} count={count} />
     </div>
   );
 }

@@ -5,17 +5,21 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
 
 [data-theme="light"] {
   .uploader {
-    --drop-color-border-outer: var(--color-state-05);
-    --drop-color-border-inner: var(--color-state-04);
-    --drop-color-background: var(--color-state-03);
+    --drop-color-border-outer: var(--color-accent-05);
+    --drop-color-border-inner: var(--color-accent-04);
+    --drop-color-background: var(--color-accent-03);
 
     &DraggingOver {
       &.uploaderDragValid {
-        @include m.state-color("success-dimmed");
+        --drop-color-border-outer: var(--color-success-dimmed-05);
+        --drop-color-border-inner: var(--color-success-dimmed-04);
+        --drop-color-background: var(--color-success-dimmed-03);
       }
 
       &.uploaderDragInvalid {
-        @include m.state-color("error-dimmed");
+        --drop-color-border-outer: var(--color-error-dimmed-05);
+        --drop-color-border-inner: var(--color-error-dimmed-04);
+        --drop-color-background: var(--color-error-dimmed-03);
       }
     }
   }
@@ -23,19 +27,21 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
 
 [data-theme="dark"] {
   .uploader {
-    --drop-color-border-outer: var(--color-state-07);
-    --drop-color-border-inner: var(--color-state-07);
-    --drop-color-background: var(--color-main-11);
+    --drop-color-border-outer: var(--color-accent-07);
+    --drop-color-border-inner: var(--color-accent-07);
+    --drop-color-background: var(--color-accent-11);
 
     &DraggingOver {
-      &.uploader {
-        &DragValid {
-          @include m.state-color("success");
-        }
+      &.uploaderDragValid {
+        --drop-color-border-outer: var(--color-success-05);
+        --drop-color-border-inner: var(--color-success-04);
+        --drop-color-background: var(--color-success-03);
+      }
 
-        &DragInvalid {
-          @include m.state-color("error");
-        }
+      &.uploaderDragInvalid {
+        --drop-color-border-outer: var(--color-error-05);
+        --drop-color-border-inner: var(--color-error-04);
+        --drop-color-background: var(--color-error-03);
       }
     }
   }
@@ -44,8 +50,7 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
 .uploader {
   --padding: 0.75rem;
 
-  @include m.state-color("accent");
-
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: var(--padding);
@@ -53,31 +58,34 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   transition-duration: var(--transition-duration-fast);
 
   &DraggingOver {
-    &.uploader {
-      &DragValid {
-        &:not(.uploaderDisabled) {
-          --padding: 0.5rem;
+    &.uploaderDragValid:not(.uploaderDisabled) {
+      --padding: 0.5rem;
 
-          .dropBackground {
-            animation-play-state: running;
-          }
-        }
+      .pad {
+        animation-play-state: running;
       }
 
-      &Disabled {
-        @extend .uploaderDragInvalid;
+      .table {
+        position: absolute;
+        opacity: 0.5;
+        inset: 2.2rem 1rem 3.35rem;
       }
+    }
+
+    &.uploaderDisabled {
+      @extend .uploaderDragInvalid;
     }
   }
 
   &Uploading {
-    .dropBackground {
+    .pad {
       animation-play-state: running;
     }
   }
 }
 
 .dropzone {
+  position: relative;
   flex-grow: 1;
   border: $drop-border;
   padding: 0.25rem;
@@ -87,14 +95,16 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
   overflow: hidden;
 }
 
-.dropBackground {
+.pad {
   @include m.background-dashed-animated(var(--color-background), var(--drop-color-background));
 
+  z-index: 1;
   position: relative;
   flex-grow: 1;
   border: $drop-background-border;
   animation-duration: 7.5s;
   min-height: 10rem;
+  pointer-events: none;
 }
 
 .status,
@@ -168,6 +178,8 @@ $drop-background-border: solid var(--border-width-thin) var(--drop-color-border-
 }
 
 .table {
+  z-index: 2;
+  position: relative;
 }
 
 .tableRow {

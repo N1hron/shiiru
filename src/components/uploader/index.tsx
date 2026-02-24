@@ -6,10 +6,8 @@ import { UploaderDropzone } from "./Dropzone";
 import { UploaderTable } from "./Table";
 import { UploaderTableHeader } from "./TableHeader";
 import { UploaderTableBody } from "./TableBody";
-import { UploaderDropBackground } from "./DropBackground";
-import { UploaderStatus } from "./Status";
-import { UploaderFileCount } from "./FileCount";
 import { UploaderFileInput } from "./FileInput";
+import { UploaderPad } from "./Pad";
 
 type UploaderProps = Omit<ComponentPropsWithRef<typeof UploaderFrame>, "children">;
 
@@ -22,12 +20,9 @@ export function Uploader(props: UploaderProps) {
           <UploaderTableHeader />
           <UploaderTableBody />
         </UploaderTable>
-        <UploaderDropBackground>
-          <UploaderStatus />
-          <UploaderFileCount />
-        </UploaderDropBackground>
-        <UploaderFileInput />
+        <UploaderPad />
       </UploaderDropzone>
+      <UploaderFileInput />
     </UploaderFrame>
   );
 }

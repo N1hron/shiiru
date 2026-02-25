@@ -1,4 +1,21 @@
-import type { Config } from "./types";
+import type { Settings } from "./types";
+
+export type Config = {
+  storage: {
+    theme: string;
+    language: string;
+    settings: string;
+    rememberSettings: string;
+  };
+  settings: {
+    default: Settings;
+  };
+  uploader: {
+    maxFiles: number;
+    accept: string[];
+    reject: string[];
+  };
+};
 
 export const config: Config = {
   storage: {

@@ -22,10 +22,6 @@ export function getFileConfig(data: InputFileData): InputFileConfig {
 }
 
 export function extractFileData(file: File): Promise<InputFileData> {
-  if (!file.type) {
-    throw new UploaderError("file-unsupported", file, "File type is empty");
-  }
-
   if (file.type.startsWith("image/")) {
     return extractImageData(file);
   }

@@ -8,6 +8,7 @@ import { getFileConfig } from "./utils";
 import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
 import type { UploaderWorkerRequest, UploaderWorkerResponse } from "./types";
+import { supportsFileType } from "@/utils/supportsFileType";
 
 const worker = new Worker(new URL("worker.ts", import.meta.url), { type: "module" });
 
@@ -19,6 +20,10 @@ export const uploadOne = createAsyncThunk<
 
   if (isFull) {
     return rejectWithValue(new UploaderError("limit-reached", file, "Reached file limit").serialize());
+  }
+
+  if (!supportsFileType(file)) {
+    return rejectWithValue(new UploaderError("file-unsupported", file, "Unsupported file type").serialize());
   }
 
   const signature = getFileSignature(file);

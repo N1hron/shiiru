@@ -30,7 +30,7 @@ export function extractFileData(file: File): Promise<InputFileData> {
     return extractVideoData(file);
   }
 
-  throw new UploaderError("file-unsupported", file, "File type is invalid");
+  throw new UploaderError("file-unsupported", file, "Unsupported file type");
 }
 
 async function extractImageData(file: File): Promise<InputFileData> {
@@ -49,7 +49,7 @@ async function extractImageData(file: File): Promise<InputFileData> {
       dimensions: { width, height }
     };
   } catch {
-    throw new UploaderError("file-unsupported", file, "Image file is invalid");
+    throw new UploaderError("file-unsupported", file, "Unsupported image");
   }
 }
 

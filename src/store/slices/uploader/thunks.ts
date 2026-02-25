@@ -1,10 +1,10 @@
 import { createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 
-import { UploadError, type SerializedUploadError } from "./errors";
+import { UploaderError, type SerializedUploaderError } from "./errors";
 import { uploaderActions, uploaderSelectors } from ".";
 import { getFileSignature } from "@/utils/getFileSignature";
 import { settingsSelectors } from "../settings";
-import { getInputFileConfig } from "./utils";
+import { getFileConfig } from "./utils";
 import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
 import type { UploaderWorkerRequest, UploaderWorkerResponse } from "./types";
@@ -12,14 +12,13 @@ import type { UploaderWorkerRequest, UploaderWorkerResponse } from "./types";
 const worker = new Worker(new URL("worker.ts", import.meta.url), { type: "module" });
 
 export const uploadOne = createAsyncThunk<
-  void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploadError }
+  void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploaderError }
 >("uploader/uploadOne", async (file, { getState, dispatch, rejectWithValue }) => {
   const state = getState();
   const isFull = uploaderSelectors.selectIsFull(state);
-  const reject = (error: UploadError) => rejectWithValue(error.serialize());
 
   if (isFull) {
-    return reject(new UploadError("limit-reached", `Unable to upload file ${file.name}: file limit reached`));
+    return rejectWithValue(new UploaderError("limit-reached", file, "Reached file limit").serialize());
   }
 
   const signature = getFileSignature(file);
@@ -27,7 +26,7 @@ export const uploadOne = createAsyncThunk<
   const allowDuplicates = settingsSelectors.selectItem(state, "allowDuplicates");
 
   if (!allowDuplicates && signatureCount > 0) {
-    return reject(new UploadError("already-exists", `Unable to upload file ${file.name}: file already exists`));
+    return rejectWithValue(new UploaderError("file-exists", file, "File already exists").serialize());
   }
 
   worker.postMessage({ file } satisfies UploaderWorkerRequest);
@@ -41,7 +40,7 @@ export const uploadOne = createAsyncThunk<
 
   if (response.type === "success") {
     const data = response.data;
-    const config = getInputFileConfig(data);
+    const config = getFileConfig(data);
 
     dispatch(uploaderActions.addFile({
       id: nanoid(),
@@ -51,7 +50,7 @@ export const uploadOne = createAsyncThunk<
       url: URL.createObjectURL(file)
     }));
   } else {
-    return reject(new UploadError("unsupported-format", `Unable to upload file ${file.name}: unsupported format`));
+    return rejectWithValue(response.error);
   }
 });
 

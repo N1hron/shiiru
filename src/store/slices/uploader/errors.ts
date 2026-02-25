@@ -1,25 +1,34 @@
-import type { SerializedError } from "@reduxjs/toolkit";
-
-export type UploadErrorType = "limit-reached" | "unsupported-format" | "already-exists";
-
-export type SerializedUploadError = Pick<SerializedError, "name" | "message"> & {
-  type: UploadErrorType;
+export type SerializedUploaderError = {
+  name: string;
+  message: string;
+  type: UploaderErrorType;
+  file: UploaderErrorFile;
 };
 
-export class UploadError extends Error {
-  type: UploadErrorType;
+export type UploaderErrorType = "file-invalid" | "file-unsupported" | "file-exists" | "limit-reached" | "unknown";
+export type UploaderErrorFile = { name: string; type: string };
 
-  constructor(type: UploadErrorType, ...args: ConstructorParameters<typeof Error>) {
+export class UploaderError extends Error {
+  type: UploaderErrorType;
+  file: UploaderErrorFile;
+
+  constructor(type: UploaderErrorType, file: UploaderErrorFile, ...args: ConstructorParameters<typeof Error>) {
     super(...args);
     this.name = this.constructor.name;
     this.type = type;
+    this.file = { name: file.name, type: file.type };
   }
 
-  serialize(): SerializedUploadError {
+  serialize(): SerializedUploaderError {
     return {
       name: this.name,
+      message: this.message,
       type: this.type,
-      message: this.message
+      file: this.file
     };
+  }
+
+  static deserialize(error: SerializedUploaderError): UploaderError {
+    return new UploaderError(error.type, error.file, error.message);
   }
 }

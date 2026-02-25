@@ -1,4 +1,5 @@
 import type { InputFileData, TranslationKey } from "@/types";
+import type { SerializedUploaderError } from "./errors";
 
 export type UploaderTranslationKey = Extract<TranslationKey, `uploader.${string}`>;
 export type UploaderStatusTranslationKey = Extract<TranslationKey, `uploader.status.${string}`>;
@@ -14,7 +15,7 @@ export type UploaderWorkerResponseSuccess = {
 
 export type UploaderWorkerResponseError = {
   type: "error";
-  error: unknown;
+  error: SerializedUploaderError;
 };
 
 export type UploaderWorkerResponse = UploaderWorkerResponseSuccess | UploaderWorkerResponseError;

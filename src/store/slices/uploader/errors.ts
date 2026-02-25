@@ -5,7 +5,7 @@ export type SerializedUploaderError = {
   file: UploaderErrorFile;
 };
 
-export type UploaderErrorType = "file-invalid" | "file-unsupported" | "file-exists" | "limit-reached" | "unknown";
+export type UploaderErrorType = "file-unsupported" | "file-exists" | "limit-reached" | "unknown";
 export type UploaderErrorFile = { name: string; type: string };
 
 export class UploaderError extends Error {

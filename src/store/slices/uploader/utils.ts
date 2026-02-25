@@ -23,7 +23,7 @@ export function getFileConfig(data: InputFileData): InputFileConfig {
 
 export function extractFileData(file: File): Promise<InputFileData> {
   if (!file.type) {
-    throw new UploaderError("file-invalid", file, "File type is empty");
+    throw new UploaderError("file-unsupported", file, "File type is empty");
   }
 
   if (file.type.startsWith("image/")) {
@@ -34,7 +34,7 @@ export function extractFileData(file: File): Promise<InputFileData> {
     return extractVideoData(file);
   }
 
-  throw new UploaderError("file-invalid", file, "File type is invalid");
+  throw new UploaderError("file-unsupported", file, "File type is invalid");
 }
 
 async function extractImageData(file: File): Promise<InputFileData> {
@@ -53,7 +53,7 @@ async function extractImageData(file: File): Promise<InputFileData> {
       dimensions: { width, height }
     };
   } catch {
-    throw new UploaderError("file-invalid", file, "Image file is invalid");
+    throw new UploaderError("file-unsupported", file, "Image file is invalid");
   }
 }
 
@@ -66,7 +66,7 @@ async function extractVideoData(file: File): Promise<InputFileData> {
   const videoTrack = await input.getPrimaryVideoTrack();
 
   if (!videoTrack) {
-    throw new UploaderError("file-invalid", file, "Video track is empty");
+    throw new UploaderError("file-unsupported", file, "Video track is empty");
   }
 
   const canDecode = await videoTrack.canDecode();

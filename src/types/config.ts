@@ -12,6 +12,7 @@ export type Config = {
   };
   uploader: {
     maxFiles: number;
-    accept: string;
+    accept: string[];
+    reject: string[];
   };
 };

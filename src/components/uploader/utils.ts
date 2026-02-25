@@ -1,6 +1,6 @@
 import { config } from "@/config";
 
-const acceptParts = new Set(config.uploader.accept.split(/,\s*/));
+const acceptParts = new Set(config.uploader.accept);
 
 export function checkDataTransfer(dataTransfer: DataTransfer) {
   if (dataTransfer.items.length < 1) {

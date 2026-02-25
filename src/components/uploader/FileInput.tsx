@@ -1,12 +1,14 @@
 import { useId, useRef, type ChangeEvent } from "react";
 
 import { Button } from "@/ui/button";
+import { Translation } from "@/ui/translation";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { uploaderSelectors, uploaderThunks } from "@/store/slices/uploader";
 
 import styles from "./style.module.scss";
-import { Translation } from "@/ui/translation";
+
+const accept = config.uploader.accept.join(",");
 
 export function UploaderFileInput() {
   const dispatch = useAppDispatch();
@@ -46,7 +48,7 @@ export function UploaderFileInput() {
 
       <input
         type="file"
-        accept={config.uploader.accept}
+        accept={accept}
         multiple
         aria-labelledby={buttonId}
         disabled={isDisabled}

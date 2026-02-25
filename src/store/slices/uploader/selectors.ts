@@ -15,23 +15,20 @@ export const selectIsFull = (state: AppState) => selectFileCount(state) >= confi
 export const selectIsEmpty = (state: AppState) => selectFileCount(state) === 0;
 export const selectIsDisabled = (state: AppState) => selectIsFull(state) || selectIsUploading(state);
 export const selectCanDrop = (state: AppState) => !selectIsDisabled(state) && selectIsDragValid(state);
-export const selectUploadedLast = ({ uploader }: AppState) => uploader.uploadedLast;
 export const selectFiles = ({ uploader }: AppState) => uploader.files;
 
 export const selectSignatureCount = ({ uploader }: AppState, signature: string) => {
   return uploader.signatures[signature] || 0;
 };
 
-export const selectStatus = createSelector(
+export const selectStatusTranslationKey = createSelector(
   [
     selectIsUploadingOne,
     selectIsUploadingMany,
     selectIsDraggingOver,
     selectIsFull,
     selectIsDragValid,
-    selectDataTransferSize,
-    selectIsEmpty,
-    selectUploadedLast
+    selectDataTransferSize
   ],
   (
     isUploadingOne,
@@ -39,34 +36,37 @@ export const selectStatus = createSelector(
     isDraggingOver,
     isFull,
     isDragValid,
-    dataTransferSize,
-    isEmpty,
-    uploadedLast
-  ): { key: UploaderStatusTranslationKey; count?: number } => {
+    dataTransferSize
+  ): UploaderStatusTranslationKey => {
     if (isUploadingMany) {
-      return { key: "uploader.status.uploading" };
+      return "uploader.status.uploading";
     }
 
     if (isUploadingOne) {
-      return { key: "uploader.status.uploading_one" };
+      return "uploader.status.uploading_one";
     }
 
     if (isDraggingOver) {
       if (isFull) {
-        return { key: "uploader.status.limitReached" };
+        return "uploader.status.limitReached";
       }
 
-      return {
-        key: isDragValid ? "uploader.status.supported" : "uploader.status.unsupported",
-        count: dataTransferSize
-      };
+      if (isDragValid) {
+        if (dataTransferSize > 1) {
+          return "uploader.status.valid";
+        } else {
+          return "uploader.status.valid_one";
+        }
+      } else {
+        if (dataTransferSize > 1) {
+          return "uploader.status.invalid";
+        } else {
+          return "uploader.status.invalid_one";
+        }
+      }
     }
 
-    if (isEmpty) {
-      return { key: "uploader.status.ready" };
-    }
-
-    return { key: "uploader.status.added", count: uploadedLast };
+    return "uploader.status.ready";
   }
 );
 

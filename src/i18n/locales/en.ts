@@ -91,18 +91,13 @@ export const en = {
       }
     },
     status: {
-      ready: "Drop images and videos",
-      supported: "Files supported",
-      supported_one: "File supported",
-      unsupported: "Files unsupported",
-      unsupported_one: "File unsupported",
+      ready: "Drag & Drop images and videos",
+      valid: "Valid files",
+      valid_one: "Valid file",
+      invalid: "Invalid files",
+      invalid_one: "Invalid file",
       uploading: "Uploading files",
       uploading_one: "Uploading file",
-      added_zero: "No new files added",
-      added_one: "Added {{count}} new file",
-      added_few: "Added {{count}} new files",
-      added_many: "Added {{count}} new files",
-      added_other: "Added {{count}} new files",
       limitReached: "File limit reached"
     }
   },

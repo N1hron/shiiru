@@ -9,7 +9,6 @@ type UploaderState = {
   isDragValid: boolean;
   dragOverCount: number;
   dataTransferSize: number;
-  uploadedLast: number;
   files: InputFile[];
   signatures: Record<string, number>;
 };
@@ -20,7 +19,6 @@ const initialState: UploaderState = {
   isDragValid: false,
   dragOverCount: 0,
   dataTransferSize: 0,
-  uploadedLast: 0,
   files: [],
   signatures: {}
 };
@@ -69,16 +67,6 @@ const uploaderSlice = createSlice({
         pending(state) {
           state.isUploadingOne = true;
         },
-        fulfilled(state) {
-          if (!state.isUploadingMany) {
-            state.uploadedLast = 1;
-          }
-        },
-        rejected(state) {
-          if (!state.isUploadingMany) {
-            state.uploadedLast = 0;
-          }
-        },
         settled(state) {
           state.isUploadingOne = false;
         }
@@ -86,9 +74,6 @@ const uploaderSlice = createSlice({
       .addAsyncThunk(uploadMany, {
         pending(state) {
           state.isUploadingMany = true;
-        },
-        fulfilled(state, action) {
-          state.uploadedLast = action.payload;
         },
         settled(state) {
           state.isUploadingMany = false;

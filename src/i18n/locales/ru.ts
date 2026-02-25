@@ -92,17 +92,12 @@ export const ru = {
     },
     status: {
       ready: "Перетащите картинки и видео",
-      supported: "Поддерживаемые файлы",
-      supported_one: "Поддерживаемый файл",
-      unsupported: "Неподдерживаемые файлы",
-      unsupported_one: "Неподдерживаемый файл",
+      valid: "Допустимые файлы",
+      valid_one: "Допустимый файл",
+      invalid: "Недопустимые файлы",
+      invalid_one: "Недопустимый файл",
       uploading: "Загрузка файлов",
       uploading_one: "Загрузка файла",
-      added_zero: "Новых файлов не добавлено",
-      added_one: "Добавлен {{count}} новый файл",
-      added_few: "Добавлено {{count}} новых файла",
-      added_many: "Добавлено {{count}} новых файлов",
-      added_other: "Добавлено {{count}} новых файлов",
       limitReached: "Достигнут лимит файлов"
     }
   },

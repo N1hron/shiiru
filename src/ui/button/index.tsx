@@ -5,9 +5,9 @@ import { capitalize } from "@/utils/capitalize";
 
 import styles from "./style.module.scss";
 
-type ButtonElement = ElementType<{ className?: string; children?: ReactNode }>;
+export type ButtonElement = ElementType<{ className?: string; children?: ReactNode }>;
 
-type ButtonProps<E extends ButtonElement = "button"> = ComponentPropsWithRef<E> & {
+export type ButtonProps<E extends ButtonElement = "button"> = ComponentPropsWithRef<E> & {
   as?: E;
   icon?: boolean;
   size?: "large" | "medium" | "small";

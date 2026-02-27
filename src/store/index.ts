@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiReducer } from "./slices/ui";
 import { settingsReducer } from "./slices/settings";
 import { uploaderReducer } from "./slices/uploader";
+import { previewReducer } from "./slices/preview";
 import { saveThemeMiddleware } from "./middleware/saveTheme";
 import { saveSettingsMiddleware } from "./middleware/saveSettings";
 import { revokeUrlsMiddleware } from "./middleware/revokeUrls";
@@ -11,7 +12,8 @@ import { revokeUrlsMiddleware } from "./middleware/revokeUrls";
 const reducer = combineReducers({
   ui: uiReducer,
   settings: settingsReducer,
-  uploader: uploaderReducer
+  uploader: uploaderReducer,
+  preview: previewReducer
 });
 
 export const store = configureStore({

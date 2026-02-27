@@ -22,7 +22,7 @@ function buildErrorResponse(error: unknown, file: File): UploaderWorkerResponseE
   } else {
     return {
       type: "error",
-      error: new UploaderError("unknown", file, "Unexpected error")
+      error: new UploaderError("unknown", file, "Unexpected error").serialize()
     };
   }
 }

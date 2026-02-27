@@ -22,12 +22,13 @@ export function LanguageToggle(props: ThemeToggleProps) {
       aria-label={t("language.toggle")}
       title={t(`language.${language}`)}
       setValue={setLanguage}
-      render={(lang) => lang}
       options={[
         { value: "en", label: t("language.en") },
         { value: "ru", label: t("language.ru") }
       ]}
       {...props}
-    />
+    >
+      { language }
+    </MultiToggle>
   );
 }

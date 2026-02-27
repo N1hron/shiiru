@@ -43,7 +43,7 @@ export function ThemeToggle({ className, ...props }: ThemeToggleProps) {
       aria-label={t("theme.toggle")}
       title={t(`theme.${theme}`)}
       setValue={setTheme}
-      render={render}
+      children={render}
       options={[
         { value: "light", label: t("theme.light") },
         { value: "dark", label: t("theme.dark") },

@@ -19,7 +19,7 @@ export type MultiToggleProps<V extends string> =
     value: V;
     disabled?: boolean;
     setValue: (value: V) => void;
-    render?: (value: V) => ReactNode;
+    children?: ReactNode | ((value: V) => ReactNode);
   };
 
 export function MultiToggle<V extends string>({
@@ -31,8 +31,9 @@ export function MultiToggle<V extends string>({
   sideways,
   disabled,
   className,
+  children,
   setValue,
-  render,
+  onKeyDown,
   ...props
 }: MultiToggleProps<V>) {
   const index = options.findIndex((option) => option.value === value);
@@ -48,7 +49,7 @@ export function MultiToggle<V extends string>({
     setValue(options[nextIndex].value);
   }
 
-  function handleKeyDown(event: KeyboardEvent) {
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (!disabled) {
       switch (event.key) {
         case " ":
@@ -61,6 +62,7 @@ export function MultiToggle<V extends string>({
           return setPrev();
       }
     }
+    onKeyDown?.(event);
   }
 
   return (
@@ -68,7 +70,6 @@ export function MultiToggle<V extends string>({
       className={cn}
       role="radiogroup"
       aria-disabled={disabled}
-      tabIndex={-1}
       onKeyDown={handleKeyDown}
       {...props}
     >
@@ -83,7 +84,7 @@ export function MultiToggle<V extends string>({
         disabled={disabled}
         onClick={setNext}
       >
-        { render ? render(value) : options[index].label }
+        { typeof children === "function" ? children(value) : children }
       </Button>
 
       {

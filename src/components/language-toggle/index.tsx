@@ -1,17 +1,11 @@
-import { useEffect, type ComponentPropsWithRef } from "react";
+import { useEffect } from "react";
 
-import { Toggle } from "@/ui/toggle";
+import { MultiToggle, type MultiToggleProps } from "@/ui/multi-toggle";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useTranslation } from "react-i18next";
+import type { Language } from "@/types";
 
-type ThemeToggleProps = Omit<ComponentPropsWithRef<typeof Toggle>,
-  "value" |
-  "values" |
-  "aria-label" |
-  "title" |
-  "setValue" |
-  "render"
->;
+type ThemeToggleProps = Omit<MultiToggleProps<Language>, "options" | "value" | "setValue" | "render">;
 
 export function LanguageToggle(props: ThemeToggleProps) {
   const { t } = useTranslation();
@@ -22,13 +16,17 @@ export function LanguageToggle(props: ThemeToggleProps) {
   }, [language]);
 
   return (
-    <Toggle
+    <MultiToggle
+      color="accent"
       value={language}
-      values={["en", "ru"]}
       aria-label={t("language.toggle")}
       title={t(`language.${language}`)}
-      color="accent"
       setValue={setLanguage}
+      render={(lang) => lang}
+      options={[
+        { value: "en", label: t("language.en") },
+        { value: "ru", label: t("language.ru") }
+      ]}
       {...props}
     />
   );

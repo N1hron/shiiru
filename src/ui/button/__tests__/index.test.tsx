@@ -16,12 +16,16 @@ describe("Button", () => {
   it("should render with correct html tag", () => {
     render(<Button as="button">Click</Button>);
     render(<Button as="a" href="#">Click</Button>);
+    render(<Button as="div" data-testid="div">Div button</Button>);
 
     const button = screen.getByRole("button", { name: "Click" });
     const buttonLink = screen.getByRole("link", { name: "Click" });
+    const buttonDiv = screen.getByTestId("div");
 
     expect(button).toBeInTheDocument();
     expect(buttonLink).toBeInTheDocument();
+    expect(buttonDiv).toBeInTheDocument();
+    expect(buttonDiv).toHaveRole("generic");
   });
 
   describe("should render with correct variant", () => {

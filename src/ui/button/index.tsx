@@ -1,39 +1,39 @@
 import clsx from "clsx";
-import type { ComponentPropsWithRef, ElementType } from "react";
+import type { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 
 import { capitalize } from "@/utils/capitalize";
 
 import styles from "./style.module.scss";
 
-type ButtonElement = "a" | "button";
+type ButtonElement = ElementType<{ className?: string; children?: ReactNode }>;
 
 type ButtonProps<E extends ButtonElement = "button"> = ComponentPropsWithRef<E> & {
   as?: E;
+  icon?: boolean;
   size?: "large" | "medium" | "small";
   color?: "accent" | "success" | "error";
-  icon?: boolean;
   sideways?: "bt" | "tb";
 };
 
 export function Button<E extends ButtonElement = "button">({
   as,
-  className,
+  icon = false,
   size = "large",
   color,
-  icon = false,
   sideways,
+  className,
   children,
   ...props
 }: ButtonProps<E>) {
-  const Element = (as || "button") as ElementType;
+  const Element = (as || "button") as ButtonElement;
 
   const cn = clsx(
     styles.button,
-    styles[`buttonSize${capitalize(size)}`],
+    icon && styles.buttonIcon,
     color && styles.buttonColored,
     color && styles[`buttonColor${capitalize(color)}`],
+    styles[`buttonSize${capitalize(size)}`],
     sideways && styles[`buttonSideways${capitalize(sideways)}`],
-    icon && styles.buttonIcon,
     className
   );
 

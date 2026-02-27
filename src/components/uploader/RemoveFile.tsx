@@ -8,20 +8,31 @@ import { uploaderActions } from "@/store/slices/uploader";
 import styles from "./style.module.scss";
 
 type UploaderRemoveFileProps = {
-  id: string;
+  file: {
+    id: string;
+    name: string;
+  };
 };
 
-export function UploaderRemoveFile({ id }: UploaderRemoveFileProps) {
+export function UploaderRemoveFile({ file }: UploaderRemoveFileProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   function handleClick() {
-    dispatch(uploaderActions.removeFile(id));
+    dispatch(uploaderActions.removeFile(file.id));
   }
 
   return (
-    <Button className={styles.removeFile} icon size="medium" color="error" onClick={handleClick}>
-      <XMarkIcon title={t("uploader.file.remove")} />
+    <Button
+      className={styles.removeFile}
+      icon
+      size="medium"
+      color="error"
+      aria-label={t("uploader.file.removeName", { name: file.name })}
+      title={t("uploader.file.remove")}
+      onClick={handleClick}
+    >
+      <XMarkIcon />
     </Button>
   );
 }

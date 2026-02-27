@@ -84,11 +84,12 @@ export const en = {
       name: "Name",
       type: "Type",
       remove: "Remove file",
+      removeName: "Remove file {{name}}",
       edit: "Edit file",
-      preview: {
-        show: "Show file preview",
-        hide: "Hide file preview"
-      }
+      editName: "Edit file {{name}}",
+      showPreview: "Show file preview",
+      hidePreview: "Hide file preview",
+      togglePreview: "Toggle preview for file {{name}}"
     },
     status: {
       ready: "Drag & Drop images and videos",

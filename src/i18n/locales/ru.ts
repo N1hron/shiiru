@@ -84,11 +84,12 @@ export const ru = {
       name: "Имя",
       type: "Тип",
       remove: "Удалить файл",
+      removeName: "Удалить файл {{name}}",
       edit: "Редактировать файл",
-      preview: {
-        show: "Показать превью файла",
-        hide: "Спрятать превью файла"
-      }
+      editName: "Редактировать файл {{name}}",
+      showPreview: "Показать превью файла",
+      hidePreview: "Спрятать превью файла",
+      togglePreview: "Переключить превью для файла {{name}}"
     },
     status: {
       ready: "Перетащите картинки и видео",

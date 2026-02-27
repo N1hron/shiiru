@@ -13,10 +13,12 @@ type UploaderTableBodyRowProps = {
 };
 
 export function UploaderTableBodyRowInner({ file }: UploaderTableBodyRowProps) {
+  const fileShort = { id: file.id, name: file.data.name.full };
+
   return (
     <Table.Row className={styles.tableRow}>
       <Table.Cell>
-        <UploaderRemoveFile id={file.id} />
+        <UploaderRemoveFile file={fileShort} />
       </Table.Cell>
 
       <Table.Cell alignStart title={file.data.name.stem}>
@@ -28,11 +30,11 @@ export function UploaderTableBodyRowInner({ file }: UploaderTableBodyRowProps) {
       </Table.Cell>
 
       <Table.Cell>
-        <UploaderPreviewFile id={file.id} />
+        <UploaderPreviewFile file={fileShort} />
       </Table.Cell>
 
       <Table.Cell>
-        <UploaderEditFile id={file.id} />
+        <UploaderEditFile file={fileShort} />
       </Table.Cell>
     </Table.Row>
   );

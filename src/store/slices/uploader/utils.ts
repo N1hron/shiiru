@@ -73,6 +73,8 @@ async function extractVideoData(file: File): Promise<InputFileData> {
 
   const duration = await videoTrack.computeDuration();
 
+  input.dispose();
+
   return {
     name: parseFileName(file.name),
     type: "video",

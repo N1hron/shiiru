@@ -1,6 +1,6 @@
 import type { Dimensions, Range, Rect } from "./common";
 
-export type FileName = { stem: string; ext: string };
+export type FileName = { full: string; stem: string; ext: string };
 export type FileType = "image" | "video";
 
 export type FileElement<T extends FileType = FileType> =

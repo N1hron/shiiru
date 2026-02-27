@@ -2,7 +2,7 @@
 
 .spinSelect {
   display: flex;
-  gap: var(--border-width-thick);
+  gap: 0.25rem;
 
   &Disabled {
     @include m.state-color("main");

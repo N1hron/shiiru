@@ -5,12 +5,14 @@ import { uploaderActions, uploaderSelectors } from ".";
 import { getFileSignature } from "@/utils/getFileSignature";
 import { settingsSelectors } from "../settings";
 import { getFileConfig } from "./utils";
+import { supportsFileType } from "@/utils/supportsFileType";
+import { WorkerMessenger } from "@/WorkerMessenger";
 import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
 import type { UploaderWorkerRequest, UploaderWorkerResponse } from "./types";
-import { supportsFileType } from "@/utils/supportsFileType";
 
 const worker = new Worker(new URL("worker.ts", import.meta.url), { type: "module" });
+const workerMessenger = new WorkerMessenger<UploaderWorkerRequest, UploaderWorkerResponse>(worker);
 
 export const uploadOne = createAsyncThunk<
   void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploaderError }
@@ -34,28 +36,28 @@ export const uploadOne = createAsyncThunk<
     return rejectWithValue(new UploaderError("file-exists", file, "File already exists").serialize());
   }
 
-  worker.postMessage({ file } satisfies UploaderWorkerRequest);
+  try {
+    const response = await workerMessenger.send({
+      type: "file",
+      payload: file
+    });
 
-  const response = await new Promise<UploaderWorkerResponse>((resolve) => {
-    worker.onmessage = (event: MessageEvent<UploaderWorkerResponse>) => {
-      worker.onmessage = null;
-      resolve(event.data);
-    };
-  });
+    if (response.status === "success") {
+      const data = response.payload;
+      const config = getFileConfig(data);
 
-  if (response.type === "success") {
-    const data = response.data;
-    const config = getFileConfig(data);
-
-    dispatch(uploaderActions.addFile({
-      id: nanoid(),
-      signature,
-      data,
-      config,
-      url: URL.createObjectURL(file)
-    }));
-  } else {
-    return rejectWithValue(response.error);
+      dispatch(uploaderActions.addFile({
+        id: nanoid(),
+        signature,
+        data,
+        config,
+        url: URL.createObjectURL(file)
+      }));
+    } else {
+      return rejectWithValue(response.payload);
+    }
+  } catch (error) {
+    return rejectWithValue(new UploaderError("unknown", file, "Unexpected error", { cause: error }).serialize());
   }
 });
 

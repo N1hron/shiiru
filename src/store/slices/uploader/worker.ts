@@ -1,28 +1,44 @@
 import { extractFileData } from "./utils";
-import { UploaderError } from "./errors";
+import { UploaderError, type SerializedUploaderError } from "./errors";
 import type { UploaderWorkerRequest, UploaderWorkerResponseError, UploaderWorkerResponseSuccess } from "./types";
 
 onmessage = async (event: MessageEvent<UploaderWorkerRequest>) => {
+  const request = event.data;
+
   try {
-    const data = await extractFileData(event.data.file);
-    const response: UploaderWorkerResponseSuccess = { type: "success", data };
+    switch (request.type) {
+      case "file": {
+        const payload = await extractFileData(request.payload);
+
+        const response: UploaderWorkerResponseSuccess = {
+          id: request.id,
+          type: request.type,
+          status: "success",
+          payload
+        };
+
+        return postMessage(response);
+      }
+      default: {
+        throw new Error("Unknown request type");
+      }
+    }
+  } catch (error) {
+    const response: UploaderWorkerResponseError = {
+      id: request.id,
+      type: request.type,
+      status: "error",
+      payload: buildSerializedError(request, error)
+    };
 
     postMessage(response);
-  } catch (error) {
-    postMessage(buildErrorResponse(error, event.data.file));
   }
 };
 
-function buildErrorResponse(error: unknown, file: File): UploaderWorkerResponseError {
+function buildSerializedError(request: UploaderWorkerRequest, error: unknown): SerializedUploaderError {
   if (error instanceof UploaderError) {
-    return {
-      type: "error",
-      error: error.serialize()
-    };
+    return error.serialize();
   } else {
-    return {
-      type: "error",
-      error: new UploaderError("unknown", file, "Unexpected error").serialize()
-    };
+    return new UploaderError("unknown", request.payload, "Unexpected error").serialize();
   }
 }

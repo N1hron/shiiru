@@ -3,7 +3,7 @@ export type Dimensions = {
   height: number;
 };
 
-export type Range = {
+export type Segment = {
   start: number;
   end: number;
 };

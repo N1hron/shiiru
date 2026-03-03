@@ -1,4 +1,4 @@
-import type { Dimensions, Range, Rect } from "./common";
+import type { Dimensions, Segment, Rect } from "./common";
 
 export type FileName = { full: string; stem: string; ext: string };
 export type FileType = "image" | "video";
@@ -19,7 +19,7 @@ export type InputFileData = {
 export type InputFileConfig = {
   name: FileName;
   crop: Rect;
-  trim: Range;
+  trim: Segment;
 };
 
 export type InputFile = {

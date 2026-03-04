@@ -26,21 +26,17 @@ export class WorkerController {
     const request = { id, ...data };
 
     return new Promise<Res>((resolve) => {
-      // /////////
-      console.log(`REQUEST  | ${request.type}`);
-      // /////////
-
+      console.dev(`REQUEST  | ${request.type}`);
       this.#worker.postMessage(request, options);
 
       this.#listeners.set(id, (event: MessageEvent<Res>) => {
         const response = event.data;
 
-        // /////////
-        console.log(`RESPONSE | ${request.type} ${response.status}`);
-        // /////////
-
+        console.dev(`RESPONSE | ${request.type} ${response.status}`);
         resolve(response);
       });
+    }).finally(() => {
+      this.#listeners.delete(id);
     });
   }
 
@@ -70,16 +66,13 @@ export class WorkerController {
   }
 
   #listen() {
-    this.#worker.onmessage = this.#handleMessage.bind(this);
+    this.#worker.onmessage = this.#callListener.bind(this);
   }
 
-  #handleMessage(event: MessageEvent<WorkerResponse>) {
+  #callListener(event: MessageEvent<WorkerResponse>) {
     const id = event.data.id;
-    const handler = this.#listeners.get(id);
+    const listener = this.#listeners.get(id);
 
-    if (handler) {
-      handler(event);
-      this.#listeners.delete(id);
-    }
+    listener?.(event);
   }
 }

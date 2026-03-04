@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { App } from "@/app";
 import { store } from "@/store";
 
+import "@/extensions";
 import "@/i18n";
 import "@/main.scss";
 

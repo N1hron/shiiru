@@ -10,7 +10,7 @@ describe("dev", () => {
   it("should print passed value in development mode", () => {
     vi.stubEnv("DEV", true);
     dev("Test");
-    expect(spy).toHaveBeenCalledExactlyOnceWith("Test");
+    expect(spy).toHaveBeenCalledExactlyOnceWith("[DEV]", "Test");
   });
 
   it("should not print passed value in non development mode", () => {

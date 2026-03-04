@@ -1,20 +1,17 @@
 import { extractFileData } from "./utils";
 import { UploaderError, type SerializedUploaderError } from "./errors";
-import type { UploaderWorkerRequest, UploaderWorkerResponseError, UploaderWorkerResponseSuccess } from "./types";
+import type { UploaderRequest, UploaderResponse } from "./types";
 
-onmessage = async (event: MessageEvent<UploaderWorkerRequest>) => {
+onmessage = async (event: MessageEvent<UploaderRequest>) => {
   const request = event.data;
 
   try {
     switch (request.type) {
       case "file": {
-        const payload = await extractFileData(request.payload);
-
-        const response: UploaderWorkerResponseSuccess = {
+        const response: UploaderResponse = {
           id: request.id,
-          type: request.type,
           status: "success",
-          payload
+          payload: await extractFileData(request.payload)
         };
 
         return postMessage(response);
@@ -24,18 +21,17 @@ onmessage = async (event: MessageEvent<UploaderWorkerRequest>) => {
       }
     }
   } catch (error) {
-    const response: UploaderWorkerResponseError = {
+    const response: UploaderResponse = {
       id: request.id,
-      type: request.type,
       status: "error",
       payload: buildSerializedError(request, error)
     };
 
-    postMessage(response);
+    return postMessage(response);
   }
 };
 
-function buildSerializedError(request: UploaderWorkerRequest, error: unknown): SerializedUploaderError {
+function buildSerializedError(request: UploaderRequest, error: unknown): SerializedUploaderError {
   if (error instanceof UploaderError) {
     return error.serialize();
   } else {

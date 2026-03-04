@@ -2,19 +2,19 @@ import { nanoid } from "@reduxjs/toolkit";
 
 import type { WorkerMessageData, WorkerRequest, WorkerResponse } from "./types";
 
-type Listener = (event: MessageEvent) => void;
-type WorkerArgs = ConstructorParameters<typeof Worker>;
+type WorkerFactory = () => Worker;
+type WorkerListener = (event: MessageEvent) => void;
 
 export class WorkerController {
   #worker: Worker;
-  #workerArgs: WorkerArgs;
-  #listeners = new Map<string, Listener>();
+  #factory: WorkerFactory;
+  #listeners = new Map<string, WorkerListener>();
   #isTerminated = false;
 
-  constructor(...args: WorkerArgs) {
-    this.#workerArgs = args;
-    this.#worker = new Worker(...this.#workerArgs);
-    this.#attachMessageHandler();
+  constructor(factory: WorkerFactory) {
+    this.#factory = factory;
+    this.#worker = this.#factory();
+    this.#listen();
   }
 
   request<Res extends WorkerResponse>(data: WorkerMessageData<WorkerRequest>, options?: StructuredSerializeOptions) {
@@ -53,8 +53,8 @@ export class WorkerController {
   /** Creates a new internal worker if previous one has been terminated */
   start() {
     if (this.#isTerminated) {
-      this.#worker = new Worker(...this.#workerArgs);
-      this.#attachMessageHandler();
+      this.#worker = this.#factory();
+      this.#listen();
       this.#isTerminated = false;
     }
   }
@@ -69,7 +69,7 @@ export class WorkerController {
     }
   }
 
-  #attachMessageHandler() {
+  #listen() {
     this.#worker.onmessage = this.#handleMessage.bind(this);
   }
 

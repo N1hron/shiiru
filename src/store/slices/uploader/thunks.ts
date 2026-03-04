@@ -11,8 +11,9 @@ import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
 import type { UploaderResponse } from "./types";
 
-const workerUrl = new URL("worker.ts", import.meta.url);
-const workerController = new WorkerController(workerUrl, { type: "module" });
+const workerController = new WorkerController(
+  () => new Worker(new URL("worker.ts", import.meta.url), { type: "module" })
+);
 
 export const uploadOne = createAsyncThunk<
   void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploaderError }

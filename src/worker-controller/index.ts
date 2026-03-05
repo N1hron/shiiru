@@ -1,5 +1,4 @@
-import { nanoid } from "@reduxjs/toolkit";
-
+import { createWorkerMessage } from "./utils";
 import type { WorkerMessageData, WorkerRequest, WorkerResponse } from "./types";
 
 type WorkerFactory = () => Worker;
@@ -22,21 +21,20 @@ export class WorkerController {
       throw new Error("Worker is terminated");
     }
 
-    const id = nanoid();
-    const request = { id, ...data };
+    const request = createWorkerMessage(data);
+    console.dev(`REQUEST  | ${request.type}`);
 
     return new Promise<Res>((resolve) => {
-      console.dev(`REQUEST  | ${request.type}`);
       this.#worker.postMessage(request, options);
 
-      this.#listeners.set(id, (event: MessageEvent<Res>) => {
+      this.#listeners.set(request.id, (event: MessageEvent<Res>) => {
         const response = event.data;
-
         console.dev(`RESPONSE | ${request.type} ${response.status}`);
+
         resolve(response);
       });
     }).finally(() => {
-      this.#listeners.delete(id);
+      this.#listeners.delete(request.id);
     });
   }
 

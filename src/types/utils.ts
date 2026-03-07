@@ -13,3 +13,5 @@ export type Canvas = HTMLCanvasElement | OffscreenCanvas;
 export type CanvasContext2D<C extends Canvas = Canvas> =
   C extends HTMLCanvasElement ? CanvasRenderingContext2D :
   C extends OffscreenCanvas ? OffscreenCanvasRenderingContext2D : never;
+
+export type Shift<A extends Array<unknown>> = A extends [unknown, ...infer R] ? R : never;

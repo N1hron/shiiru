@@ -1,6 +1,6 @@
 import { createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 
-import { WorkerController } from "@/worker-controller";
+import { WorkerController } from "@/worker-utils";
 import { UploaderError, type SerializedUploaderError } from "./errors";
 import { uploaderActions, uploaderSelectors } from ".";
 import { getFileSignature } from "@/utils/getFileSignature";
@@ -9,9 +9,9 @@ import { getFileConfig } from "./utils";
 import { supportsFileType } from "@/utils/supportsFileType";
 import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
-import type { UploaderResponse } from "./types";
+import type { UploaderRequest, UploaderResponse } from "./types";
 
-const workerController = new WorkerController(
+const workerController = new WorkerController<UploaderRequest, UploaderResponse>(
   () => new Worker(new URL("worker.ts", import.meta.url), { type: "module" })
 );
 
@@ -38,27 +38,22 @@ export const uploadOne = createAsyncThunk<
   }
 
   try {
-    const response = await workerController.request<UploaderResponse>({
-      type: "file",
+    const data = await workerController.send({
+      type: "extract-data",
       payload: file
     });
 
-    if (response.status === "success") {
-      const data = response.payload;
-      const config = getFileConfig(data);
+    const config = getFileConfig(data);
 
-      dispatch(uploaderActions.addFile({
-        id: nanoid(),
-        signature,
-        data,
-        config,
-        url: URL.createObjectURL(file)
-      }));
-    } else {
-      return rejectWithValue(response.payload);
-    }
+    dispatch(uploaderActions.addFile({
+      id: nanoid(),
+      signature,
+      data,
+      config,
+      url: URL.createObjectURL(file)
+    }));
   } catch (error) {
-    return rejectWithValue(new UploaderError("unknown", file, "Unexpected error", { cause: error }).serialize());
+    return rejectWithValue(error as SerializedUploaderError);
   }
 });
 

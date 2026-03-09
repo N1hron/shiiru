@@ -1,16 +1,17 @@
 import { postRequest } from "./utils";
-import type { WorkerRequest, WorkerResponse, WorkerResponseSuccess } from "./types";
+import type { WorkerRequest, WorkerRequestData, WorkerResponse, WorkerResponseSuccess } from "./types";
 
 type Factory = () => Worker;
 type Listener = (event: MessageEvent) => void;
-type SendArgs<R extends WorkerRequest> = Parameters<typeof postRequest<R>>;
-type SendResult<R extends WorkerResponse> = Extract<R, WorkerResponseSuccess>["payload"];
 
-export class WorkerController<Req extends WorkerRequest = WorkerRequest, Res extends WorkerResponse = WorkerResponse> {
+export class WorkerController<
+  Req extends WorkerRequest = WorkerRequest,
+  Res extends WorkerResponse = WorkerResponse
+> {
   #worker: Worker;
   #factory: Factory;
-  #listeners = new Map<string, Listener>();
   #isTerminated = false;
+  #listeners = new Map<string, Listener>();
 
   constructor(factory: Factory) {
     this.#factory = factory;
@@ -22,11 +23,16 @@ export class WorkerController<Req extends WorkerRequest = WorkerRequest, Res ext
    * Sends request to the internal worker and returns a promise that resolves
    * with the success payload or rejects with the error payload
    */
-  send<R extends Res = Res>(...args: SendArgs<Req>) {
-    const request = postRequest.call(this.#worker, ...args);
+  send<T extends Req["type"]>(
+    data: Extract<WorkerRequestData<Req>, { type: T }>,
+    options?: StructuredSerializeOptions
+  ) {
+    const request = postRequest.call(this.#worker, data, options);
     console.dev(`REQUEST  | ${request.type}`);
 
-    return new Promise<SendResult<R>>((resolve, reject) => {
+    type Result = Extract<Res, WorkerResponseSuccess<T>>["payload"];
+
+    return new Promise<Result>((resolve, reject) => {
       this.#addListener(request.id, (event: MessageEvent<Res>) => {
         const response = event.data;
         console.dev(`RESPONSE | ${request.type} ${response.status}`);

@@ -1,6 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import type { WorkerMessageData, WorkerRequest, WorkerResponse } from "./types";
-import type { Shift } from "@/types";
+import type { WorkerRequest, WorkerRequestData, WorkerResponse, WorkerResponseData } from "./types";
 
 type PostMessageThis =
   Worker |
@@ -10,25 +9,24 @@ type PostMessageThis =
   Window |
   Client;
 
-type PostMessageArgs = Parameters<typeof postMessage>;
-
 export function postRequest<R extends WorkerRequest>(
   this: PostMessageThis,
-  requestData: WorkerMessageData<R>,
-  ...rest: Shift<PostMessageArgs>
+  data: WorkerRequestData<R>,
+  options?: StructuredSerializeOptions
 ): R {
-  const request = { id: nanoid(), ...requestData } as R;
-  this.postMessage(request, ...rest);
+  const request = { id: nanoid(), ...data } as R;
+  this.postMessage(request, options);
   return request;
 }
 
 export function postResponse<R extends WorkerResponse>(
   this: PostMessageThis,
   request: WorkerRequest,
-  responseData: WorkerMessageData<R>,
-  ...rest: Shift<PostMessageArgs>
+  data: WorkerResponseData<R>,
+  options?: StructuredSerializeOptions
 ): R {
-  const response = { id: request.id, ...responseData } as R;
-  this.postMessage(response, ...rest);
+  const response = { id: request.id, type: request.type, ...data } as R;
+  this.postMessage(response, options);
   return response;
 }
+

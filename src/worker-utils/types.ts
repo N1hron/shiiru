@@ -1,3 +1,5 @@
+import type { DistributiveOmit } from "@/types";
+
 export type WorkerMessage<P = unknown> = {
   id: string;
 } & (unknown extends P ? { payload?: P } : { payload: P });
@@ -7,17 +9,22 @@ export type WorkerRequest<T extends string = string, P = unknown> = {
 } & WorkerMessage<P>;
 
 export type WorkerResponse<
+  T extends string = string,
   P = unknown,
   E extends Error = Error
-> = WorkerResponseSuccess<P> | WorkerResponseError<E>;
+> = WorkerResponseSuccess<T, P> | WorkerResponseError<T, E>;
 
-export type WorkerResponseSuccess<P = unknown> = {
+export type WorkerResponseSuccess<T extends string = string, P = unknown> = {
+  type: T;
   status: "success";
 } & WorkerMessage<P>;
 
-export type WorkerResponseError<E extends Error = Error> = {
+export type WorkerResponseError<T extends string = string, E extends Error = Error> = {
+  type: T;
   status: "error";
 } & WorkerMessage<E>;
 
 export type WorkerResponseStatus = "success" | "error";
-export type WorkerMessageData<M extends WorkerMessage> = Omit<M, "id">;
+
+export type WorkerRequestData<R extends WorkerRequest> = DistributiveOmit<R, "id">;
+export type WorkerResponseData<R extends WorkerRequest> = DistributiveOmit<R, "id" | "type">;

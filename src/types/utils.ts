@@ -15,3 +15,5 @@ export type CanvasContext2D<C extends Canvas = Canvas> =
   C extends OffscreenCanvas ? OffscreenCanvasRenderingContext2D : never;
 
 export type Shift<A extends Array<unknown>> = A extends [unknown, ...infer R] ? R : never;
+
+export type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : never;

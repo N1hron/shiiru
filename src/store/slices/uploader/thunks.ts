@@ -1,6 +1,6 @@
 import { createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 
-import { WorkerController } from "@/worker-utils";
+import { WorkerMessenger } from "@/worker-messenger";
 import { UploaderError, type SerializedUploaderError } from "./errors";
 import { uploaderActions, uploaderSelectors } from ".";
 import { getFileSignature } from "@/utils/getFileSignature";
@@ -11,9 +11,8 @@ import type { AppDispatch, AppState } from "@/store";
 import type { IterableArrayLike } from "@/types/utils";
 import type { UploaderRequest, UploaderResponse } from "./types";
 
-const workerController = new WorkerController<UploaderRequest, UploaderResponse>(
-  () => new Worker(new URL("worker.ts", import.meta.url), { type: "module" })
-);
+const worker = new Worker(new URL("worker.ts", import.meta.url), { type: "module" });
+const messenger = new WorkerMessenger<UploaderRequest, UploaderResponse>(worker);
 
 export const uploadOne = createAsyncThunk<
   void, File, { dispatch: AppDispatch; state: AppState; rejectValue: SerializedUploaderError }
@@ -38,7 +37,7 @@ export const uploadOne = createAsyncThunk<
   }
 
   try {
-    const data = await workerController.send({
+    const data = await messenger.request({
       type: "extract-data",
       payload: file
     });

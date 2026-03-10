@@ -2,7 +2,7 @@ import type { DistributiveOmit } from "@/types";
 
 export type WorkerMessage<P = unknown> = {
   id: string;
-} & (unknown extends P ? { payload?: P } : { payload: P });
+} & (unknown extends P ? { payload?: P } : undefined extends P ? { payload?: P } : { payload: P });
 
 export type WorkerRequest<T extends string = string, P = unknown> = {
   type: T;

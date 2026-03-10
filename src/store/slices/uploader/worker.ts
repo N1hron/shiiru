@@ -1,12 +1,12 @@
 import { ALL_FORMATS, BlobSource, Input } from "mediabunny";
 
-import * as workerUtils from "@/worker-utils";
+import { WorkerMessenger } from "@/worker-messenger";
 import { UploaderError, type SerializedUploaderError } from "./errors";
 import { parseFileName } from "@/utils/parseFileName";
 import type { UploaderRequest, UploaderResponse } from "./types";
 import type { InputFileData } from "@/types";
 
-const postResponse = (workerUtils.postResponse<UploaderResponse>).bind(self);
+const messenger = new WorkerMessenger<UploaderRequest, UploaderResponse>(self);
 
 onmessage = async (event: MessageEvent<UploaderRequest>) => {
   const request = event.data;
@@ -14,7 +14,7 @@ onmessage = async (event: MessageEvent<UploaderRequest>) => {
   try {
     switch (request.type) {
       case "extract-data": {
-        return postResponse(request, {
+        return messenger.respond(request, {
           status: "success",
           payload: await extractData(request.payload)
         });
@@ -24,7 +24,7 @@ onmessage = async (event: MessageEvent<UploaderRequest>) => {
       }
     }
   } catch (error) {
-    postResponse(request, {
+    messenger.respond(request, {
       status: "error",
       payload: serializeError(request, error)
     });

@@ -1,44 +1,41 @@
 import { nanoid } from "@reduxjs/toolkit";
 
-import { isWorkerResponse } from "./utils";
+import { isResponse } from "./utils";
 import type { DistributiveOmit, Shift } from "@/types";
-import type { WorkerRequest, WorkerResponse } from "./types";
+import type { Request, Response } from "./types";
 
-type WorkerMessengerDestination =
+type MessengerDestination =
   Window |
   Worker |
   MessagePort |
   DedicatedWorkerGlobalScope;
 
-type WorkerMessengerListener = {
+type MessengerListener = {
   resolve: (payload: unknown) => void;
   reject: (payload: Error) => void;
 };
 
 type PostMessageArgs = Parameters<typeof postMessage>;
 
-export class WorkerMessenger<
-  WReq extends WorkerRequest = WorkerRequest,
-  WRes extends WorkerResponse = WorkerResponse
-> {
-  #destination: WorkerMessengerDestination | null = null;
-  #listeners = new Map<string, WorkerMessengerListener>();
+export class Messenger<Req extends Request = Request, Res extends Response = Response> {
+  #destination: MessengerDestination | null = null;
+  #listeners = new Map<string, MessengerListener>();
   #aborter: AbortController | null = null;
 
-  constructor(destination?: WorkerMessengerDestination) {
+  constructor(destination?: MessengerDestination) {
     if (destination) {
       this.start(destination);
     }
   }
 
-  start(destination: WorkerMessengerDestination) {
+  start(destination: MessengerDestination) {
     this.stop();
 
     this.#destination = destination;
     this.#aborter = new AbortController();
 
     this.#destination.addEventListener("message", (event) => {
-      if ("data" in event && isWorkerResponse(event.data)) {
+      if ("data" in event && isResponse(event.data)) {
         const { id, type, status, payload } = event.data;
         const listener = this.#listeners.get(id);
 
@@ -73,15 +70,15 @@ export class WorkerMessenger<
     this.#aborter?.abort();
   }
 
-  request<T extends WReq["type"]>(
-    data: Extract<DistributiveOmit<WReq, "id">, { type: T }>,
+  request<T extends Req["type"]>(
+    data: Extract<DistributiveOmit<Req, "id">, { type: T }>,
     ...rest: Shift<PostMessageArgs>
   ) {
     if (!this.#destination) {
       throw new Error("Uninitialized");
     }
 
-    return new Promise<Extract<WRes, { type: T; status: "success" }>["payload"]>((resolve, reject) => {
+    return new Promise<Extract<Res, { type: T; status: "success" }>["payload"]>((resolve, reject) => {
       const request = { id: nanoid(), ...data };
 
       console.dev(`REQ | ${request.id} ${request.type}`);
@@ -91,9 +88,9 @@ export class WorkerMessenger<
     });
   }
 
-  respond<T extends WRes["type"]>(
-    request: Extract<WReq, { type: T }>,
-    data: DistributiveOmit<Extract<WRes, { type: T }>, "id" | "type">,
+  respond<T extends Res["type"]>(
+    request: Extract<Req, { type: T }>,
+    data: DistributiveOmit<Extract<Res, { type: T }>, "id" | "type">,
     ...rest: Shift<PostMessageArgs>
   ) {
     if (!this.#destination) {
@@ -107,7 +104,7 @@ export class WorkerMessenger<
     this.#destination?.postMessage(...args);
   }
 
-  #addListener(id: string, listener: WorkerMessengerListener) {
+  #addListener(id: string, listener: MessengerListener) {
     this.#listeners.set(id, listener);
   }
 

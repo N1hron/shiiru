@@ -1,12 +1,12 @@
 import { ALL_FORMATS, BlobSource, Input } from "mediabunny";
 
-import { WorkerMessenger } from "@/worker-messenger";
+import { Messenger } from "@/messenger";
 import { UploaderError, type SerializedUploaderError } from "./errors";
 import { parseFileName } from "@/utils/parseFileName";
 import type { UploaderRequest, UploaderResponse } from "./types";
 import type { InputFileData } from "@/types";
 
-const messenger = new WorkerMessenger<UploaderRequest, UploaderResponse>(self);
+const messenger = new Messenger<UploaderRequest, UploaderResponse>(self);
 
 onmessage = async (event: MessageEvent<UploaderRequest>) => {
   const request = event.data;

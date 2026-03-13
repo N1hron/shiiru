@@ -5,13 +5,11 @@ import type { Theme } from "@/types";
 
 type UiState = {
   theme: Theme;
-  isSupported: null | boolean;
 };
 
 function getInitialState(): UiState {
   return {
-    theme: getInitialTheme(),
-    isSupported: null
+    theme: getInitialTheme()
   };
 }
 
@@ -21,9 +19,6 @@ const uiSlice = createSlice({
   reducers: {
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
-    },
-    setIsSupported(state, action: PayloadAction<boolean>) {
-      state.isSupported = action.payload;
     }
   }
 });

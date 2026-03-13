@@ -1,8 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/store";
-import { uiActions, uiSelectors } from "@/store/slices/ui";
-import { checkSupport } from "./utils";
+import { supportSelectors, supportThunks } from "@/store/slices/support";
 
 type SupportBoundaryProps = {
   children: ReactNode;
@@ -10,15 +9,14 @@ type SupportBoundaryProps = {
 
 export function SupportBoundary({ children }: SupportBoundaryProps) {
   const dispatch = useAppDispatch();
-  const isSupported = useAppSelector(uiSelectors.selectIsSupported);
+  const isPending = useAppSelector(supportSelectors.selectIsPending);
+  const isSupported = useAppSelector(supportSelectors.selectIsSupported);
 
   useEffect(() => {
-    checkSupport()
-      .then((isSupported) => dispatch(uiActions.setIsSupported(isSupported)))
-      .catch(() => dispatch(uiActions.setIsSupported(false)));
+    void dispatch(supportThunks.checkSupport());
   }, [dispatch]);
 
-  if (isSupported === null) {
+  if (isPending) {
     return "Checking browser support...";
   }
 

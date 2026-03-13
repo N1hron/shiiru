@@ -6,10 +6,10 @@ function isTheme(value: unknown): value is Theme {
 }
 
 export function getInitialTheme(): Theme {
-  const savedTheme = localStorage.getItem(config.storage.theme);
+  const theme = localStorage.getItem(config.storage.theme);
 
-  if (isTheme(savedTheme)) {
-    return savedTheme;
+  if (isTheme(theme)) {
+    return theme;
   } else {
     return "system";
   }

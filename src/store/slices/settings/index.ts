@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import { config } from "@/config";
 import { parseJson } from "@/utils/parseJson";
-import { correctSettings, isSettings } from "./utils";
+import { isSettings } from "./utils";
 import type { Settings } from "@/types";
 
 type SettingsState = {
@@ -26,7 +26,7 @@ function getInitialState(): SettingsState {
     if (isSettings(settings)) {
       return {
         ...defaultState,
-        items: correctSettings(settings)
+        items: settings
       };
     }
   } else if (remember === false) {

@@ -3,7 +3,6 @@ import { Checkbox } from "@/ui/checkbox";
 import { Translation } from "@/ui/translation";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { settingsActions, settingsSelectors } from "@/store/slices/settings";
-import { support } from "@/support";
 import type { BooleanSettings } from "@/types";
 
 import styles from "./style.module.scss";
@@ -26,7 +25,6 @@ export function SettingsItemBoolean<N extends keyof BooleanSettings>({ name }: S
         <Checkbox
           value={value}
           setValue={setValue}
-          disabled={name === "antialiasing" && !support.imageSmoothingQuality}
         />
         <Translation translationKey={`settings.items.${name}.label`} />
       </Label>

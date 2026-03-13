@@ -1,15 +1,7 @@
-import { support } from "@/support";
 import type { Settings } from "@/types";
 
 export function createItemsSignature(items: Settings) {
   return Object.values(items).join("");
-}
-
-export function correctSettings(settings: Settings): Settings {
-  if (!support.imageSmoothingQuality && settings.antialiasing) {
-    return { ...settings, antialiasing: false };
-  }
-  return settings;
 }
 
 export function isSettings(value: unknown): value is Settings {

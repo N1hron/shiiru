@@ -36,10 +36,8 @@ export class Messenger<Req extends Request = Request, Res extends Response = Res
 
     this.#destination.addEventListener("message", (event) => {
       if ("data" in event && isResponse(event.data)) {
-        const { id, type, status, payload } = event.data;
+        const { id, status, payload } = event.data;
         const listener = this.#listeners.get(id);
-
-        console.dev(`RES | ${id} ${type} ${status}`);
 
         if (listener) {
           if (status === "success") {
@@ -54,9 +52,7 @@ export class Messenger<Req extends Request = Request, Res extends Response = Res
     }, { signal: this.#aborter.signal });
 
     this.#aborter.signal.addEventListener("abort", () => {
-      for (const [id, listener] of this.#listeners) {
-        console.dev(`CAN | ${id}`);
-
+      for (const [, listener] of this.#listeners) {
         listener.reject(new Error("WorkerMessenger has been stopped"));
       }
 
@@ -75,13 +71,11 @@ export class Messenger<Req extends Request = Request, Res extends Response = Res
     ...rest: Shift<PostMessageArgs>
   ) {
     if (!this.#destination) {
-      throw new Error("Uninitialized");
+      throw new Error("Messenger is uninitialized");
     }
 
     return new Promise<Extract<Res, { type: T; status: "success" }>["payload"]>((resolve, reject) => {
       const request = { id: nanoid(), ...data };
-
-      console.dev(`REQ | ${request.id} ${request.type}`);
 
       this.#send(request, ...rest);
       this.#addListener(request.id, { resolve, reject });
@@ -94,7 +88,7 @@ export class Messenger<Req extends Request = Request, Res extends Response = Res
     ...rest: Shift<PostMessageArgs>
   ) {
     if (!this.#destination) {
-      throw new Error("Uninitialized");
+      throw new Error("Messenger is uninitialized");
     }
 
     this.#send({ id: request.id, type: request.type, ...data }, ...rest);

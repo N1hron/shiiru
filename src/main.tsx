@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Provider as StoreProvider } from "react-redux";
 
 import { App } from "@/app";
-import { ErrorBoundary } from "@/components/error-boundary";
+import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { ThemeProvider } from "@/features/theme";
 import { LanguageProvider } from "./features/translation";
 import { store } from "@/store";

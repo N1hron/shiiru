@@ -1,0 +1,219 @@
+@use "../../styles/mixins" as m;
+
+.button {
+  --inline-size: auto;
+
+  &Large {
+    --block-size: 2rem;
+    --padding-inline: 0.5rem;
+    --gap: 0.5rem;
+    --font-size: var(--font-size-medium);
+    --svg-stroke-width: 2.25;
+  }
+
+  &Medium {
+    --block-size: 1.5rem;
+    --padding-inline: 0.25rem;
+    --gap: 0.25rem;
+    --font-size: var(--font-size-small);
+    --svg-stroke-width: 2.5;
+  }
+
+  &Small {
+    --block-size: 1.125rem;
+    --padding-inline: 0.125rem;
+    --gap: 0.125rem;
+    --font-size: var(--font-size-small);
+    --svg-stroke-width: 2.6;
+  }
+
+  &Icon {
+    --padding-inline: 0;
+  }
+}
+
+[data-theme="dark"] {
+  .button {
+    --color-background: var(--color-main-08);
+    --color-background-hover: var(--color-main-09);
+    --color-border: var(--color-main-10);
+    --color-text: var(--color-text-alt);
+
+    &Colored {
+      &Accent {
+        --color-background: var(--color-accent-07);
+        --color-background-hover: var(--color-accent-08);
+        --color-border: var(--color-accent-09);
+      }
+
+      &Error {
+        --color-background: var(--color-error-07);
+        --color-background-hover: var(--color-error-08);
+        --color-border: var(--color-error-09);
+      }
+
+      &Success {
+        --color-background: var(--color-success-07);
+        --color-background-hover: var(--color-success-08);
+        --color-border: var(--color-success-09);
+      }
+
+      &:disabled {
+        --color-background: var(--color-main-08);
+        --color-background-hover: var(--color-main-09);
+        --color-border: var(--color-main-10);
+      }
+    }
+  }
+}
+
+[data-theme="light"] {
+  .button {
+    --color-background: var(--color-accent-02);
+    --color-background-hover: var(--color-accent-03);
+    --color-border: var(--color-accent-04);
+    --color-text: var(--color-accent-04);
+
+    &Colored {
+      --color-text: var(--color-text-alt);
+
+      &Accent {
+        --color-background: var(--color-accent-07);
+        --color-background-hover: var(--color-accent-08);
+        --color-border: var(--color-accent-09);
+      }
+
+      &Error {
+        --color-background: var(--color-error-07);
+        --color-background-hover: var(--color-error-08);
+        --color-border: var(--color-error-09);
+      }
+
+      &Success {
+        --color-background: var(--color-success-07);
+        --color-background-hover: var(--color-success-08);
+        --color-border: var(--color-success-09);
+      }
+
+      &:disabled {
+        --color-background: var(--color-main-05);
+        --color-background-hover: var(--color-main-06);
+        --color-border: var(--color-main-07);
+      }
+    }
+  }
+}
+
+$wrapper-padding: calc(var(--border-width-thick) - var(--border-width-thin));
+$content-height: calc(var(--block-size) - $wrapper-padding);
+
+.button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-block;
+  width: fit-content;
+  height: fit-content;
+  flex-grow: 0;
+  cursor: pointer;
+
+  &Sideways {
+    &Lr {
+      .wrapper {
+        writing-mode: vertical-lr;
+      }
+
+      .content {
+        rotate: 180deg;
+        transform-origin: center;
+      }
+    }
+
+    &Rl {
+      .wrapper {
+        writing-mode: vertical-lr;
+      }
+    }
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      .content {
+        background-color: var(--color-background-hover);
+      }
+    }
+
+    &:active {
+      .wrapper {
+        padding-top: $wrapper-padding;
+        padding-bottom: 0;
+      }
+    }
+
+    &:focus-visible {
+      @include m.focus-outline(var(--color-accent-07));
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    .content {
+      @include m.background-dashed(var(--color-background), var(--color-background-hover));
+
+      background-color: var(--color-background);
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+  display: block;
+  padding-top: 0;
+  padding-bottom: $wrapper-padding;
+  inline-size: var(--inline-size);
+  transition-property: padding-top, padding-bottom;
+  transition-duration: var(--transition-duration-fastest);
+}
+
+.background {
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  background-color: var(--color-border);
+  transition-property: background-color;
+  transition-duration: var(--transition-duration-fast);
+}
+
+.content {
+  @include m.unselectable;
+
+  position: relative;
+  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  block-size: $content-height;
+  min-inline-size: $content-height;
+  padding-inline: var(--padding-inline);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: solid var(--border-width-thin) var(--color-border);
+  font-size: var(--font-size);
+  line-height: 0.5;
+  transition-property: background-color, border-color;
+  transition-duration: var(--transition-duration-fast);
+
+  svg {
+    block-size: 80%;
+    inline-size: auto;
+  }
+
+  path {
+    stroke: var(--color-text-alt);
+    stroke-width: var(--svg-stroke-width);
+  }
+}

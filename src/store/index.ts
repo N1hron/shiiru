@@ -1,31 +1,15 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
 
-import { supportReducer } from "./slices/support";
-import { uiReducer } from "./slices/ui";
-import { settingsReducer } from "./slices/settings";
-import { uploaderReducer } from "./slices/uploader";
-import { previewReducer } from "./slices/preview";
-import { saveThemeMiddleware } from "./middleware/saveTheme";
-import { saveSettingsMiddleware } from "./middleware/saveSettings";
-import { revokeUrlsMiddleware } from "./middleware/revokeUrls";
+import { themeReducer, saveThemeMiddleware } from "@/features/theme";
 
-const reducer = combineReducers({
-  support: supportReducer,
-  ui: uiReducer,
-  settings: settingsReducer,
-  uploader: uploaderReducer,
-  preview: previewReducer
+export const reducer = combineReducers({
+  theme: themeReducer
 });
 
 export const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat([saveThemeMiddleware, saveSettingsMiddleware, revokeUrlsMiddleware]),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
+    saveThemeMiddleware
+  ]),
   devTools: import.meta.env.DEV
 });
-
-export type AppState = ReturnType<typeof reducer>;
-export type AppDispatch = typeof store.dispatch;
-
-export const useAppSelector = useSelector.withTypes<AppState>();
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>();

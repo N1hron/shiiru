@@ -5,14 +5,17 @@ import { initReactI18next } from "react-i18next";
 import { en } from "./locales/en";
 import { ru } from "./locales/ru";
 import { config } from "@/config";
-import type { Language } from "@/types";
+import type { Language } from "@/features/translation";
+
+const fallbackLng: Language = "en";
+const supportedLngs: Array<Language> = ["en", "ru"];
 
 void i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en" satisfies Language,
-    supportedLngs: ["en", "ru"] as const satisfies Language[],
+    fallbackLng,
+    supportedLngs,
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],

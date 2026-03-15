@@ -1,16 +1,11 @@
 import { Component, type ReactNode } from "react";
 
-type ErrorBoundaryProps = {
+export type ErrorBoundaryProps = {
   children: ReactNode;
-} & ({
-  renderFallback: (error: unknown) => ReactNode;
-  fallback?: never;
-} | {
-  renderFallback?: never;
-  fallback: ReactNode;
-});
+  fallback?: ReactNode | ((error: unknown) => ReactNode);
+};
 
-type ErrorBoundaryState = {
+export type ErrorBoundaryState = {
   hasError: boolean;
   error: unknown;
 };
@@ -27,12 +22,26 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   render() {
     if (this.state.hasError) {
-      if (this.props.renderFallback) {
-        return this.props.renderFallback(this.state.error);
-      } else {
-        return this.props.fallback;
+      const error = this.state.error;
+      const fallback = this.props.fallback;
+
+      if (!fallback) {
+        if (error instanceof Error) {
+          return error.message;
+        }
+
+        if (typeof error === "string") {
+          return error;
+        }
       }
+
+      if (typeof fallback === "function") {
+        return fallback(error);
+      }
+
+      return fallback;
     }
+
     return this.props.children;
   }
 }

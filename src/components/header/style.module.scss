@@ -1,0 +1,49 @@
+@use "../../shared/styles/mixins" as m;
+
+[data-theme="light"] {
+  .heading {
+    --color-text: var(--color-accent-07);
+    --color-shadow: var(--color-accent-04);
+  }
+}
+
+[data-theme="dark"] {
+  .heading {
+    --color-text: var(--color-accent-06);
+    --color-shadow: var(--color-accent-09);
+  }
+}
+
+.header {
+  height: fit-content;
+  display: flex;
+}
+
+.themeToggle {
+  span {
+    border-right: none;
+  }
+}
+
+.languageToggle {
+  span {
+    border-left: none;
+  }
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.heading {
+  @include m.unselectable;
+
+  text-shadow: 0 var(--border-width-thick) 0 var(--color-shadow);
+  color: var(--color-text);
+  font-size: 2.25rem;
+  text-align: center;
+  line-height: 1;
+}

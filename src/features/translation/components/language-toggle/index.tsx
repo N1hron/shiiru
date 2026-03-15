@@ -5,9 +5,13 @@ import { useLanguage } from "../../hooks/useLanguage";
 import type { Language } from "../../types";
 import type { UseSpinButtonOption, UseSpinButtonOptionList } from "@/shared/hooks/useSpinButton";
 
+import styles from "./style.module.scss";
+import clsx from "clsx";
+
 type LanguageToggleProps = MultiToggleBaseProps;
 
-export function LanguageToggle(props: LanguageToggleProps) {
+export function LanguageToggle({ className, ...props }: LanguageToggleProps) {
+  const cn = clsx(styles.languageToggle, className);
   const [language, setLanguage] = useLanguage();
   const { t } = useTranslation();
   const label = t("language.toggle");
@@ -29,6 +33,7 @@ export function LanguageToggle(props: LanguageToggleProps) {
 
   return (
     <MultiToggle
+      className={cn}
       color="accent"
       size="medium"
       options={options}

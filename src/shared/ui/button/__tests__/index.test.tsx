@@ -38,7 +38,7 @@ describe("Button", () => {
     it.each(["accent", "success", "error"] as const)("color = %s", (color) => {
       render(<Button color={color} />);
       const button = screen.getByRole("button");
-      expect(button).toHaveClass(new RegExp(`buttonColored${capitalize(color)}`));
+      expect(button).toHaveClass(new RegExp(`button${capitalize(color)}`));
     });
 
     it.each(["lr", "rl"] as const)("sideways = %s", (sideways) => {

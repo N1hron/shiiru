@@ -39,30 +39,28 @@
     --color-border: var(--color-main-10);
     --color-text: var(--color-text-alt);
 
-    &Colored {
-      &Accent {
-        --color-background: var(--color-accent-07);
-        --color-background-hover: var(--color-accent-08);
-        --color-border: var(--color-accent-09);
-      }
+    &Colored:disabled {
+      --color-background: var(--color-main-08);
+      --color-background-hover: var(--color-main-09);
+      --color-border: var(--color-main-10);
+    }
 
-      &Error {
-        --color-background: var(--color-error-07);
-        --color-background-hover: var(--color-error-08);
-        --color-border: var(--color-error-09);
-      }
+    &Accent {
+      --color-background: var(--color-accent-07);
+      --color-background-hover: var(--color-accent-08);
+      --color-border: var(--color-accent-09);
+    }
 
-      &Success {
-        --color-background: var(--color-success-07);
-        --color-background-hover: var(--color-success-08);
-        --color-border: var(--color-success-09);
-      }
+    &Error {
+      --color-background: var(--color-error-07);
+      --color-background-hover: var(--color-error-08);
+      --color-border: var(--color-error-09);
+    }
 
-      &:disabled {
-        --color-background: var(--color-main-08);
-        --color-background-hover: var(--color-main-09);
-        --color-border: var(--color-main-10);
-      }
+    &Success {
+      --color-background: var(--color-success-07);
+      --color-background-hover: var(--color-success-08);
+      --color-border: var(--color-success-09);
     }
   }
 }
@@ -77,29 +75,29 @@
     &Colored {
       --color-text: var(--color-text-alt);
 
-      &Accent {
-        --color-background: var(--color-accent-07);
-        --color-background-hover: var(--color-accent-08);
-        --color-border: var(--color-accent-09);
-      }
-
-      &Error {
-        --color-background: var(--color-error-07);
-        --color-background-hover: var(--color-error-08);
-        --color-border: var(--color-error-09);
-      }
-
-      &Success {
-        --color-background: var(--color-success-07);
-        --color-background-hover: var(--color-success-08);
-        --color-border: var(--color-success-09);
-      }
-
       &:disabled {
         --color-background: var(--color-main-05);
         --color-background-hover: var(--color-main-06);
         --color-border: var(--color-main-07);
       }
+    }
+
+    &Accent {
+      --color-background: var(--color-accent-07);
+      --color-background-hover: var(--color-accent-08);
+      --color-border: var(--color-accent-09);
+    }
+
+    &Error {
+      --color-background: var(--color-error-07);
+      --color-background-hover: var(--color-error-08);
+      --color-border: var(--color-error-09);
+    }
+
+    &Success {
+      --color-background: var(--color-success-07);
+      --color-background-hover: var(--color-success-08);
+      --color-border: var(--color-success-09);
     }
   }
 }

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import { Button } from "../";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "@/shared/utils/capitalize";
 
 describe("Button", () => {
   it("should render correctly", () => {
@@ -32,16 +32,16 @@ describe("Button", () => {
     it.each(["large", "medium"] as const)("size = %s", (size) => {
       render(<Button size={size} />);
       const button = screen.getByRole("button");
-      expect(button).toHaveClass(new RegExp(`buttonSize${capitalize(size)}`));
+      expect(button).toHaveClass(new RegExp(`button${capitalize(size)}`));
     });
 
     it.each(["accent", "success", "error"] as const)("color = %s", (color) => {
       render(<Button color={color} />);
       const button = screen.getByRole("button");
-      expect(button).toHaveClass(new RegExp(`buttonColor${capitalize(color)}`));
+      expect(button).toHaveClass(new RegExp(`buttonColored${capitalize(color)}`));
     });
 
-    it.each(["bt", "tb"] as const)("sideways = %s", (sideways) => {
+    it.each(["lr", "rl"] as const)("sideways = %s", (sideways) => {
       render(<Button sideways={sideways} />);
       const button = screen.getByRole("button");
       expect(button).toHaveClass(new RegExp(`buttonSideways${capitalize(sideways)}`));

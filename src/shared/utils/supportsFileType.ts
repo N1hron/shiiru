@@ -1,8 +1,8 @@
 import { config } from "@/config";
 import { getFileNameExt } from "./getFileNameExt";
 
-const acceptSet = new Set(config.uploader.accept);
-const rejectSet = new Set(config.uploader.reject);
+const accept = new Set(config.uploader.accept);
+const reject = new Set(config.uploader.reject);
 
 export function supportsFileType(file: File | DataTransferItem) {
   if (file instanceof DataTransferItem && file.kind !== "file") {
@@ -21,13 +21,13 @@ export function supportsFileType(file: File | DataTransferItem) {
 
   return (
     (
-      acceptSet.has(type) ||
-      acceptSet.has(wildcard) ||
-      acceptSet.has(ext)
+      accept.has(type) ||
+      accept.has(wildcard) ||
+      accept.has(ext)
     ) && !(
-      rejectSet.has(type) ||
-      rejectSet.has(wildcard) ||
-      rejectSet.has(ext)
+      reject.has(type) ||
+      reject.has(wildcard) ||
+      reject.has(ext)
     )
   );
 }

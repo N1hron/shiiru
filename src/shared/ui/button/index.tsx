@@ -39,9 +39,10 @@ export function Button<E extends ButtonElement = "button">({
 
   return (
     <Element className={cn} {...props}>
-      <span className={styles.wrapper}>
-        <span className={styles.background} />
-        <span className={styles.content}>{ children }</span>
+      <span data-wrapper className={styles.wrapper}>
+        <span data-content className={styles.content}>
+          { children }
+        </span>
       </span>
     </Element>
   );

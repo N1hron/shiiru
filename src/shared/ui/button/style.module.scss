@@ -102,33 +102,32 @@
   }
 }
 
-$wrapper-padding: calc(var(--border-width-thick) - var(--border-width-thin));
-$content-height: calc(var(--block-size) - $wrapper-padding);
+$padding: calc(var(--border-width-thick) - var(--border-width-thin));
+$content-height: calc(var(--block-size) - var(--border-width-thick));
 
 .button {
   all: unset;
   box-sizing: border-box;
   display: inline-block;
-  width: fit-content;
-  height: fit-content;
-  flex-grow: 0;
+  margin-top: 0;
+  padding-bottom: $padding;
+  background: linear-gradient(to bottom, transparent 0 50%, var(--color-border) 50% 100%);
+  transition-property: margin-top, padding-bottom;
+  transition-duration: var(--transition-duration-fastest);
   cursor: pointer;
 
   &Sideways {
-    &Lr {
-      .wrapper {
-        writing-mode: vertical-lr;
-      }
-
-      .content {
-        rotate: 180deg;
-        transform-origin: center;
-      }
-    }
-
+    &Lr,
     &Rl {
       .wrapper {
         writing-mode: vertical-lr;
+      }
+    }
+
+    &Lr {
+      .content {
+        rotate: 180deg;
+        transform-origin: center;
       }
     }
   }
@@ -141,10 +140,8 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
     }
 
     &:active {
-      .wrapper {
-        padding-top: $wrapper-padding;
-        padding-bottom: 0;
-      }
+      margin-top: $padding;
+      padding-bottom: 0;
     }
 
     &:focus-visible {
@@ -166,31 +163,14 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
 .wrapper {
   position: relative;
   display: block;
-  padding-top: 0;
-  padding-bottom: $wrapper-padding;
   inline-size: var(--inline-size);
-  transition-property: padding-top, padding-bottom;
-  transition-duration: var(--transition-duration-fastest);
-}
-
-.background {
-  position: absolute;
-  display: block;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 50%;
-  width: 100%;
-  background-color: var(--color-border);
-  transition-property: background-color;
-  transition-duration: var(--transition-duration-fast);
+  border: solid var(--border-width-thin) var(--color-border);
 }
 
 .content {
   @include m.unselectable;
 
   position: relative;
-  display: block;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -199,7 +179,6 @@ $content-height: calc(var(--block-size) - $wrapper-padding);
   padding-inline: var(--padding-inline);
   background-color: var(--color-background);
   color: var(--color-text);
-  border: solid var(--border-width-thin) var(--color-border);
   font-size: var(--font-size);
   line-height: 0.5;
   transition-property: background-color, border-color;

@@ -50,6 +50,7 @@ export function MultiToggle<V extends string>({
       aria-valuemax={max}
       aria-valuenow={now}
       aria-valuetext={label}
+      disabled={disabled}
       onClick={setNext}
       onKeyDown={handleKeyDown}
       {...props}

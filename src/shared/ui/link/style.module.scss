@@ -1,0 +1,19 @@
+@use "../../styles/mixins" as m;
+
+.link {
+  color: var(--color-accent-06);
+  transition-property: color;
+  transition-duration: var(--transition-duration-fast);
+
+  &:hover {
+    color: var(--color-accent-07);
+  }
+
+  &:active {
+    color: var(--color-accent-08);
+  }
+
+  &:focus-visible {
+    @include m.focus-outline(var(--color-accent-07));
+  }
+}

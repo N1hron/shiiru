@@ -9,10 +9,10 @@ export function Header() {
     <header className={styles.header}>
       <Card.Menu>
         <Card.MenuItem>
-          <ThemeToggle className={styles.themeToggle} />
+          <ThemeToggle />
         </Card.MenuItem>
         <Card.MenuItem>
-          <LanguageToggle sideways="lr" className={styles.languageToggle} />
+          <LanguageToggle sideways="lr" />
         </Card.MenuItem>
       </Card.Menu>
       <Card className={styles.logo}>

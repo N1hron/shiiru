@@ -44,12 +44,28 @@ $menu-gap: 0.25rem;
   padding-top: calc($menu-gap + var(--border-width-thin));
   padding-bottom: calc($menu-gap + var(--border-width-medium));
 
+  &Left {
+    button {
+      [data-wrapper] {
+        border-right: none;
+      }
+    }
+  }
+
+  &Right {
+    button {
+      [data-wrapper] {
+        border-left: none;
+      }
+    }
+  }
+
   &Item {
     display: block;
-    box-shadow: var(--box-shadow);
 
-    & > button {
+    button {
       display: block;
+      box-shadow: var(--box-shadow);
     }
   }
 }

@@ -1,37 +1,5 @@
 @use "../../styles/mixins" as m;
 
-.button {
-  --inline-size: auto;
-
-  &Large {
-    --block-size: 2rem;
-    --padding-inline: 0.5rem;
-    --gap: 0.5rem;
-    --font-size: var(--font-size-medium);
-    --svg-stroke-width: 2.25;
-  }
-
-  &Medium {
-    --block-size: 1.5rem;
-    --padding-inline: 0.25rem;
-    --gap: 0.25rem;
-    --font-size: var(--font-size-small);
-    --svg-stroke-width: 2.5;
-  }
-
-  &Small {
-    --block-size: 1.125rem;
-    --padding-inline: 0.125rem;
-    --gap: 0.125rem;
-    --font-size: var(--font-size-small);
-    --svg-stroke-width: 2.6;
-  }
-
-  &Icon {
-    --padding-inline: 0;
-  }
-}
-
 [data-theme="dark"] {
   .button {
     --color-background: var(--color-main-08);
@@ -40,27 +8,9 @@
     --color-text: var(--color-text-alt);
 
     &Colored:disabled {
-      --color-background: var(--color-main-08);
-      --color-background-hover: var(--color-main-09);
-      --color-border: var(--color-main-10);
-    }
-
-    &Accent {
-      --color-background: var(--color-accent-07);
-      --color-background-hover: var(--color-accent-08);
-      --color-border: var(--color-accent-09);
-    }
-
-    &Error {
-      --color-background: var(--color-error-07);
-      --color-background-hover: var(--color-error-08);
-      --color-border: var(--color-error-09);
-    }
-
-    &Success {
-      --color-background: var(--color-success-07);
-      --color-background-hover: var(--color-success-08);
-      --color-border: var(--color-success-09);
+      --color-background: var(--color-state-08);
+      --color-background-hover: var(--color-state-09);
+      --color-border: var(--color-state-10);
     }
   }
 }
@@ -76,28 +26,50 @@
       --color-text: var(--color-text-alt);
 
       &:disabled {
-        --color-background: var(--color-main-05);
-        --color-background-hover: var(--color-main-06);
-        --color-border: var(--color-main-07);
+        --color-background: var(--color-state-05);
+        --color-background-hover: var(--color-state-06);
+        --color-border: var(--color-state-07);
       }
     }
+  }
+}
 
-    &Accent {
-      --color-background: var(--color-accent-07);
-      --color-background-hover: var(--color-accent-08);
-      --color-border: var(--color-accent-09);
+[data-theme] {
+  .button {
+    --inline-size: auto;
+
+    &Large {
+      --block-size: 2rem;
+      --padding-inline: 0.5rem;
+      --gap: 0.5rem;
+      --font-size: var(--font-size-medium);
+      --svg-stroke-width: 2.25;
     }
 
-    &Error {
-      --color-background: var(--color-error-07);
-      --color-background-hover: var(--color-error-08);
-      --color-border: var(--color-error-09);
+    &Medium {
+      --block-size: 1.5rem;
+      --padding-inline: 0.25rem;
+      --gap: 0.25rem;
+      --font-size: var(--font-size-small);
+      --svg-stroke-width: 2.5;
     }
 
-    &Success {
-      --color-background: var(--color-success-07);
-      --color-background-hover: var(--color-success-08);
-      --color-border: var(--color-success-09);
+    &Small {
+      --block-size: 1.125rem;
+      --padding-inline: 0.125rem;
+      --gap: 0.125rem;
+      --font-size: var(--font-size-small);
+      --svg-stroke-width: 2.6;
+    }
+
+    &Icon {
+      --padding-inline: 0;
+    }
+
+    &Colored {
+      --color-background: var(--color-state-07);
+      --color-background-hover: var(--color-state-08);
+      --color-border: var(--color-state-09);
     }
   }
 }
@@ -115,6 +87,18 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
   transition-property: margin-top, padding-bottom;
   transition-duration: var(--transition-duration-fastest);
   cursor: pointer;
+
+  &Accent {
+    @include m.color-state("accent");
+  }
+
+  &Error {
+    @include m.color-state("error");
+  }
+
+  &Success {
+    @include m.color-state("success");
+  }
 
   &Sideways {
     &Lr,
@@ -150,6 +134,8 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
   }
 
   &:disabled {
+    @include m.color-state("main");
+
     cursor: not-allowed;
 
     .content {

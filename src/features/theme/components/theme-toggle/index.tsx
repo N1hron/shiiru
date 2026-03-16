@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actions } from "../../slice";
 import { selectors } from "../../slice/selectors";
 import type { Theme } from "../../types";
-import type { UseSpinButtonOption } from "@/hooks/useSpinButton";
+import type { SpinButtonOption } from "@/hooks/useSpinButton";
 
 type ThemeToggleProps = MultiToggleBaseProps;
 
@@ -18,7 +18,7 @@ export function ThemeToggle(props: ThemeToggleProps) {
   const theme = useAppSelector(selectors.selectTheme);
   const label = t("theme.toggle");
 
-  const options: Array<UseSpinButtonOption<Theme>> = [
+  const options: Array<SpinButtonOption<Theme>> = [
     {
       value: "system",
       label: t("theme.system")
@@ -37,7 +37,7 @@ export function ThemeToggle(props: ThemeToggleProps) {
     dispatch(actions.setValue(value));
   }
 
-  function render(option: UseSpinButtonOption<Theme>) {
+  function render(option: SpinButtonOption<Theme>) {
     switch (option.value) {
       case "light":
         return <SunIcon aria-hidden />;

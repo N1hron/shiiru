@@ -2,31 +2,46 @@ import { useCallback, useMemo } from "react";
 
 import { wrap } from "../utils/wrap";
 
-export type UseSpinButtonOptions<V extends string> = {
-  options: UseSpinButtonOptionList<V>;
+export type SpinButtonOptions<V extends string> = {
+  options: SpinButtonOptionList<V>;
   value: V;
   defaultValue?: V;
   setValue: (value: V) => void;
 };
 
-export type UseSpinButtonOptionList<V extends string> = Array<UseSpinButtonOption<V>>;
+export type UseSpinButtonResult = {
+  min: number;
+  max: number;
+  now: number;
+  label: string;
+  next: () => void;
+  prev: () => void;
+  reset: () => void;
+};
 
-export type UseSpinButtonOption<V extends string> = {
+export type SpinButtonOptionList<V extends string> = Array<SpinButtonOption<V>>;
+
+export type SpinButtonOption<V extends string> = {
   value: V;
   label: string;
 };
 
-export function useSpinButton<V extends string>({ options, value, defaultValue, setValue }: UseSpinButtonOptions<V>) {
+export function useSpinButton<V extends string>({
+  options,
+  value,
+  defaultValue,
+  setValue
+}: SpinButtonOptions<V>): UseSpinButtonResult {
   const min = 0;
   const max = options.length - 1;
   const now = options.findIndex((o) => o.value === value);
   const label = options[now].label;
 
-  const setNext = useCallback(() => {
+  const next = useCallback(() => {
     setValue(options[wrap(0, now + 1, max)].value);
   }, [options, now, max, setValue]);
 
-  const setPrev = useCallback(() => {
+  const prev = useCallback(() => {
     setValue(options[wrap(0, now - 1, max)].value);
   }, [options, now, max, setValue]);
 
@@ -36,7 +51,7 @@ export function useSpinButton<V extends string>({ options, value, defaultValue, 
   }, [options, defaultValue, setValue]);
 
   return useMemo(
-    () => ({ min, max, now, label, setNext, setPrev, reset }),
-    [min, max, now, label, setNext, setPrev, reset]
+    () => ({ min, max, now, label, next, prev, reset }),
+    [min, max, now, label, next, prev, reset]
   );
 }

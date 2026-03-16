@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { MultiToggle, type MultiToggleBaseProps } from "@/ui/multi-toggle";
 import { useLanguage } from "../../hooks/useLanguage";
 import type { Language } from "../../types";
-import type { UseSpinButtonOption, UseSpinButtonOptionList } from "@/hooks/useSpinButton";
+import type { SpinButtonOption, SpinButtonOptionList } from "@/hooks/useSpinButton";
 
 import styles from "./style.module.scss";
 import clsx from "clsx";
@@ -16,7 +16,7 @@ export function LanguageToggle({ className, ...props }: LanguageToggleProps) {
   const { t } = useTranslation();
   const label = t("language.toggle");
 
-  const options: UseSpinButtonOptionList<Language> = [
+  const options: SpinButtonOptionList<Language> = [
     {
       value: "en",
       label: t("language.en")
@@ -27,7 +27,7 @@ export function LanguageToggle({ className, ...props }: LanguageToggleProps) {
     }
   ];
 
-  function renderContent(option: UseSpinButtonOption<Language>) {
+  function render(option: SpinButtonOption<Language>) {
     return <span aria-hidden>{ option.value }</span>;
   }
 
@@ -40,7 +40,7 @@ export function LanguageToggle({ className, ...props }: LanguageToggleProps) {
       value={language}
       aria-label={label}
       setValue={setLanguage}
-      children={renderContent}
+      children={render}
       {...props}
     />
   );

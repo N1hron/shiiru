@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import type { ComponentPropsWithRef } from "react";
 
-import { Card } from "@/shared/ui/card";
-import { Link } from "@/shared/ui/link";
+import { Card } from "@/ui/card";
+import { Link } from "@/ui/link";
 
 import styles from "./style.module.scss";
 

@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 
-import { MultiToggle, type MultiToggleBaseProps } from "@/shared/ui/multi-toggle";
+import { MultiToggle, type MultiToggleBaseProps } from "@/ui/multi-toggle";
 import { useLanguage } from "../../hooks/useLanguage";
 import type { Language } from "../../types";
-import type { UseSpinButtonOption, UseSpinButtonOptionList } from "@/shared/hooks/useSpinButton";
+import type { UseSpinButtonOption, UseSpinButtonOptionList } from "@/hooks/useSpinButton";
 
 import styles from "./style.module.scss";
 import clsx from "clsx";

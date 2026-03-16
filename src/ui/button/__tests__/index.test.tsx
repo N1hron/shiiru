@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import { Button } from "../";
-import { capitalize } from "@/shared/utils/capitalize";
+import { capitalize } from "@/utils/capitalize";
 
 describe("Button", () => {
   it("should render correctly", () => {

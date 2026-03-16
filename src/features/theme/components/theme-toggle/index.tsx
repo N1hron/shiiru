@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import SunIcon from "@/assets/icons/sun.svg?react";
 import MoonIcon from "@/assets/icons/moon.svg?react";
 import ComputerIcon from "@/assets/icons/computer.svg?react";
-import { MultiToggle, type MultiToggleBaseProps } from "@/shared/ui/multi-toggle";
+import { MultiToggle, type MultiToggleBaseProps } from "@/ui/multi-toggle";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actions } from "../../slice";
 import { selectors } from "../../slice/selectors";
 import type { Theme } from "../../types";
-import type { UseSpinButtonOption } from "@/shared/hooks/useSpinButton";
+import type { UseSpinButtonOption } from "@/hooks/useSpinButton";
 
 type ThemeToggleProps = MultiToggleBaseProps;
 

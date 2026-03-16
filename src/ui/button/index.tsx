@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 
-import { capitalize } from "@/shared/utils/capitalize";
+import { capitalize } from "@/utils/capitalize";
 
 import styles from "./style.module.scss";
 

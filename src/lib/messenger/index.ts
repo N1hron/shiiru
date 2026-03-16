@@ -1,7 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 
 import { isResponse } from "./utils";
-import type { DistributiveOmit, Shift } from "@/shared/types";
+import type { DistributiveOmit, Shift } from "@/types";
 import type { Request, Response } from "./types";
 
 type MessengerDestination =

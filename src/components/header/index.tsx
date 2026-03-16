@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { ComponentPropsWithRef } from "react";
 
-import { Card } from "@/shared/ui/card";
+import { Card } from "@/ui/card";
 import { ThemeToggle } from "@/features/theme";
 import { LanguageToggle } from "@/features/translation";
 

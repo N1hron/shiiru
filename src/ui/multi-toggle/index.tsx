@@ -2,8 +2,8 @@ import clsx from "clsx";
 import type { KeyboardEvent } from "react";
 
 import { Button, type ButtonProps } from "../button";
-import { useSpinButton, type UseSpinButtonOption, type UseSpinButtonOptions } from "@/shared/hooks/useSpinButton";
-import type { RenderProp } from "@/shared/types";
+import { useSpinButton, type UseSpinButtonOption, type UseSpinButtonOptions } from "@/hooks/useSpinButton";
+import type { RenderProp } from "@/types";
 
 import styles from "./style.module.scss";
 

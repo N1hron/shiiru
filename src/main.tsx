@@ -4,8 +4,8 @@ import { Provider as StoreProvider } from "react-redux";
 
 import { App } from "@/app";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
-import { ThemeProvider } from "@/features/theme";
-import { LanguageProvider } from "./features/translation";
+import { DataTheme } from "@/features/theme";
+import { HtmlLang } from "./features/translation";
 import { store } from "@/store";
 
 import "@/i18n";
@@ -17,13 +17,11 @@ const root = createRoot(rootNode);
 root.render(
   <StrictMode>
     <StoreProvider store={store}>
-      <ThemeProvider>
-        <LanguageProvider>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
-        </LanguageProvider>
-      </ThemeProvider>
+      <HtmlLang />
+      <DataTheme />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </StoreProvider>
   </StrictMode>
 );

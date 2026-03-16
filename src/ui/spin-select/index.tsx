@@ -1,10 +1,11 @@
 import clsx from "clsx";
-import { type ComponentPropsWithRef, type KeyboardEvent, type MouseEvent } from "react";
+import { useRef, type ComponentPropsWithRef, type KeyboardEvent, type MouseEvent } from "react";
 
 import { Trigger } from "./Trigger";
 import { useSpinButton, type SpinButtonOptions } from "@/hooks/useSpinButton";
 
 import styles from "./style.module.scss";
+import { useAnimationDuration } from "@/hooks/useAnimationDuration";
 
 type SpinSelectProps<V extends string> = Omit<ComponentPropsWithRef<"div">, "children"> & SpinButtonOptions<V> & {
   disabled?: boolean;
@@ -18,6 +19,8 @@ export function SpinSelect<V extends string>({
   className,
   ...props
 }: SpinSelectProps<V>) {
+  const outputRef = useRef<HTMLOutputElement>(null);
+  const animationDuration = useAnimationDuration({ targetRef: outputRef });
   const { min, max, now, label, prev, next, reset } = useSpinButton({ options, value, setValue });
   const cn = clsx(styles.spinSelect, className);
 
@@ -82,7 +85,15 @@ export function SpinSelect<V extends string>({
       {...props}
     >
       <Trigger direction="prev" disabled={disabled} onClick={handlePrevClick} />
-      <output className={styles.output}> { label } </output>
+
+      <output
+        className={styles.output}
+        ref={outputRef}
+        style={{ animationDuration: animationDuration + "s" }}
+      >
+        { label }
+      </output>
+
       <Trigger direction="next" disabled={disabled} onClick={handleNextClick} />
     </div>
   );

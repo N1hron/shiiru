@@ -29,12 +29,18 @@
 
     .output {
       @include m.focus-outline(var(--color-accent-07));
+
+      animation-play-state: running;
     }
   }
 
   &:not([aria-disabled]) {
     .output {
       cursor: pointer;
+
+      &:hover {
+        animation-play-state: running;
+      }
     }
   }
 

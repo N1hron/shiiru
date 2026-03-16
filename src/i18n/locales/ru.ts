@@ -11,5 +11,10 @@ export const ru = {
     toggle: "Переключить язык",
     en: "Английский язык",
     ru: "Русский язык"
+  },
+  spinButton: {
+    prev: "Предыдущее значение",
+    next: "Следующее значение",
+    reset: "Сбросить значение"
   }
 } satisfies typeof en;

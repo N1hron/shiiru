@@ -1,0 +1,81 @@
+@use "../../styles/mixins" as m;
+
+.output {
+  --color-background-1: var(--color-state-05);
+  --color-background-2: var(--color-state-06);
+  --color-border: var(--color-state-08);
+  --color-shadow: var(--color-state-10);
+}
+
+[data-theme="dark"] {
+  .spinSelect[aria-disabled] {
+    .output {
+      --color-background-1: var(--color-state-07);
+      --color-background-2: var(--color-state-08);
+      --color-border: var(--color-state-10);
+      --color-shadow: var(--color-state-12);
+    }
+  }
+}
+
+.spinSelect {
+  @include m.color-state("accent");
+
+  display: flex;
+  gap: 0.25rem;
+
+  &:focus-visible {
+    outline: none;
+
+    .output {
+      @include m.focus-outline(var(--color-accent-07));
+    }
+  }
+
+  &:not([aria-disabled]) {
+    .output {
+      cursor: pointer;
+    }
+  }
+
+  &[aria-disabled] {
+    @include m.color-state("main");
+
+    .output {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.trigger {
+  flex-shrink: 0;
+
+  svg {
+    height: 100%;
+  }
+
+  path {
+    stroke-width: 2;
+  }
+
+  &Next {
+    svg {
+      rotate: 180deg;
+    }
+  }
+}
+
+.output {
+  @include m.border-3d(var(--color-border));
+  @include m.background-dashed-animated(var(--color-background-1), var(--color-background-2));
+  @include m.unselectable;
+
+  flex-grow: 1;
+  padding: 0 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text-alt);
+  text-shadow: 0 0 1rem var(--color-shadow);
+  overflow: hidden;
+}

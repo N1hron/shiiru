@@ -9,5 +9,10 @@ export const en = {
     toggle: "Toggle language",
     en: "English language",
     ru: "Russian language"
+  },
+  spinButton: {
+    prev: "Previous value",
+    next: "Next value",
+    reset: "Reset value"
   }
 };

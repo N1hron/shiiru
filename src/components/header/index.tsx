@@ -1,12 +1,19 @@
+import clsx from "clsx";
+import type { ComponentPropsWithRef } from "react";
+
 import { Card } from "@/shared/ui/card";
 import { ThemeToggle } from "@/features/theme";
 import { LanguageToggle } from "@/features/translation";
 
 import styles from "./style.module.scss";
 
-export function Header() {
+export type HeaderProps = ComponentPropsWithRef<"header">;
+
+export function Header({ className, ...props }: HeaderProps) {
+  const cn = clsx(styles.header, className);
+
   return (
-    <header className={styles.header}>
+    <header className={cn} {...props}>
       <Card.Menu>
         <Card.MenuItem>
           <ThemeToggle />

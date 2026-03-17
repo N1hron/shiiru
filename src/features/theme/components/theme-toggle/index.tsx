@@ -5,8 +5,7 @@ import MoonIcon from "@/assets/icons/moon.svg?react";
 import ComputerIcon from "@/assets/icons/computer.svg?react";
 import { MultiToggle, type MultiToggleBaseProps } from "@/ui/multi-toggle";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { actions } from "../../slice";
-import { selectors } from "../../slice/selectors";
+import { themeSelectors, themeActions } from "../../slice";
 import type { Theme } from "../../types";
 import type { SpinButtonOption } from "@/hooks/useSpinButton";
 
@@ -15,7 +14,7 @@ type ThemeToggleProps = MultiToggleBaseProps;
 export function ThemeToggle(props: ThemeToggleProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const theme = useAppSelector(selectors.selectTheme);
+  const theme = useAppSelector(themeSelectors.selectTheme);
   const label = t("theme.toggle");
 
   const options: Array<SpinButtonOption<Theme>> = [
@@ -34,7 +33,7 @@ export function ThemeToggle(props: ThemeToggleProps) {
   ];
 
   function setValue(value: Theme) {
-    dispatch(actions.setValue(value));
+    dispatch(themeActions.setValue(value));
   }
 
   function render(option: SpinButtonOption<Theme>) {

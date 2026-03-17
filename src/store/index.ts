@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import { themeReducer, saveThemeMiddleware } from "@/features/theme";
+import { themeReducer, themeMiddleware } from "@/features/theme";
 
 export const reducer = combineReducers({
   theme: themeReducer
@@ -9,7 +9,7 @@ export const reducer = combineReducers({
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
-    saveThemeMiddleware
+    themeMiddleware.saveTheme
   ]),
   devTools: import.meta.env.DEV
 });

@@ -21,5 +21,7 @@ const slice = createSlice({
   }
 });
 
-export const reducer = slice.reducer;
-export const actions = slice.actions;
+export const themeReducer = slice.reducer;
+export const themeActions = slice.actions;
+export * as themeSelectors from "./selectors";
+export * as themeMiddleware from "./middleware";

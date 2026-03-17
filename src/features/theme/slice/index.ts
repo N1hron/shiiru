@@ -23,5 +23,6 @@ const slice = createSlice({
 
 export const themeReducer = slice.reducer;
 export const themeActions = slice.actions;
+
 export * as themeSelectors from "./selectors";
 export * as themeMiddleware from "./middleware";

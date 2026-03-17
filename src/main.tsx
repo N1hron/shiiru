@@ -1,11 +1,12 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import { Provider as StoreProvider } from "react-redux";
+import { createRoot } from "react-dom/client";
 
 import { App } from "@/app";
 import { ErrorBoundary } from "@/ui/error-boundary";
+import { SupportBoundary } from "@/features/support";
 import { DataTheme } from "@/features/theme";
-import { HtmlLang } from "./features/translation";
+import { HtmlLang } from "@/features/translation";
 import { store } from "@/store";
 
 import "@/i18n";
@@ -20,7 +21,9 @@ root.render(
       <HtmlLang />
       <DataTheme />
       <ErrorBoundary>
-        <App />
+        <SupportBoundary>
+          <App />
+        </SupportBoundary>
       </ErrorBoundary>
     </StoreProvider>
   </StrictMode>

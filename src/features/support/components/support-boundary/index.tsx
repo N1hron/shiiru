@@ -15,11 +15,11 @@ export function SupportBoundary({ children }: SupportBoundaryProps) {
     void dispatch(supportThunks.checkSupport());
   }, [dispatch]);
 
-  if (isPending) {
-    return "Checking browser support";
-  } else if (isSupported) {
+  if (isSupported) {
     return children;
+  } else if (isPending) {
+    return "Checking browser support";
   } else {
-    return null;
+    return "Your browser is not supported";
   }
 }

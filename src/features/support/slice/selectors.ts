@@ -16,7 +16,7 @@ export const selectIsSupported = (state: AppState) => {
   );
 };
 
-export const selectFeatureSupport = <F extends Features>(state: AppState, feature: F): FeatureSupport[F] => {
+export const selectFeature = <F extends Features>(state: AppState, feature: F): FeatureSupport[F] => {
   const features = selectFeatures(state);
   return features != null && features[feature];
 };

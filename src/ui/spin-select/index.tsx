@@ -3,9 +3,9 @@ import { useRef, type ComponentPropsWithRef, type KeyboardEvent, type MouseEvent
 
 import { Trigger } from "./Trigger";
 import { useSpinButton, type SpinButtonOptions } from "@/hooks/useSpinButton";
+import { useAnimationDuration } from "@/hooks/useAnimationDuration";
 
 import styles from "./style.module.scss";
-import { useAnimationDuration } from "@/hooks/useAnimationDuration";
 
 type SpinSelectProps<V extends string> = Omit<ComponentPropsWithRef<"div">, "children"> & SpinButtonOptions<V> & {
   disabled?: boolean;
@@ -14,6 +14,7 @@ type SpinSelectProps<V extends string> = Omit<ComponentPropsWithRef<"div">, "chi
 export function SpinSelect<V extends string>({
   options,
   value,
+  defaultValue,
   setValue,
   disabled,
   className,
@@ -21,7 +22,7 @@ export function SpinSelect<V extends string>({
 }: SpinSelectProps<V>) {
   const outputRef = useRef<HTMLOutputElement>(null);
   const animationDuration = useAnimationDuration({ targetRef: outputRef });
-  const { min, max, now, label, prev, next, reset } = useSpinButton({ options, value, setValue });
+  const { min, max, now, label, prev, next, reset } = useSpinButton({ options, value, defaultValue, setValue });
   const cn = clsx(styles.spinSelect, className);
 
   function handleKeyDown(event: KeyboardEvent) {

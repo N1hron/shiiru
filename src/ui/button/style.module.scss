@@ -26,9 +26,9 @@
       --color-text: var(--color-text-alt);
 
       &:disabled {
-        --color-background: var(--color-state-05);
-        --color-background-hover: var(--color-state-06);
-        --color-border: var(--color-state-07);
+        --color-background: var(--color-state-06);
+        --color-background-hover: var(--color-state-07);
+        --color-border: var(--color-state-08);
       }
     }
   }

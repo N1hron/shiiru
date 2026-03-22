@@ -1,5 +1,37 @@
 @use "../../styles/mixins" as m;
 
+.button {
+  --inline-size: auto;
+
+  &Large {
+    --block-size: 2rem;
+    --padding-inline: 0.5rem;
+    --gap: 0.5rem;
+    --font-size: var(--font-size-medium);
+    --svg-stroke-width: 2.25;
+  }
+
+  &Medium {
+    --block-size: 1.5rem;
+    --padding-inline: 0.25rem;
+    --gap: 0.25rem;
+    --font-size: var(--font-size-small);
+    --svg-stroke-width: 2.5;
+  }
+
+  &Small {
+    --block-size: 1.125rem;
+    --padding-inline: 0.125rem;
+    --gap: 0.125rem;
+    --font-size: var(--font-size-small);
+    --svg-stroke-width: 2.6;
+  }
+
+  &Icon {
+    --padding-inline: 0;
+  }
+}
+
 [data-theme="dark"] {
   .button {
     --color-background: var(--color-main-08);
@@ -35,42 +67,10 @@
 }
 
 [data-theme] {
-  .button {
-    --inline-size: auto;
-
-    &Large {
-      --block-size: 2rem;
-      --padding-inline: 0.5rem;
-      --gap: 0.5rem;
-      --font-size: var(--font-size-medium);
-      --svg-stroke-width: 2.25;
-    }
-
-    &Medium {
-      --block-size: 1.5rem;
-      --padding-inline: 0.25rem;
-      --gap: 0.25rem;
-      --font-size: var(--font-size-small);
-      --svg-stroke-width: 2.5;
-    }
-
-    &Small {
-      --block-size: 1.125rem;
-      --padding-inline: 0.125rem;
-      --gap: 0.125rem;
-      --font-size: var(--font-size-small);
-      --svg-stroke-width: 2.6;
-    }
-
-    &Icon {
-      --padding-inline: 0;
-    }
-
-    &Colored {
-      --color-background: var(--color-state-07);
-      --color-background-hover: var(--color-state-08);
-      --color-border: var(--color-state-09);
-    }
+  .buttonColored {
+    --color-background: var(--color-state-07);
+    --color-background-hover: var(--color-state-08);
+    --color-border: var(--color-state-09);
   }
 }
 
@@ -103,7 +103,7 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
   &Sideways {
     &Lr,
     &Rl {
-      .wrapper {
+      .contentWrapper {
         writing-mode: vertical-lr;
       }
     }
@@ -146,7 +146,7 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
   }
 }
 
-.wrapper {
+.contentWrapper {
   position: relative;
   display: block;
   inline-size: var(--inline-size);

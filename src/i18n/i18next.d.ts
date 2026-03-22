@@ -1,10 +1,11 @@
 import "i18next";
-import { en } from "./locales/en";
+
+import type { Translation } from "@/i18n";
 
 declare module "i18next" {
   interface CustomTypeOptions {
     resources: {
-      translation: typeof en;
+      translation: Translation;
     };
   }
 }

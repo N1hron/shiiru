@@ -1,5 +1,11 @@
+@use "../../styles/mixins" as m;
+
 .footer {
   text-align: center;
+  grid-column: 1/2;
+  grid-row: -2/-1;
+  width: 15rem;
+  justify-self: end;
 }
 
 .link {
@@ -7,5 +13,11 @@
 
   &:focus-visible {
     padding-inline: 0.125rem;
+  }
+}
+
+@include m.mobile {
+  .footer {
+    justify-self: start;
   }
 }

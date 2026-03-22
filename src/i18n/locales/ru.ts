@@ -1,20 +1,26 @@
-import type { en } from "./en";
+import type { Translation } from "../types";
 
-export const ru = {
+export const ru: Translation = {
   theme: {
     toggle: "Переключить тему",
-    light: "Светлая тема",
-    dark: "Темная тема",
-    system: "Системная тема"
+    current: "Текущая тема: {{theme}}",
+    light: "Светлая",
+    dark: "Темная",
+    system: "Системная"
   },
   language: {
     toggle: "Переключить язык",
-    en: "Английский язык",
-    ru: "Русский язык"
+    current: "Текущий язык: {{language}}",
+    en: "Английский",
+    ru: "Русский"
   },
-  spinButton: {
+  spinSelect: {
     prev: "Предыдущее значение",
     next: "Следующее значение",
     reset: "Сбросить значение"
+  },
+  stickerSettings: {
+    reset: "Сбросить настройки стикера",
+    toggle: "Переключить настройки стикера"
   }
-} satisfies typeof en;
+};

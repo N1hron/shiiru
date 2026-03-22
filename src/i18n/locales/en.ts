@@ -1,18 +1,26 @@
-export const en = {
+import type { Translation } from "@/i18n";
+
+export const en: Translation = {
   theme: {
     toggle: "Toggle theme",
-    light: "Light theme",
-    dark: "Dark theme",
-    system: "System theme"
+    current: "Current theme: {{theme}}",
+    light: "Light",
+    dark: "Dark",
+    system: "System"
   },
   language: {
     toggle: "Toggle language",
-    en: "English language",
-    ru: "Russian language"
+    current: "Current language: {{language}}",
+    en: "English",
+    ru: "Russian"
   },
-  spinButton: {
+  spinSelect: {
     prev: "Previous value",
     next: "Next value",
     reset: "Reset value"
+  },
+  stickerSettings: {
+    reset: "Reset sticker settings",
+    toggle: "Toggle sticker settings"
   }
 };

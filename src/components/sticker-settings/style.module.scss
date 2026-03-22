@@ -1,0 +1,51 @@
+@use "../../styles/mixins" as m;
+
+.stickerSettings {
+  position: relative;
+  grid-column: 1/2;
+  grid-row: 2/4;
+  display: flex;
+}
+
+.list {
+  height: 100%;
+  flex-grow: 1;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-panel-gap);
+
+  button {
+    display: block;
+  }
+}
+
+@include m.desktop {
+  .menu {
+    button {
+      :global {
+        .button-content-wrapper {
+          border-right: none;
+        }
+      }
+    }
+  }
+}
+
+@include m.mobile {
+  .stickerSettings {
+    flex-direction: row-reverse;
+  }
+
+  .menu {
+    button {
+      :global {
+        .button-content-wrapper {
+          border-left: none;
+        }
+      }
+    }
+  }
+}

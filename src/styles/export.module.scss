@@ -1,0 +1,5 @@
+@use "./constants" as *;
+
+:export {
+  MOBILE_BREAKPOINT: $MOBILE_BREAKPOINT;
+}

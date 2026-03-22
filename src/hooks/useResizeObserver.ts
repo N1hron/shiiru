@@ -8,32 +8,34 @@ export type UseResizeObserverOptions = {
   box?: ResizeObserverBoxOptions;
 };
 
-export function useResizeObserver({ targetRef, callback, box }: UseResizeObserverOptions, throttleMs?: number) {
-  const observerRef = useRef<ResizeObserver>(null);
+export function useResizeObserver({ targetRef, callback, box }: UseResizeObserverOptions, ms?: number) {
+  const callbackRef = useRef(callback);
 
   useEffect(() => {
-    const observer = new ResizeObserver(
-      throttleMs != null ?
-        throttle(callback, throttleMs) : callback
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    const target = targetRef.current;
+
+    if (!target) return;
+
+    const callback: ResizeObserverCallback = (
+      ms == null ?
+        (...args) => callbackRef.current(...args) :
+        throttle((...args) => callbackRef.current(...args), ms)
     );
 
-    observerRef.current = observer;
+    const observer = new ResizeObserver(callback);
+
+    observer.observe(target, { box });
 
     return () => {
       observer.disconnect();
+
+      if ("cancel" in callback && typeof callback.cancel === "function") {
+        (callback as ReturnType<typeof throttle>).cancel();
+      }
     };
-  }, [callback, throttleMs]);
-
-  useEffect(() => {
-    const observer = observerRef.current;
-    const target = targetRef.current;
-
-    if (observer && target) {
-      observer.observe(target, { box });
-
-      return () => {
-        observer.unobserve(target);
-      };
-    }
-  }, [callback, throttleMs, targetRef, box]);
+  }, [targetRef, box, ms]);
 }

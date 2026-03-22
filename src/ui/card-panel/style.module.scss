@@ -1,0 +1,9 @@
+.cardPanel {
+  --card-panel-gap: 0.25rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-panel-gap);
+  padding-top: calc(var(--card-panel-gap) + var(--border-width-thin));
+  padding-bottom: calc(var(--card-panel-gap) + var(--border-width-thick));
+}

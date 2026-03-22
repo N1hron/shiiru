@@ -1,0 +1,36 @@
+.toggle {
+  .icon {
+    block-size: 100%;
+    rotate: 270deg;
+
+    path {
+      stroke-width: 2;
+    }
+  }
+
+  &:not(.toggleIcon) {
+    :global {
+      .button-content {
+        padding-inline-end: 0.075rem;
+      }
+    }
+  }
+
+  &Checked {
+    .icon {
+      rotate: 90deg;
+    }
+  }
+
+  &Sideways {
+    .icon {
+      rotate: 0deg;
+    }
+
+    &.toggleChecked {
+      .icon {
+        rotate: 180deg;
+      }
+    }
+  }
+}

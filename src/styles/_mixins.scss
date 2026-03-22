@@ -1,3 +1,5 @@
+@use "./constants" as *;
+
 @mixin visually-hidden {
   position: absolute;
   width: 1px;
@@ -58,5 +60,17 @@
     } @else {
       --color-state-#{$i}: var(--color-#{$color}-#{$i});
     }
+  }
+}
+
+@mixin desktop {
+  @media not (max-width: #{$MOBILE_BREAKPOINT}em) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$MOBILE_BREAKPOINT}em) {
+    @content;
   }
 }

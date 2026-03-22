@@ -6,6 +6,5 @@ export function parseJson(value: unknown, replacement: unknown = null): unknown 
       return replacement;
     }
   }
-
   return replacement;
 }

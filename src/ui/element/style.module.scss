@@ -1,0 +1,7 @@
+@use "../../styles/mixins" as m;
+
+.element {
+  &HiddenVisually {
+    @include m.visually-hidden;
+  }
+}

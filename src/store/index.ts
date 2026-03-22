@@ -1,17 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+export * from "./reducer";
+export * from "./hooks";
+export * from "./types";
 
-import { themeReducer, themeMiddleware } from "@/features/theme";
-import { supportReducer } from "@/features/support";
-
-export const reducer = combineReducers({
-  theme: themeReducer,
-  support: supportReducer
-});
-
-export const store = configureStore({
-  reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
-    themeMiddleware.saveTheme
-  ]),
-  devTools: import.meta.env.DEV
-});
+export { support } from "./slices/support";
+export { ui } from "./slices/ui";

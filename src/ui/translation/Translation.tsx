@@ -3,9 +3,12 @@ import type { TOptions } from "i18next";
 
 import type { TranslationKey } from "@/types";
 
-type TranslationProps = TOptions & { translationKey: TranslationKey };
+type TranslationProps = Omit<TOptions, "defaultValue"> & {
+  translationKey: TranslationKey;
+  defaultValue?: string;
+};
 
-export function Translation({ translationKey, ...options }: TranslationProps) {
+export function Translation({ translationKey, defaultValue, ...options }: TranslationProps) {
   const { t } = useTranslation();
-  return t(translationKey, options);
+  return t(translationKey, defaultValue ?? translationKey, options);
 }

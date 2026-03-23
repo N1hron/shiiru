@@ -47,7 +47,9 @@ export function ThemeToggle() {
         setValue={setValue}
       >
         { renderIcon() }
-        <Element as="span" hidden="visually">{ t("theme.toggle") }</Element>
+        <Element as="span" hidden="visually">
+          { t("theme.toggle") }
+        </Element>
       </MultiToggle>
 
       <Element as="span" id={descriptionId} hidden="visually">

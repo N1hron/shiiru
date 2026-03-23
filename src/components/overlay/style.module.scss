@@ -1,0 +1,14 @@
+.overlay {
+  z-index: 2;
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition-property: opacity, pointer-events;
+  transition-duration: 0.25s;
+
+  &Visible {
+    opacity: 1;
+    pointer-events: unset;
+  }
+}

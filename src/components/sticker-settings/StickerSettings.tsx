@@ -1,19 +1,38 @@
-import { Card, CardPanel, Element } from "@/ui";
-import { VisibilityToggle } from "./VisibilityToggle";
+import { useId } from "react";
+
+import { Frame } from "./Frame";
+import { CardPanel, Element, Translation } from "@/ui";
+import { ExpandFrame } from "./ExpandFrame";
+import { Expand } from "./Expand";
+import { ResetFrame } from "./ResetFrame";
 import { Reset } from "./Reset";
+import { CardFrame } from "./CardFrame";
 
 import styles from "./style.module.scss";
 
 export function StickerSettings() {
+  const headingId = useId();
+  const cardId = useId();
+
   return (
-    <section className={styles.stickerSettings}>
-      <CardPanel as="menu" className={styles.menu}>
-        <Element as="li"><VisibilityToggle /></Element>
-        <Element as="li"><Reset /></Element>
+    <Frame headingId={headingId}>
+      <Element id={headingId} as="h2" hidden="visually">
+        <Translation translationKey="stickerSettings.heading" />
+      </Element>
+
+      <CardPanel as="menu" className={styles.panel}>
+        <ExpandFrame>
+          <Expand cardId={cardId} />
+        </ExpandFrame>
+
+        <ResetFrame>
+          <Reset />
+        </ResetFrame>
       </CardPanel>
-      <Card as="ul" className={styles.list}>
-        { }
-      </Card>
-    </section>
+
+      <CardFrame id={cardId}>
+        <ul> { } </ul>
+      </CardFrame>
+    </Frame>
   );
 }

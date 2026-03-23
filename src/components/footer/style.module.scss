@@ -1,6 +1,7 @@
 @use "../../styles/mixins" as m;
 
 .footer {
+  z-index: 3;
   text-align: center;
   grid-column: 1/2;
   grid-row: -2/-1;

@@ -1,18 +1,19 @@
 @use "../../styles/mixins" as m;
 
 .stickerSettings {
+  z-index: 3;
   position: relative;
   grid-column: 1/2;
   grid-row: 2/4;
   display: flex;
 }
 
-.list {
+.card {
   height: 100%;
   flex-grow: 1;
 }
 
-.menu {
+.panel {
   display: flex;
   flex-direction: column;
   gap: var(--card-panel-gap);
@@ -23,7 +24,7 @@
 }
 
 @include m.desktop {
-  .menu {
+  .panel {
     button {
       :global {
         .button-content-wrapper {
@@ -39,7 +40,7 @@
     flex-direction: row-reverse;
   }
 
-  .menu {
+  .panel {
     button {
       :global {
         .button-content-wrapper {

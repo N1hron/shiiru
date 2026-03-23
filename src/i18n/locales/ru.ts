@@ -20,6 +20,7 @@ export const ru: Translation = {
     reset: "Сбросить значение"
   },
   stickerSettings: {
+    heading: "Настройки стикера",
     reset: "Сбросить настройки стикера",
     toggle: "Переключить настройки стикера"
   }

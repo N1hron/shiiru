@@ -5,7 +5,7 @@ import type { Theme, ThemeActual } from "@/types";
 
 type uiState = {
   isMobile: boolean;
-  isSidebarVisible: boolean;
+  showSidebar: boolean;
   theme: {
     current: Theme;
     preferred: ThemeActual;
@@ -14,14 +14,12 @@ type uiState = {
 
 function getInitialState(): uiState {
   const preferredTheme = getPreferredTheme();
-  const savedTheme = getSavedTheme();
-  const isMobile = getIsMobile();
 
   return {
-    isMobile,
-    isSidebarVisible: !isMobile,
+    isMobile: getIsMobile(),
+    showSidebar: false,
     theme: {
-      current: savedTheme ?? preferredTheme,
+      current: getSavedTheme() ?? preferredTheme,
       preferred: preferredTheme
     }
   };
@@ -33,13 +31,16 @@ const slice = createSlice({
   reducers: {
     setIsMobile(state, action: PayloadAction<boolean>) {
       state.isMobile = action.payload;
-      state.isSidebarVisible = !action.payload;
+      state.showSidebar = !action.payload;
     },
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme.current = action.payload;
     },
     setPreferredTheme(state, action: PayloadAction<ThemeActual>) {
       state.theme.preferred = action.payload;
+    },
+    setShowSidebar(state, action: PayloadAction<boolean>) {
+      state.showSidebar = action.payload;
     }
   }
 });

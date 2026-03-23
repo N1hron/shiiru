@@ -1,4 +1,4 @@
-import { Header, Footer, StickerSettings } from "@/components";
+import { Header, Footer, StickerSettings, Overlay } from "@/components";
 
 import styles from "./style.module.scss";
 
@@ -6,7 +6,10 @@ export function App() {
   return (
     <div className={styles.app}>
       <Header />
-      <StickerSettings />
+      <main className={styles.main}>
+        <StickerSettings />
+        <Overlay />
+      </main>
       <Footer />
     </div>
   );

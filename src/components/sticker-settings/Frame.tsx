@@ -1,30 +1,28 @@
 import { motion } from "motion/react";
+import { type ReactNode } from "react";
 
-import { Link, Card } from "@/ui";
 import { ui, useAppSelector } from "@/store";
 import { variants } from "@/animations";
 
 import styles from "./style.module.scss";
 
-const MotionCard = motion.create(Card<"footer">);
+type FrameProps = {
+  headingId: string;
+  children: ReactNode;
+};
 
-export function Footer() {
+export function Frame({ children, headingId }: FrameProps) {
   const isVisible = useAppSelector(ui.selectIsSidebarVisible);
   const isMobile = useAppSelector(ui.selectIsMobile);
 
   return (
-    <MotionCard
-      as="footer"
-      className={styles.footer}
+    <motion.section
+      className={styles.stickerSettings}
       variants={variants.sidebar}
       animate={isVisible ? "visible" : "hidden"}
       initial={isMobile ? "hidden" : "visible"}
-      custom={{ delay: 0.0625 }}
-      inert={!isVisible}
-    >
-      <Link className={styles.link} href="https://github.com/N1hron/shiiru">
-        GitHub page
-      </Link>
-    </MotionCard>
+      aria-labelledby={headingId}
+      children={children}
+    />
   );
 }

@@ -4,6 +4,7 @@ import type { ParseKeys } from "i18next";
 export type Theme = ThemeActual | "system";
 export type ThemeActual = "light" | "dark";
 export type Language = "en" | "ru";
+export type Side = "left" | "right";
 export type TranslationKey = ParseKeys<"translation">;
 export type RenderProp<T> = (data: T) => ReactNode;
 export type Fn<A extends unknown[], R, C> = (this: C, ...args: A) => R;

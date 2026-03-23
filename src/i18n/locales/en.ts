@@ -20,6 +20,7 @@ export const en: Translation = {
     reset: "Reset value"
   },
   stickerSettings: {
+    heading: "Sticker settings",
     reset: "Reset sticker settings",
     toggle: "Toggle sticker settings"
   }

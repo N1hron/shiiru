@@ -39,6 +39,7 @@ export function Button<C extends ButtonComponent = "button">({
 
   return (
     <Component className={cn} {...props}>
+      <span className={styles.background} />
       <span className={clsx(styles.contentWrapper, "button-content-wrapper")}>
         <span className={clsx(styles.content, "button-content")}>
           { children }

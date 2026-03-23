@@ -80,10 +80,11 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
 .button {
   all: unset;
   box-sizing: border-box;
+  position: relative;
   display: inline-block;
   margin-top: 0;
   padding-bottom: $padding;
-  background: linear-gradient(to bottom, transparent 0 50%, var(--color-border) 50% 100%);
+  background-color: var(--color-border);
   transition-property: margin-top, padding-bottom;
   transition-duration: var(--transition-duration-fastest);
   cursor: pointer;
@@ -103,7 +104,7 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
   &Sideways {
     &Lr,
     &Rl {
-      .contentWrapper {
+      .content {
         writing-mode: vertical-lr;
       }
     }
@@ -149,7 +150,6 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
 .contentWrapper {
   position: relative;
   display: block;
-  inline-size: var(--inline-size);
   border: solid var(--border-width-thin) var(--color-border);
 }
 

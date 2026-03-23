@@ -49,7 +49,7 @@
     .output {
       cursor: pointer;
 
-      &:hover {
+      @include m.hover {
         animation-play-state: running;
       }
     }

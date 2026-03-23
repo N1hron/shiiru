@@ -5,7 +5,7 @@
   transition-property: color;
   transition-duration: var(--transition-duration-fast);
 
-  &:hover {
+  @include m.hover {
     color: var(--color-accent-07);
   }
 

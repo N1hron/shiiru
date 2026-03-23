@@ -11,20 +11,25 @@ type ResetFrameProps = {
 export function ResetFrame({ children }: ResetFrameProps) {
   const isVisible = useAppSelector(ui.selectIsSidebarVisible);
   const isMobile = useAppSelector(ui.selectIsMobile);
-  const custom = isMobile ? { side: "right", delay: 0.25 } : { side: "left", delay: 0.5 };
+
+  const custom = isMobile ? {
+    side: "right",
+    delay: 0.25
+  } : {
+    side: "left",
+    delay: 0.5
+  };
 
   return (
     <AnimatePresence custom={custom}>
       { isVisible && (
         <motion.li
           variants={variants.button}
-          initial="hidden"
-          animate="visible"
+          initial={isMobile ? "hidden" : "visible"}
           exit="hidden"
           custom={custom}
-        >
-          { children }
-        </motion.li>
+          children={children}
+        />
       ) }
     </AnimatePresence>
   );

@@ -118,7 +118,7 @@ $content-height: calc(var(--block-size) - var(--border-width-thick));
   }
 
   &:not(:disabled) {
-    &:hover {
+    @include m.hover {
       .content {
         background-color: var(--color-background-hover);
       }

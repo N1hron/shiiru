@@ -8,6 +8,7 @@ import styles from "./style.module.scss";
 
 export type ToggleProps = Omit<ButtonProps, "value"> & {
   value: boolean;
+  showArrow?: boolean;
   setValue: (value: boolean) => void;
 };
 
@@ -16,6 +17,7 @@ export function Toggle({
   icon,
   sideways,
   className,
+  showArrow,
   children,
   setValue,
   onClick,
@@ -42,7 +44,7 @@ export function Toggle({
       {...props}
     >
       { children }
-      <ArrowIcon className={styles.icon} aria-hidden />
+      { showArrow && <ArrowIcon className={styles.icon} aria-hidden /> }
     </Button>
   );
 }

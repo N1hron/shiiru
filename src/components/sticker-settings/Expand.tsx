@@ -20,6 +20,7 @@ export function Expand({ cardId }: ExpandProps) {
     <Toggle
       className={styles.expand}
       icon
+      showArrow
       color="accent"
       size="medium"
       sideways="rl"

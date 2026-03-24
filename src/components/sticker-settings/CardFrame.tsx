@@ -10,8 +10,7 @@ type CardFrameProps = {
   children: ReactNode;
 };
 
-export function CardFrame({ id, children }: CardFrameProps) {
+export function CardFrame(props: CardFrameProps) {
   const isVisible = useAppSelector(ui.selectIsSidebarVisible);
-
-  return <Card id={id} className={styles.card} inert={!isVisible}>{ children }</Card>;
+  return <Card className={styles.card} inert={!isVisible} {...props} />;
 }

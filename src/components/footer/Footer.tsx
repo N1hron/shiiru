@@ -1,30 +1,14 @@
-import { motion } from "motion/react";
-
-import { Link, Card } from "@/ui";
-import { ui, useAppSelector } from "@/store";
-import { variants } from "@/animations";
+import { Frame } from "./Frame";
+import { Link } from "@/ui";
 
 import styles from "./style.module.scss";
 
-const MotionCard = motion.create(Card<"footer">);
-
 export function Footer() {
-  const isVisible = useAppSelector(ui.selectIsSidebarVisible);
-  const isMobile = useAppSelector(ui.selectIsMobile);
-
   return (
-    <MotionCard
-      as="footer"
-      className={styles.footer}
-      variants={variants.sidebar}
-      animate={isVisible ? "visible" : "hidden"}
-      initial={isMobile ? "hidden" : "visible"}
-      custom={{ delay: 0.0625 }}
-      inert={!isVisible}
-    >
+    <Frame>
       <Link className={styles.link} href="https://github.com/N1hron/shiiru">
         GitHub page
       </Link>
-    </MotionCard>
+    </Frame>
   );
 }

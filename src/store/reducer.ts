@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import { support, supportReducer } from "./slices/support";
-import { uiReducer, listenToIsMobile, listenToPreferredTheme, saveThemeMiddleware } from "./slices/ui";
+import { supportReducer, support } from "./slices/support";
+import { listenToIsMobile, listenToPreferredTheme, saveThemeMiddleware, uiReducer } from "./slices/ui";
 import { saveSettingsMiddleware, settingsReducer } from "./slices/settings";
 
 export const reducer = combineReducers({

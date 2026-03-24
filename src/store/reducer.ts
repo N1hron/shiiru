@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { support, supportReducer } from "./slices/support";
 import { uiReducer, listenToIsMobile, listenToPreferredTheme, saveThemeMiddleware } from "./slices/ui";
-import { settingsReducer } from "./slices/settings";
+import { saveSettingsMiddleware, settingsReducer } from "./slices/settings";
 
 export const reducer = combineReducers({
   support: supportReducer,
@@ -12,7 +12,7 @@ export const reducer = combineReducers({
 
 export const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat([saveThemeMiddleware]),
+  middleware: (gDM) => gDM().concat([saveThemeMiddleware, saveSettingsMiddleware]),
   devTools: import.meta.env.DEV
 });
 

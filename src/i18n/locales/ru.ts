@@ -23,5 +23,58 @@ export const ru: Translation = {
     heading: "Настройки стикера",
     reset: "Сбросить настройки стикера",
     toggle: "Переключить настройки стикера"
+  },
+  settings: {
+    labels: {
+      type: "Тип стикера",
+      verticalAlignment: "Вертик. выравнивание",
+      horizontalAlignment: "Гориз. выравнивание",
+      antialiasingQuality: "Качество сглаживания",
+      resizeMode: "Тип масштабирования",
+      removeSpaces: "Удалять пробелы",
+      downloadZip: "Скачать в виде zip файла",
+      imageFormat: "Формат изображения",
+      videoQuality: "Качество видео"
+    },
+    values: {
+      type: {
+        sticker: "Стикер",
+        emoji: "Эмодзи"
+      },
+      verticalAlignment: {
+        top: "Сверху",
+        middle: "По центру",
+        bottom: "Снизу"
+      },
+      horizontalAlignment: {
+        left: "Слева",
+        middle: "По центру",
+        right: "Справа"
+      },
+      resizeMode: {
+        "scale-down": "Уменьшить",
+        contain: "Вписать",
+        cover: "Заполнить",
+        fill: "Растянуть"
+      },
+      antialiasingQuality: {
+        off: "Выключено",
+        low: "Низкое",
+        medium: "Среднее",
+        high: "Высокое"
+      },
+      imageFormat: {
+        webp: "WEBP",
+        png: "PNG"
+      },
+      videoQuality: {
+        auto: "Автоматическое",
+        "very-low": "Очень низкое",
+        low: "Низкое",
+        medium: "Среднее",
+        high: "Высокое",
+        "very-high": "Очень высокое"
+      }
+    }
   }
 };

@@ -1,4 +1,5 @@
-import type { Transition, Variants } from "motion";
+import { type Transition, type Variants } from "motion";
+
 import type { Side } from "@/types";
 
 export const variants = {

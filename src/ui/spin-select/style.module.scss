@@ -45,7 +45,7 @@
     }
   }
 
-  &:not([aria-disabled]) {
+  &:not(.spinSelectDisabled) {
     .output {
       cursor: pointer;
 
@@ -55,7 +55,7 @@
     }
   }
 
-  &[aria-disabled] {
+  &Disabled {
     @include m.color-state("main");
 
     .output {

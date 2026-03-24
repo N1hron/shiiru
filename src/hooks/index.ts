@@ -4,3 +4,4 @@ export * from "./useResizeObserver";
 export * from "./useDuration";
 export * from "./useCycle";
 export * from "./useAttribute";
+export * from "./usePrevious";

@@ -1,3 +1,5 @@
+import type { Settings, StringSettings } from "@/types";
+
 export type Config = {
   storage: {
     theme: string;
@@ -8,5 +10,9 @@ export type Config = {
     maxFiles: number;
     accept: string[];
     reject: string[];
+  };
+  settings: {
+    defaults: Settings;
+    values: { [K in keyof StringSettings]: StringSettings[K][]; };
   };
 };

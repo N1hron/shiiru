@@ -19,8 +19,8 @@ export function Frame({ children, headingId }: FrameProps) {
     <motion.section
       className={styles.stickerSettings}
       variants={variants.sidebar}
-      animate={isVisible ? "visible" : "hidden"}
       initial={isMobile ? "hidden" : "visible"}
+      animate={isVisible ? "visible" : "hidden"}
       aria-labelledby={headingId}
       children={children}
     />

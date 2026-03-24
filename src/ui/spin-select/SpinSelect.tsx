@@ -35,7 +35,7 @@ export function SpinSelect<V extends string>({
   const outputRef = useRef<HTMLOutputElement>(null);
   const duration = useDuration({ targetRef: outputRef });
   const label = options[index].label;
-  const cn = clsx(styles.spinSelect, className);
+  const cn = clsx(styles.spinSelect, disabled && styles.spinSelectDisabled, className);
 
   function handleKeyDown(event: KeyboardEvent) {
     if (!disabled) {
@@ -83,7 +83,7 @@ export function SpinSelect<V extends string>({
     <div
       className={cn}
       role="spinbutton"
-      aria-disabled={disabled}
+      aria-disabled={disabled || undefined}
       aria-valuemin={0}
       aria-valuemax={options.length - 1}
       aria-valuenow={index}

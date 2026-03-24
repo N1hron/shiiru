@@ -1,0 +1,14 @@
+.checkbox {
+  width: fit-content;
+
+  svg {
+    height: 100%;
+    opacity: 0;
+  }
+
+  &Checked {
+    svg {
+      opacity: 1;
+    }
+  }
+}

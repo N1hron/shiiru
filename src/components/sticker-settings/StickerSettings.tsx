@@ -7,6 +7,9 @@ import { Expand } from "./Expand";
 import { ResetFrame } from "./ResetFrame";
 import { Reset } from "./Reset";
 import { CardFrame } from "./CardFrame";
+import { StringItem } from "./StringItem";
+import { AntialiasingQuality } from "./AntialiasingQuality";
+import { BooleanItem } from "./BooleanItem";
 
 import styles from "./style.module.scss";
 
@@ -31,7 +34,14 @@ export function StickerSettings() {
       </CardPanel>
 
       <CardFrame id={cardId}>
-        <ul> { } </ul>
+        <ul className={styles.list}>
+          <StringItem name="type" />
+          <StringItem name="verticalAlignment" />
+          <StringItem name="horizontalAlignment" />
+          <StringItem name="resizeMode" />
+          <AntialiasingQuality />
+          <BooleanItem name="removeSpaces" />
+        </ul>
       </CardFrame>
     </Frame>
   );

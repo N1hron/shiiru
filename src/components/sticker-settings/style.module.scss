@@ -8,11 +8,6 @@
   display: flex;
 }
 
-.card {
-  height: 100%;
-  flex-grow: 1;
-}
-
 .panel {
   display: flex;
   flex-direction: column;
@@ -21,6 +16,45 @@
   button {
     display: block;
   }
+}
+
+.card {
+  height: 100%;
+  flex-grow: 1;
+  padding: 0;
+}
+
+.list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0.75rem;
+  overflow: auto;
+  scrollbar-width: none;
+
+  li {
+    position: relative;
+  }
+
+  &:focus-visible {
+    @include m.focus-outline(var(--color-accent-07));
+
+    outline-offset: calc(-1 * var(--border-width-thick));
+  }
+}
+
+.stringItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.booleanItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 @include m.desktop {

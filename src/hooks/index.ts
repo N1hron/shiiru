@@ -5,3 +5,4 @@ export * from "./useDuration";
 export * from "./useCycle";
 export * from "./useAttribute";
 export * from "./usePrevious";
+export * from "./useDragOver";

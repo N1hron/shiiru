@@ -1,5 +1,6 @@
 import { nanoid } from "@reduxjs/toolkit";
 
+import { MessengerError } from "./error";
 import type { Shift } from "@/types";
 import type { ExtractRequest, ExtractResponse, Interaction, ResponseStatus } from "./types";
 
@@ -44,7 +45,7 @@ export class Messenger<I extends Interaction> {
 
     this.#controller.signal.addEventListener("abort", () => {
       for (const [, listener] of this.#listeners) {
-        listener.reject(new Error("Messenger has been stopped"));
+        listener.reject(new MessengerError("inactive", "Messenger is inactive"));
       }
 
       this.#listeners.clear();
@@ -65,7 +66,7 @@ export class Messenger<I extends Interaction> {
     ...rest: Shift<PostMessageArgs>
   ) {
     if (!this.#destination) {
-      throw new Error("Call start() before making any requests");
+      throw new MessengerError("inactive", "Call start() before creating any requests");
     }
 
     return new Promise<ExtractResponse<I, T, "success">["payload"]>((resolve, reject) => {
@@ -83,7 +84,7 @@ export class Messenger<I extends Interaction> {
     ...rest: Shift<PostMessageArgs>
   ) {
     if (!this.#destination) {
-      throw new Error("Call start() before making any responses");
+      throw new MessengerError("inactive", "Call start() before creating any responses");
     }
 
     this.#send({ id: request.id, type: request.type, status, payload }, ...rest);

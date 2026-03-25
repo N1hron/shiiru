@@ -6,3 +6,6 @@ export * from "./debounce";
 export * from "./parseJson";
 export * from "./wait";
 export * from "./mergeHandlers";
+export * from "./getExtension";
+export * from "./parseFileName";
+export * from "./supportsFile";

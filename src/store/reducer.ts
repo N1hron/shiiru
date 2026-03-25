@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { supportReducer, support } from "./slices/support";
 import { listenToIsMobile, listenToPreferredTheme, saveThemeMiddleware, uiReducer } from "./slices/ui";
 import { saveSettingsMiddleware, settingsReducer } from "./slices/settings";
+import { uploadReducer } from "./slices/upload";
 
 export const reducer = combineReducers({
   support: supportReducer,
   ui: uiReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  upload: uploadReducer
 });
 
 export const store = configureStore({

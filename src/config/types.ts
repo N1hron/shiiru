@@ -6,13 +6,13 @@ export type Config = {
     language: string;
     settings: string;
   };
-  uploader: {
-    maxFiles: number;
-    accept: string[];
-    reject: string[];
-  };
   settings: {
     defaults: Settings;
     values: { [K in keyof StringSettings]: StringSettings[K][]; };
+  };
+  upload: {
+    maxFiles: number;
+    accept: string[];
+    reject: string[];
   };
 };

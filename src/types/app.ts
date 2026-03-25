@@ -42,6 +42,7 @@ export type StickerSettings = {
 
 export type UploadedFile = {
   id: string;
+  url: string;
   signature: string;
   data: UploadedFileData;
   config: UploadedFileConfig;
@@ -53,13 +54,12 @@ export type UploadedFileData = {
   mime: string;
   size: number;
   dimensions: Dimensions;
-  duration: number;
-  url: string;
+  duration: Segment;
 };
 
 export type UploadedFileConfig = {
-  name: FileName;
-  crop: Rect;
+  stem: string;
   rotate: number;
+  crop: Rect;
   trim: Segment;
 };

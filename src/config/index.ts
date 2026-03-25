@@ -6,11 +6,6 @@ export const config: Config = {
     language: "language",
     settings: "settings"
   },
-  uploader: {
-    maxFiles: 20,
-    accept: ["image/*", "video/*"],
-    reject: ["image/svg+xml"]
-  },
   settings: {
     defaults: {
       type: "sticker",
@@ -32,5 +27,10 @@ export const config: Config = {
       imageFormat: ["webp", "png"],
       videoQuality: ["auto", "very-low", "low", "medium", "high", "very-high"]
     }
+  },
+  upload: {
+    maxFiles: 20,
+    accept: ["image/*", "video/*"],
+    reject: ["image/svg+xml"]
   }
 };

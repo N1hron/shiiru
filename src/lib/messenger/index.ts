@@ -1,3 +1,4 @@
 export { Messenger } from "./messenger";
+
 export * from "./types";
-export * from "./error";
+export * from "./errors";

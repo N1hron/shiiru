@@ -4,7 +4,7 @@ export type Rect = Position & Dimensions;
 export type VerticalAlignment = "top" | "middle" | "bottom";
 export type HorizontalAlignment = "left" | "middle" | "right";
 export type FileName = { full: string; stem: string; ext: string };
-export type Validity = "valid" | "partially" | "invalid";
+export type Validity = "valid" | "partial" | "invalid";
 
 export type Position = {
   x: number;

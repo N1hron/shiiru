@@ -1,4 +1,6 @@
-import { CustomError } from "../custom-error";
-
-export class MessengerInactiveError extends CustomError {
+export class MessengerInactiveError extends Error {
+  constructor(...args: ConstructorParameters<ErrorConstructor>) {
+    super(...args);
+    this.name = this.constructor.name;
+  }
 }

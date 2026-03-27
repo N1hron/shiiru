@@ -1,7 +1,7 @@
 import { config } from "@/config";
 import type { AppState } from "@/store/types";
 
-export const selectIsUploading = ({ upload }: AppState) => upload.isUploading;
+export const selectIsUploading = ({ upload }: AppState) => upload.isUploadingOne || upload.isUploadingMany;
 export const selectIsDraggingOver = ({ upload }: AppState) => upload.isDraggingOver;
 export const selectDragValidity = ({ upload }: AppState) => upload.dragValidity;
 export const selectFiles = ({ upload }: AppState) => upload.files.items;

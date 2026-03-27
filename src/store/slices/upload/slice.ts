@@ -4,7 +4,8 @@ import { upload } from ".";
 import type { UploadedFile, Validity } from "@/types";
 
 type UploaderState = {
-  isUploading: boolean;
+  isUploadingOne: boolean;
+  isUploadingMany: boolean;
   isDraggingOver: boolean;
   dragValidity: Validity;
   files: {
@@ -14,7 +15,8 @@ type UploaderState = {
 };
 
 const initialState: UploaderState = {
-  isUploading: false,
+  isUploadingOne: false,
+  isUploadingMany: false,
   isDraggingOver: false,
   dragValidity: "invalid",
   files: {
@@ -53,12 +55,19 @@ const slice = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addAsyncThunk(upload.uploadFiles, {
+    builder.addAsyncThunk(upload.uploadOne, {
       pending(state) {
-        state.isUploading = true;
+        state.isUploadingOne = true;
       },
       settled(state) {
-        state.isUploading = false;
+        state.isUploadingOne = false;
+      }
+    }).addAsyncThunk(upload.uploadMany, {
+      pending(state) {
+        state.isUploadingMany = true;
+      },
+      settled(state) {
+        state.isUploadingMany = false;
       }
     });
   }

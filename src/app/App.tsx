@@ -1,4 +1,4 @@
-import { Header, Footer, StickerSettings, Overlay } from "@/components";
+import { Header, Footer, StickerSettings, Overlay } from "@/widgets";
 
 import styles from "./style.module.scss";
 

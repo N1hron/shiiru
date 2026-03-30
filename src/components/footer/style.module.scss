@@ -1,15 +1,14 @@
 @use "../../styles/mixins" as m;
 
-.footer {
+.sidebarFrame {
   z-index: 3;
   text-align: center;
   grid-column: 1/2;
   grid-row: -2/-1;
   width: 15rem;
-  justify-self: end;
 }
 
-.link {
+.githubLink {
   font-size: var(--font-size-medium);
 
   &:focus-visible {

@@ -9,7 +9,7 @@ export type FileName = { full: string; stem: string; ext: string };
 export type Validity = "valid" | "partial" | "invalid";
 export type ActivityMode = NonNullable<ActivityProps["mode"]>;
 export type FrameProps = { children: ReactNode };
-export type RateLimiter = "debounce" | "throttle";
+export type LimitKind = "debounce" | "throttle";
 
 export type LimitedFn<C, A extends unknown[]> = {
   (this: C, ...args: A): void;

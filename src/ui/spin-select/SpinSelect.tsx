@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useRef, type ComponentPropsWithRef, type KeyboardEvent, type MouseEvent } from "react";
 
 import { Trigger } from "./Trigger";
-import { useDuration, useCycle } from "@/hooks";
+import { useBackgroundAnimation, useCycle } from "@/hooks";
 import { mergeHandlers } from "@/utils";
 
 import styles from "./style.module.scss";
@@ -33,9 +33,10 @@ export function SpinSelect<V extends string>({
   });
 
   const outputRef = useRef<HTMLOutputElement>(null);
-  const duration = useDuration({ targetRef: outputRef });
   const label = options[index].label;
   const cn = clsx(styles.spinSelect, disabled && styles.spinSelectDisabled, className);
+
+  useBackgroundAnimation(outputRef);
 
   function handleKeyDown(event: KeyboardEvent) {
     if (!disabled) {
@@ -94,12 +95,7 @@ export function SpinSelect<V extends string>({
     >
       <Trigger direction="prev" disabled={disabled} onClick={handlePrevClick} />
 
-      <output
-        className={styles.output}
-        ref={outputRef}
-        style={{ animationDuration: duration + "s" }}
-        onClick={handleOutputClick}
-      >
+      <output className={styles.output} ref={outputRef} onClick={handleOutputClick}>
         { label }
       </output>
 

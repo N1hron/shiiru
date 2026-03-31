@@ -16,6 +16,11 @@ export type LimitedFn<C, A extends unknown[]> = {
   cancel: () => void;
 };
 
+export type Limit = {
+  kind: LimitKind;
+  ms: number;
+};
+
 export type Position = {
   x: number;
   y: number;

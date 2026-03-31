@@ -42,7 +42,7 @@
 
   background-size: 200% 100%;
   animation-name: move;
-  animation-duration: 5s;
+  animation-duration: var(--background-animation-duration, 5s);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;

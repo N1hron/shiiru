@@ -1,29 +1,35 @@
 import { useEffect, type RefObject } from "react";
 
-import { throttle } from "@/utils/throttle";
+import { limit as applyLimit } from "@/utils";
+import type { Limit, LimitedFn } from "@/types";
 
 export type UseResizeObserverOptions = {
   targetRef: RefObject<Element | null>;
   callback: ResizeObserverCallback;
   box?: ResizeObserverBoxOptions;
+  limit?: Limit;
 };
 
-export function useResizeObserver({ targetRef, callback, box }: UseResizeObserverOptions, ms?: number) {
+export function useResizeObserver({ targetRef, callback, box, limit }: UseResizeObserverOptions) {
+  const kind = limit?.kind;
+  const ms = limit?.ms ?? 0;
+
   useEffect(() => {
     const target = targetRef.current;
 
     if (target) {
-      const observer = new ResizeObserver(ms == null ? callback : throttle(callback, ms));
+      const cb = kind ? applyLimit(callback, kind, ms) : callback;
+      const observer = new ResizeObserver(cb);
 
       observer.observe(target, { box });
 
       return () => {
         observer.disconnect();
 
-        if ("cancel" in callback && typeof callback.cancel === "function") {
-          (callback as ReturnType<typeof throttle>).cancel();
+        if ("cancel" in cb && typeof cb.cancel === "function") {
+          (cb as LimitedFn<unknown, unknown[]>).cancel();
         }
       };
     }
-  }, [targetRef, callback, box, ms]);
+  }, [targetRef, callback, box, kind, ms]);
 }

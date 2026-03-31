@@ -1,6 +1,6 @@
-import type { Fn } from "@/types";
+import type { Fn, LimitedFn } from "@/types";
 
-export function throttle<A extends unknown[], R, C>(fn: Fn<A, R, C>, ms: number) {
+export function throttle<C, A extends unknown[]>(fn: Fn<C, A, void>, ms: number): LimitedFn<C, A> {
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   let saved: { context: C; args: A } | null = null;
 

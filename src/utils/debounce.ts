@@ -1,13 +1,19 @@
-import type { Fn } from "@/types";
+import type { Fn, LimitedFn } from "@/types";
 
-export function debounce<A extends unknown[], R, C>(fn: Fn<A, R, C>, ms: number) {
+export function debounce<C, A extends unknown[]>(fn: Fn<C, A, void>, ms: number): LimitedFn<C, A> {
   let timeoutId: number;
 
-  return function debounced(this: C, ...args: A) {
+  function debounced(this: C, ...args: A) {
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => {
       fn.apply(this, args);
     }, ms);
+  }
+
+  debounced.cancel = () => {
+    clearTimeout(timeoutId);
   };
+
+  return debounced;
 }

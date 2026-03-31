@@ -1,12 +1,7 @@
-import type { ReactNode } from "react";
-
 import { ui, useAppSelector } from "@/store";
+import type { FrameProps } from "@/types";
 
-type ExpandFrameProps = {
-  children: ReactNode;
-};
-
-export function ExpandFrame({ children }: ExpandFrameProps) {
+export function ExpandFrame({ children }: FrameProps) {
   const isMobile = useAppSelector(ui.selectIsMobile);
 
   if (!isMobile) return null;

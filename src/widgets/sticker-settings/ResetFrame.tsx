@@ -1,14 +1,9 @@
-import type { ReactNode } from "react";
-
+import { SideMotion, useSidebarMotionContext } from "@/components";
 import { settings, ui, useAppSelector } from "@/store";
 import { usePrevious } from "@/hooks";
-import { SideMotion, useSidebarMotionContext } from "@/components";
+import type { FrameProps } from "@/types";
 
-type ResetFrameProps = {
-  children: ReactNode;
-};
-
-export function ResetFrame({ children }: ResetFrameProps) {
+export function ResetFrame({ children }: FrameProps) {
   const { isVisible: isSidebarVisible } = useSidebarMotionContext();
   const shouldDelay = usePrevious(isSidebarVisible) !== isSidebarVisible;
   const isDefaultItems = useAppSelector(settings.selectIsDefaultItems);

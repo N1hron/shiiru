@@ -1,4 +1,4 @@
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, type RefObject } from "react";
 
 import { throttle } from "@/utils/throttle";
 
@@ -9,33 +9,21 @@ export type UseResizeObserverOptions = {
 };
 
 export function useResizeObserver({ targetRef, callback, box }: UseResizeObserverOptions, ms?: number) {
-  const callbackRef = useRef(callback);
-
-  useEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
-
   useEffect(() => {
     const target = targetRef.current;
 
-    if (!target) return;
+    if (target) {
+      const observer = new ResizeObserver(ms == null ? callback : throttle(callback, ms));
 
-    const callback: ResizeObserverCallback = (
-      ms == null ?
-        (...args) => callbackRef.current(...args) :
-        throttle((...args) => callbackRef.current(...args), ms)
-    );
+      observer.observe(target, { box });
 
-    const observer = new ResizeObserver(callback);
+      return () => {
+        observer.disconnect();
 
-    observer.observe(target, { box });
-
-    return () => {
-      observer.disconnect();
-
-      if ("cancel" in callback && typeof callback.cancel === "function") {
-        (callback as ReturnType<typeof throttle>).cancel();
-      }
-    };
-  }, [targetRef, box, ms]);
+        if ("cancel" in callback && typeof callback.cancel === "function") {
+          (callback as ReturnType<typeof throttle>).cancel();
+        }
+      };
+    }
+  }, [targetRef, callback, box, ms]);
 }

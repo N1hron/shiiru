@@ -6,6 +6,11 @@ export const config: Config = {
     language: "language",
     settings: "settings"
   },
+  id: {
+    header: "header",
+    footer: "footer",
+    stickerSettings: "sticker-settings"
+  },
   settings: {
     defaults: {
       type: "sticker",

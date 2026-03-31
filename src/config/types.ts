@@ -6,6 +6,11 @@ export type Config = {
     language: string;
     settings: string;
   };
+  id: {
+    header: string;
+    footer: string;
+    stickerSettings: string;
+  };
   settings: {
     defaults: Settings;
     values: { [K in keyof StringSettings]: StringSettings[K][]; };

@@ -1,11 +1,8 @@
 @use "../../styles/mixins" as m;
 
-.stickerSettings {
-  z-index: 3;
-  position: relative;
+.frame {
   grid-column: 1/2;
   grid-row: 2/4;
-  display: flex;
 }
 
 .panel {
@@ -70,10 +67,6 @@
 }
 
 @include m.mobile {
-  .stickerSettings {
-    flex-direction: row-reverse;
-  }
-
   .panel {
     button {
       :global {

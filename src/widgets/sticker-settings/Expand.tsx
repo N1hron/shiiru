@@ -1,14 +1,13 @@
 import { Element, Translation } from "@/ui";
 import { Toggle } from "@/ui/toggle/Toggle";
 import { ui, useAppDispatch, useAppSelector } from "@/store";
+import { config } from "@/config";
 
 import styles from "./style.module.scss";
 
-type ExpandProps = {
-  cardId: string;
-};
+const controls = `${config.id.header} ${config.id.footer} ${config.id.stickerSettings}`;
 
-export function Expand({ cardId }: ExpandProps) {
+export function Expand() {
   const dispatch = useAppDispatch();
   const value = useAppSelector(ui.selectIsSidebarVisible);
 
@@ -24,7 +23,7 @@ export function Expand({ cardId }: ExpandProps) {
       color="accent"
       size="medium"
       sideways="rl"
-      aria-controls={cardId}
+      aria-controls={controls}
       aria-expanded={value}
       value={value}
       setValue={setValue}

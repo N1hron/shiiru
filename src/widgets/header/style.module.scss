@@ -1,27 +1,25 @@
 @use "../../styles/mixins" as m;
 
 [data-theme="light"] {
-  .logo {
+  .heading {
     --color-text: var(--color-accent-07);
     --color-shadow: var(--color-accent-04);
   }
 }
 
 [data-theme="dark"] {
-  .logo {
+  .heading {
     --color-text: var(--color-accent-06);
     --color-shadow: var(--color-accent-09);
   }
 }
 
-.header {
-  z-index: 3;
-  display: flex;
+.frame {
   grid-column: 1/2;
   grid-row: 1/2;
 }
 
-.panel {
+.menu {
   display: flex;
   flex-direction: column;
   gap: var(--card-panel-gap);
@@ -35,7 +33,7 @@
   --inline-size: 1.875rem;
 }
 
-.logo {
+.card {
   @include m.unselectable;
 
   display: flex;
@@ -53,7 +51,7 @@
 }
 
 @include m.desktop {
-  .panel {
+  .menu {
     button {
       :global {
         .button-content-wrapper {
@@ -65,11 +63,7 @@
 }
 
 @include m.mobile {
-  .header {
-    flex-direction: row-reverse;
-  }
-
-  .panel {
+  .menu {
     button {
       :global {
         .button-content-wrapper {

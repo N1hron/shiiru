@@ -1,0 +1,15 @@
+@use "../../styles/mixins" as m;
+
+.sidebarFrame {
+  position: relative;
+  z-index: 3;
+  width: 16.375rem;
+  display: flex;
+  flex-direction: row;
+}
+
+@include m.mobile {
+  .sidebarFrame {
+    flex-direction: row-reverse;
+  }
+}

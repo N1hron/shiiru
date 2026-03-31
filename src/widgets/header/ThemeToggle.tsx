@@ -36,7 +36,7 @@ export function ThemeToggle() {
   }
 
   return (
-    <>
+    <li>
       <MultiToggle
         icon
         color="accent"
@@ -55,6 +55,6 @@ export function ThemeToggle() {
       <Element as="span" id={descriptionId} hidden="visually">
         { t("theme.current", { theme: t(`theme.${theme}`) }) }
       </Element>
-    </>
+    </li>
   );
 }

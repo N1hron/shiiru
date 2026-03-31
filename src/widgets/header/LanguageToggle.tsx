@@ -19,7 +19,7 @@ export function LanguageToggle() {
   useAttribute(document.documentElement, "lang", language);
 
   return (
-    <>
+    <li>
       <MultiToggle
         className={styles.languageToggle}
         aria-describedby={descriptionId}
@@ -37,6 +37,6 @@ export function LanguageToggle() {
       <Element as="span" id={descriptionId} hidden="visually">
         { t("language.current", { language: t(`language.${language}`) }) }
       </Element>
-    </>
+    </li>
   );
 }

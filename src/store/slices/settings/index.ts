@@ -1,9 +1,8 @@
-import * as selectors from "./selectors";
-import * as thunks from "./thunks";
-
 import { actions, reducer } from "./slice";
+import { selectors } from "./selectors";
+import { thunks } from "./thunks";
+import { middleware } from "./middleware";
 
-export const settingsReducer = reducer;
 export const settings = { ...actions, ...selectors, ...thunks };
-
-export * from "./middleware";
+export const settingsMiddleware = middleware;
+export const settingsReducer = reducer;

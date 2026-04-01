@@ -2,13 +2,21 @@ import type { ListenerMiddleware } from "@reduxjs/toolkit";
 
 import { config } from "@/config";
 import { actions } from "./slice";
+import { selectors } from "./selectors";
 import { type AppState } from "@/store";
 
-export const saveSettingsMiddleware: ListenerMiddleware<AppState> = (storeApi) => (next) => (action) => {
+const saveSettings: ListenerMiddleware<AppState> = (api) => (next) => (action) => {
   next(action);
 
   if (actions.setItems.match(action) || actions.setItem.match(action)) {
-    const settings = JSON.stringify(storeApi.getState().settings.items);
-    localStorage.setItem(config.storage.settings, settings);
+    const state = api.getState();
+    const settings = selectors.selectItems(state);
+    const settingsLS = JSON.stringify(settings);
+
+    localStorage.setItem(config.storage.settings, settingsLS);
   }
+};
+
+export const middleware = {
+  saveSettings
 };

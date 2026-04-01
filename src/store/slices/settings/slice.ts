@@ -11,10 +11,11 @@ type SettingsState = {
 };
 
 function getInitialState(): SettingsState {
-  const itemsLS = localStorage.getItem(config.storage.settings);
-  const items = parseJson(itemsLS);
+  const valueLS = localStorage.getItem(config.storage.settings);
+  const value = parseJson(valueLS);
+  const items = isSettings(value) ? value : config.settings.defaults;
 
-  return { items: isSettings(items) ? items : config.settings.defaults };
+  return { items };
 }
 
 const slice = createSlice({

@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { upload } from ".";
+import { thunks } from "./thunks";
 import type { UploadedFile, Validity } from "@/types";
 
 type UploaderState = {
@@ -55,21 +55,23 @@ const slice = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addAsyncThunk(upload.uploadOne, {
-      pending(state) {
-        state.isUploadingOne = true;
-      },
-      settled(state) {
-        state.isUploadingOne = false;
-      }
-    }).addAsyncThunk(upload.uploadMany, {
-      pending(state) {
-        state.isUploadingMany = true;
-      },
-      settled(state) {
-        state.isUploadingMany = false;
-      }
-    });
+    builder
+      .addAsyncThunk(thunks.uploadOne, {
+        pending(state) {
+          state.isUploadingOne = true;
+        },
+        settled(state) {
+          state.isUploadingOne = false;
+        }
+      })
+      .addAsyncThunk(thunks.uploadMany, {
+        pending(state) {
+          state.isUploadingMany = true;
+        },
+        settled(state) {
+          state.isUploadingMany = false;
+        }
+      });
   }
 });
 

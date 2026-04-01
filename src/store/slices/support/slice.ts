@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { checkSupport } from "./thunks";
+import { thunks } from "./thunks";
 import type { FeatureSupport } from "./types";
 
 type SupportState = {
@@ -16,7 +16,7 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addAsyncThunk(checkSupport, {
+    builder.addAsyncThunk(thunks.checkSupport, {
       fulfilled(state, action) {
         state.features = action.payload;
       },

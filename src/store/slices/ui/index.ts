@@ -1,9 +1,10 @@
-import * as selectors from "./selectors";
+import { selectors } from "./selectors";
+import { middleware } from "./middleware";
+import { effects } from "./effects";
 import { actions, reducer } from "./slice";
 
-export const uiReducer = reducer;
 export const ui = { ...actions, ...selectors };
-
-export * from "./listeners";
-export * from "./middleware";
+export const uiMiddleware = middleware;
+export const uiEffects = effects;
+export const uiReducer = reducer;
 

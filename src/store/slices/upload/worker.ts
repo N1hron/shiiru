@@ -15,9 +15,12 @@ onmessage = async (event: MessageEvent<ExtractRequest<UploadInteraction>>) => {
   if (request.type === "data:extract") {
     try {
       const data = await extractData(file);
+
       messenger.success(request, data);
     } catch (error) {
-      const serialized = (error instanceof UploadError ? error : new UploadError(file, "unknown")).serialize();
+      const e = error instanceof UploadError ? error : new UploadError(file, "unknown");
+      const serialized = e.serialize();
+
       messenger.error(request, serialized);
     }
   }

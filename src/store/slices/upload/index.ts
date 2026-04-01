@@ -1,6 +1,8 @@
 import { reducer, actions } from "./slice";
-import * as selectors from "./selectors";
-import * as thunks from "./thunks";
+import { selectors } from "./selectors";
+import { thunks } from "./thunks";
+import { middleware } from "./middleware";
 
-export const uploadReducer = reducer;
 export const upload = { ...actions, ...selectors, ...thunks };
+export const uploadReducer = reducer;
+export const uploadMiddleware = middleware;

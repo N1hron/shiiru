@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import { supportReducer, support } from "./slices/support";
-import { listenToIsMobile, listenToPreferredTheme, saveThemeMiddleware, uiReducer } from "./slices/ui";
-import { saveSettingsMiddleware, settingsReducer } from "./slices/settings";
-import { uploadReducer } from "./slices/upload";
+import { supportReducer, supportEffects } from "./slices/support";
+import { uiReducer, uiMiddleware, uiEffects } from "./slices/ui";
+import { settingsReducer, settingsMiddleware } from "./slices/settings";
+import { uploadReducer, uploadMiddleware } from "./slices/upload";
 
 export const reducer = combineReducers({
   support: supportReducer,
@@ -14,12 +14,14 @@ export const reducer = combineReducers({
 
 export const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat([saveThemeMiddleware, saveSettingsMiddleware]),
+  middleware: (gDM) => gDM().concat([
+    uiMiddleware.saveTheme,
+    settingsMiddleware.saveSettings,
+    uploadMiddleware.revokeUrls
+  ]),
   devTools: import.meta.env.DEV
 });
 
-void store.dispatch(support.checkSupport());
-
-listenToIsMobile();
-listenToPreferredTheme();
+supportEffects.run();
+uiEffects.run();
 

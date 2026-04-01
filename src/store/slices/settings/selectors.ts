@@ -2,11 +2,10 @@ import { config } from "@/config";
 import type { AppState } from "@/store";
 import type { Settings } from "@/types";
 
-export const selectItem = <N extends keyof Settings>(state: AppState, name: N) => {
-  return state.settings.items[name];
-};
+const selectItems = (state: AppState) => state.settings.items;
+const selectItem = <N extends keyof Settings>(state: AppState, name: N) => selectItems(state)[name];
 
-export const selectDefaultItems = (state: AppState) => {
+const selectDefaultItems = (state: AppState) => {
   const defaults = { ...config.settings.defaults };
   const features = state.support.features;
 
@@ -17,9 +16,9 @@ export const selectDefaultItems = (state: AppState) => {
   return defaults;
 };
 
-export const selectIsDefaultItems = (state: AppState) => {
+const selectIsDefaultItems = (state: AppState) => {
+  const current = selectItems(state);
   const defaults = selectDefaultItems(state);
-  const current = state.settings.items;
 
   return (
     defaults.antialiasingQuality === current.antialiasingQuality &&
@@ -32,4 +31,11 @@ export const selectIsDefaultItems = (state: AppState) => {
     defaults.verticalAlignment === current.verticalAlignment &&
     defaults.videoQuality === current.videoQuality
   );
+};
+
+export const selectors = {
+  selectItem,
+  selectItems,
+  selectDefaultItems,
+  selectIsDefaultItems
 };

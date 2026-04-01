@@ -10,7 +10,7 @@ export function useBackgroundAnimation(targetRef: RefObject<HTMLElement | null>,
       const entry = entries[0];
       const size = entry.contentBoxSize[0].inlineSize;
       const duration = (size / 200 * 5) * multiplier;
-      console.log(size, duration);
+
       target.style.setProperty("--background-animation-duration", duration + "s");
     }
   }, [targetRef, multiplier]);

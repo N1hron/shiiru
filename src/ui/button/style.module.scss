@@ -75,7 +75,7 @@
 }
 
 $padding: calc(var(--border-width-thick) - var(--border-width-thin));
-$content-height: calc(var(--block-size) - var(--border-width-thick));
+$content-height: calc(var(--block-size) - var(--border-width-thick) - var(--border-width-thin));
 
 .button {
   all: unset;

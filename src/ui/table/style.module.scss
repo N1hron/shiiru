@@ -1,0 +1,90 @@
+@use "../../styles/mixins" as m;
+
+$row-height: 1.5rem;
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--border-width-medium);
+  color: var(--color-text-alt);
+  overflow: hidden;
+  cursor: default;
+
+  *::selection {
+    background-color: var(--color-text-alt);
+    color: var(--color-accent-06);
+    text-shadow: none;
+  }
+
+  &::after {
+    @include m.background-dashed-animated(var(--color-accent-06), var(--color-accent-05));
+    @include m.border-3d(var(--color-accent-08));
+
+    content: "";
+    display: block;
+    height: 0.75rem;
+    flex-shrink: 0;
+  }
+}
+
+.head {
+  display: block;
+
+  .row {
+    @include m.background-dashed-animated(var(--color-accent-06), var(--color-accent-05));
+    @include m.border-3d(var(--color-accent-08));
+  }
+}
+
+.body {
+  --cell-background-color: var(--color-accent-05);
+  --cell-border-color: var(--color-accent-07);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--border-width-medium);
+  overflow: auto;
+  scrollbar-width: none;
+
+  .cell:not(:has(button)) {
+    @include m.border-3d(var(--cell-border-color));
+  }
+}
+
+.row {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: var(--border-width-medium);
+  height: $row-height;
+}
+
+.cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+  justify-content: start;
+  padding: 0 0.25rem;
+  background-color: var(--cell-background-color);
+  line-height: calc($row-height - var(--border-width-thin) - var(--border-width-thick));
+  text-shadow: 0 0 1rem var(--color-accent-10);
+
+  &:has(button) {
+    padding: 0;
+    background-color: transparent;
+    overflow: visible;
+  }
+
+  button {
+    display: block;
+
+    &:focus-visible:not(:disabled) {
+      outline-offset: 0;
+    }
+  }
+
+  &Center {
+    text-align: center;
+    justify-content: ce;
+  }
+}

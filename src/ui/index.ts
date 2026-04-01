@@ -11,3 +11,4 @@ export * from "./toggle/Toggle";
 export * from "./translation/Translation";
 export * from "./checkbox/Checkbox";
 export * from "./label/Label";
+export * from "./table/Table";

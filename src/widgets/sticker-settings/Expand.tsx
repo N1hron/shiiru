@@ -1,5 +1,4 @@
-import { Element, Translation } from "@/ui";
-import { Toggle } from "@/ui/toggle/Toggle";
+import { Element, Translation, ExpandToggle } from "@/ui";
 import { ui, useAppDispatch, useAppSelector } from "@/store";
 import { config } from "@/config";
 
@@ -9,28 +8,26 @@ const controls = `${config.id.header} ${config.id.footer} ${config.id.stickerSet
 
 export function Expand() {
   const dispatch = useAppDispatch();
-  const value = useAppSelector(ui.selectIsSidebarVisible);
+  const expanded = useAppSelector(ui.selectIsSidebarVisible);
 
-  function setValue(value: boolean) {
+  function setExpanded(value: boolean) {
     dispatch(ui.setShowSidebar(value));
   }
 
   return (
-    <Toggle
+    <ExpandToggle
       className={styles.expand}
       icon
-      showArrow
       color="accent"
       size="medium"
       sideways="rl"
       aria-controls={controls}
-      aria-expanded={value}
-      value={value}
-      setValue={setValue}
+      expanded={expanded}
+      setExpanded={setExpanded}
     >
       <Element as="span" hidden="visually">
         <Translation translationKey="stickerSettings.toggle" />
       </Element>
-    </Toggle>
+    </ExpandToggle>
   );
 }

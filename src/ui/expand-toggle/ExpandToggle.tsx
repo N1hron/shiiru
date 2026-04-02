@@ -6,33 +6,31 @@ import { mergeHandlers } from "@/utils";
 
 import styles from "./style.module.scss";
 
-export type ToggleProps = Omit<ButtonProps, "value"> & {
-  value: boolean;
-  showArrow?: boolean;
-  setValue: (value: boolean) => void;
+export type ExpandToggleProps = Omit<ButtonProps, "value"> & {
+  expanded: boolean;
+  setExpanded: (value: boolean) => void;
 };
 
-export function Toggle({
-  value,
+export function ExpandToggle({
+  expanded,
   icon,
   sideways,
   className,
-  showArrow,
   children,
-  setValue,
+  setExpanded,
   onClick,
   ...props
-}: ToggleProps) {
+}: ExpandToggleProps) {
   const cn = clsx(
-    styles.toggle,
-    icon && styles.toggleIcon,
-    value && styles.toggleChecked,
-    sideways && styles.toggleSideways,
+    styles.expandToggle,
+    icon && styles.expandToggleIcon,
+    expanded && styles.expandToggleChecked,
+    sideways && styles.expandToggleSideways,
     className
   );
 
   function handleClick() {
-    setValue(!value);
+    setExpanded(!expanded);
   }
 
   return (
@@ -40,11 +38,12 @@ export function Toggle({
       className={cn}
       icon={icon}
       sideways={sideways}
+      aria-expanded={expanded}
       onClick={mergeHandlers(handleClick, onClick)}
       {...props}
     >
       { children }
-      { showArrow && <ArrowIcon className={styles.icon} aria-hidden /> }
+      <ArrowIcon className={styles.icon} aria-hidden />
     </Button>
   );
 }

@@ -1,4 +1,4 @@
-.toggle {
+.expandToggle {
   .icon {
     block-size: 100%;
     rotate: 270deg;
@@ -8,7 +8,7 @@
     }
   }
 
-  &:not(.toggleIcon) {
+  &:not(.expandToggleIcon) {
     :global {
       .button-content {
         padding-inline-end: 0.075rem;
@@ -27,7 +27,7 @@
       rotate: 0deg;
     }
 
-    &.toggleChecked {
+    &.expandToggleChecked {
       .icon {
         rotate: 180deg;
       }

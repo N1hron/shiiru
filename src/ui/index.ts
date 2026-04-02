@@ -6,7 +6,7 @@ export * from "./error-boundary/ErrorBoundary";
 export * from "./link/Link";
 export * from "./multi-toggle/MultiToggle";
 export * from "./spin-select/SpinSelect";
-export * from "./toggle/Toggle";
+export * from "./expand-toggle/ExpandToggle";
 export * from "./translation/Translation";
 export * from "./checkbox/Checkbox";
 export * from "./label/Label";

@@ -1,12 +1,21 @@
+@use "../styles/mixins" as m;
+
 .app {
   display: grid;
   grid-template-columns: 16.375rem minmax(auto, 35rem);
   grid-template-rows: auto 1fr auto auto;
   justify-content: center;
   gap: 0.5rem;
+  padding: 0.5rem;
   height: 100%;
 }
 
 .main {
   display: contents;
+}
+
+@include m.mobile {
+  .app {
+    padding-right: 0;
+  }
 }

@@ -1,0 +1,30 @@
+$gap: 0.25rem;
+
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+  padding-top: calc($gap + var(--border-width-thin));
+  padding-bottom: calc($gap + var(--border-width-thick));
+  width: 1.3125rem;
+
+  button {
+    display: block;
+  }
+
+  &Left {
+    :global {
+      .button-content-wrapper {
+        border-right: none;
+      }
+    }
+  }
+
+  &Right {
+    :global {
+      .button-content-wrapper {
+        border-left: none;
+      }
+    }
+  }
+}

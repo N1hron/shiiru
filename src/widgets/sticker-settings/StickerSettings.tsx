@@ -1,10 +1,11 @@
 import { useId } from "react";
 
-import { SidebarMotion } from "@/components";
-import { Card, SidePanel, Element, Translation } from "@/ui";
-import { ExpandFrame } from "./ExpandFrame";
+import { Sidebar } from "@/components";
+import { Heading } from "./Heading";
+import { Card } from "@/ui";
+import { ExpandWrapper } from "./ExpandWrapper";
 import { Expand } from "./Expand";
-import { ResetFrame } from "./ResetFrame";
+import { ResetWrapper } from "./ResetWrapper";
 import { Reset } from "./Reset";
 import { StringItem } from "./StringItem";
 import { AntialiasingQuality } from "./AntialiasingQuality";
@@ -17,22 +18,20 @@ export function StickerSettings() {
   const headingId = useId();
 
   return (
-    <SidebarMotion as="section" id={config.id.stickerSettings} className={styles.frame} aria-labelledby={headingId}>
-      <Element as="h2" id={headingId} hidden="visually">
-        <Translation translationKey="stickerSettings.heading" />
-      </Element>
+    <Sidebar as="section" id={config.id.stickerSettings} className={styles.frame} aria-labelledby={headingId}>
+      <Heading id={headingId} />
 
-      <SidePanel as="menu" className={styles.panel}>
-        <ExpandFrame>
+      <Sidebar.Panel as="menu">
+        <ExpandWrapper>
           <Expand />
-        </ExpandFrame>
+        </ExpandWrapper>
 
-        <ResetFrame>
+        <ResetWrapper>
           <Reset />
-        </ResetFrame>
-      </SidePanel>
+        </ResetWrapper>
+      </Sidebar.Panel>
 
-      <SidebarMotion.Activity>
+      <Sidebar.Activity>
         <Card className={styles.card}>
           <ul className={styles.list}>
             <StringItem name="type" />
@@ -43,7 +42,7 @@ export function StickerSettings() {
             <BooleanItem name="removeSpaces" />
           </ul>
         </Card>
-      </SidebarMotion.Activity>
-    </SidebarMotion>
+      </Sidebar.Activity>
+    </Sidebar>
   );
 }

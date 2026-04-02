@@ -1,48 +1,46 @@
 import clsx from "clsx";
 import { useMemo, useState, type ComponentPropsWithRef } from "react";
-import { motion, type AnimationDefinition, type DOMMotionComponents } from "motion/react";
+import { motion, type VariantLabels, type DOMMotionComponents } from "motion/react";
 
-import { SidebarMotionContext, type SidebarMotionContextValue } from "./Context";
-import { SidebarMotionActivity } from "./SidebarMotionActivity";
+import { SidebarContext, type SidebarContextValue } from "./context";
+import { SidebarActivity } from "./SidebarActivity";
+import { SidebarPanel } from "./SidebarPanel";
 import { ui, useAppSelector } from "@/store";
 import { variants } from "./animations";
 
 import styles from "./style.module.scss";
 
-export type SidebarMotionComponent = keyof DOMMotionComponents;
+export type SidebarComponent = keyof DOMMotionComponents;
 
-export type SidebarMotionProps<C extends SidebarMotionComponent = "div"> = {
+export type SidebarProps<C extends SidebarComponent = "div"> = {
   as?: C;
   delay?: number;
 } & ComponentPropsWithRef<DOMMotionComponents[C]>;
 
-function SidebarMotion<C extends SidebarMotionComponent = "div">({
+function Sidebar<C extends SidebarComponent = "div">({
   as,
   delay,
   className,
   ...props
-}: SidebarMotionProps<C>) {
+}: SidebarProps<C>) {
+  const [isExitComplete, setIsExitComplete] = useState(false);
   const Component = motion[as || "div"] as DOMMotionComponents["div"];
   const isVisible = useAppSelector(ui.selectIsSidebarVisible);
   const isMobile = useAppSelector(ui.selectIsMobile);
-  const [isExitComplete, setIsExitComplete] = useState(false);
+  const mode = !isVisible && isExitComplete ? "hidden" : "visible";
+  const contextValue = useMemo<SidebarContextValue>(() => ({ mode }), [mode]);
   const cn = clsx(styles.sidebarMotion, className);
 
-  const contextValue = useMemo<SidebarMotionContextValue>(
-    () => ({ isVisible, isExitComplete }),
-    [isVisible, isExitComplete]
-  );
-
-  function handleExitComplete(definition: AnimationDefinition) {
-    if (definition === "hidden") {
+  function handleExitComplete(variant: VariantLabels) {
+    if (variant === "hidden") {
       setIsExitComplete(true);
-    } else if (definition === "visible") {
+    } else if (variant === "visible") {
       setIsExitComplete(false);
     }
   }
 
   return (
-    <SidebarMotionContext value={contextValue}>
+    <SidebarContext value={contextValue}>
       <Component
         className={cn}
         variants={variants}
@@ -52,10 +50,11 @@ function SidebarMotion<C extends SidebarMotionComponent = "div">({
         onAnimationComplete={handleExitComplete}
         {...props as ComponentPropsWithRef<DOMMotionComponents["div"]>}
       />
-    </SidebarMotionContext>
+    </SidebarContext>
   );
 }
 
-SidebarMotion.Activity = SidebarMotionActivity;
+Sidebar.Panel = SidebarPanel;
+Sidebar.Activity = SidebarActivity;
 
-export { SidebarMotion };
+export { Sidebar };

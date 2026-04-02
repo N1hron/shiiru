@@ -8,7 +8,7 @@ export type HorizontalAlignment = "left" | "middle" | "right";
 export type FileName = { full: string; stem: string; ext: string };
 export type Validity = "valid" | "partial" | "invalid";
 export type ActivityMode = NonNullable<ActivityProps["mode"]>;
-export type FrameProps = { children: ReactNode };
+export type WrapperProps = { children: ReactNode };
 export type LimitKind = "debounce" | "throttle";
 
 export type LimitedFn<C, A extends unknown[]> = {

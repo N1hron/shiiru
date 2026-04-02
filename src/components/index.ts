@@ -1,2 +1,2 @@
-export * from "./side-motion";
-export * from "./sidebar-motion";
+export * from "./sidebar";
+export * from "./side-panel";

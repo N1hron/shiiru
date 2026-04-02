@@ -1,7 +1,6 @@
 export * from "./backdrop/Backdrop";
 export * from "./button/Button";
 export * from "./card/Card";
-export * from "./side-panel/SidePanel";
 export * from "./element/Element";
 export * from "./error-boundary/ErrorBoundary";
 export * from "./link/Link";

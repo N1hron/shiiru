@@ -5,16 +5,6 @@
   grid-row: 2/4;
 }
 
-.panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--card-panel-gap);
-
-  button {
-    display: block;
-  }
-}
-
 .card {
   height: 100%;
   flex-grow: 1;
@@ -52,28 +42,4 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-}
-
-@include m.desktop {
-  .panel {
-    button {
-      :global {
-        .button-content-wrapper {
-          border-right: none;
-        }
-      }
-    }
-  }
-}
-
-@include m.mobile {
-  .panel {
-    button {
-      :global {
-        .button-content-wrapper {
-          border-left: none;
-        }
-      }
-    }
-  }
 }

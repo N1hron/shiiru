@@ -2,24 +2,24 @@ import { AnimatePresence, motion, type DOMMotionComponents } from "motion/react"
 import type { ComponentPropsWithRef } from "react";
 
 import { variants } from "./animations";
-import type { ActivityMode, Side } from "@/types";
+import { useSidePanelContext } from "./context";
+import type { ActivityMode } from "@/types";
 
-export type SideMotionComponent = keyof DOMMotionComponents;
+export type SidePanelMotionComponent = keyof DOMMotionComponents;
 
-export type SideMotionProps<C extends SideMotionComponent = "div"> = {
+export type SidePanelMotionProps<C extends SidePanelMotionComponent = "div"> = {
   as?: C;
-  side: Side;
-  delay?: number;
   mode?: ActivityMode;
+  delay?: number;
 } & Omit<ComponentPropsWithRef<DOMMotionComponents[C]>, "mode">;
 
-export function SideMotion<C extends SideMotionComponent = "div">({
+export function SidePanelMotion<C extends SidePanelMotionComponent = "div">({
   as,
-  side,
-  delay,
   mode,
+  delay,
   ...props
-}: SideMotionProps<C>) {
+}: SidePanelMotionProps<C>) {
+  const { side } = useSidePanelContext();
   const Component = motion[as || "div"] as DOMMotionComponents["div"];
   const custom = { side, delay };
 
@@ -28,10 +28,10 @@ export function SideMotion<C extends SideMotionComponent = "div">({
       { mode === "visible" && (
         <Component
           variants={variants}
+          custom={custom}
           initial="hidden"
           animate="visible"
           exit="hidden"
-          custom={custom}
           {...props as ComponentPropsWithRef<DOMMotionComponents["div"]>}
         />
       ) }

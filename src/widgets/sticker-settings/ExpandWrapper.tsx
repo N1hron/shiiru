@@ -1,7 +1,7 @@
 import { ui, useAppSelector } from "@/store";
-import type { FrameProps } from "@/types";
+import type { WrapperProps } from "@/types";
 
-export function ExpandFrame({ children }: FrameProps) {
+export function ExpandWrapper({ children }: WrapperProps) {
   const isMobile = useAppSelector(ui.selectIsMobile);
 
   if (!isMobile) return null;

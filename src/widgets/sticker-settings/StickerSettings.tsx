@@ -1,7 +1,7 @@
 import { useId } from "react";
 
 import { SidebarMotion } from "@/components";
-import { Card, CardPanel, Element, Translation } from "@/ui";
+import { Card, SidePanel, Element, Translation } from "@/ui";
 import { ExpandFrame } from "./ExpandFrame";
 import { Expand } from "./Expand";
 import { ResetFrame } from "./ResetFrame";
@@ -22,7 +22,7 @@ export function StickerSettings() {
         <Translation translationKey="stickerSettings.heading" />
       </Element>
 
-      <CardPanel as="menu" className={styles.panel}>
+      <SidePanel as="menu" className={styles.panel}>
         <ExpandFrame>
           <Expand />
         </ExpandFrame>
@@ -30,7 +30,7 @@ export function StickerSettings() {
         <ResetFrame>
           <Reset />
         </ResetFrame>
-      </CardPanel>
+      </SidePanel>
 
       <SidebarMotion.Activity>
         <Card className={styles.card}>

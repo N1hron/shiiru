@@ -1,5 +1,5 @@
 import { SidebarMotion } from "@/components";
-import { Card, CardPanel } from "@/ui";
+import { Card, SidePanel } from "@/ui";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
 import { config } from "@/config";
@@ -9,10 +9,10 @@ import styles from "./style.module.scss";
 export function Header() {
   return (
     <SidebarMotion as="header" id={config.id.header} className={styles.frame} delay={0.0625}>
-      <CardPanel as="menu" className={styles.menu}>
+      <SidePanel as="menu" className={styles.menu}>
         <ThemeToggle />
         <LanguageToggle />
-      </CardPanel>
+      </SidePanel>
 
       <SidebarMotion.Activity>
         <Card className={styles.card} as="div">

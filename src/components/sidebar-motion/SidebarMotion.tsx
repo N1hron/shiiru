@@ -26,7 +26,7 @@ function SidebarMotion<C extends SidebarMotionComponent = "div">({
   const isVisible = useAppSelector(ui.selectIsSidebarVisible);
   const isMobile = useAppSelector(ui.selectIsMobile);
   const [isExitComplete, setIsExitComplete] = useState(false);
-  const cn = clsx(styles.sidebarFrame, className);
+  const cn = clsx(styles.sidebarMotion, className);
 
   const contextValue = useMemo<SidebarMotionContextValue>(
     () => ({ isVisible, isExitComplete }),

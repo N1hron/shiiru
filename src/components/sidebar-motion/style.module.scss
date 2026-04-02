@@ -1,15 +1,15 @@
 @use "../../styles/mixins" as m;
 
-.sidebarFrame {
+.sidebarMotion {
   position: relative;
   z-index: 3;
-  width: 16.375rem;
+  width: 16.3125rem;
   display: flex;
   flex-direction: row;
 }
 
 @include m.mobile {
-  .sidebarFrame {
+  .sidebarMotion {
     flex-direction: row-reverse;
   }
 }

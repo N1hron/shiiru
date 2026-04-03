@@ -4,15 +4,17 @@ import { useMemo, type ComponentPropsWithRef, type ElementType, type ReactNode }
 import { SidePanelContext, type SidePanelContextValue } from "./context";
 import { SidePanelMotion } from "./SidePanelMotion";
 import { capitalize } from "@/utils";
+import { ui, useAppSelector } from "@/store";
 import type { Side } from "@/types";
 
 import styles from "./style.module.scss";
 
 export type SidePanelComponent = ElementType<{ children?: ReactNode; className?: string }>;
+export type SidePanelSide = Side | Record<"mobile" | "desktop", Side>;
 
 export type SidePanelProps<C extends SidePanelComponent> = ComponentPropsWithRef<C> & {
   as?: C;
-  side?: Side;
+  side?: SidePanelSide;
 };
 
 function SidePanel<C extends SidePanelComponent>({
@@ -23,8 +25,10 @@ function SidePanel<C extends SidePanelComponent>({
   ...props
 }: SidePanelProps<C>) {
   const Component: SidePanelComponent = as || "div";
-  const cn = clsx(styles.sidePanel, styles[`sidePanel${capitalize(side)}`], className);
-  const contextValue = useMemo<SidePanelContextValue>(() => ({ side }), [side]);
+  const isMobile = useAppSelector(ui.selectIsMobile);
+  const sideValue = typeof side === "string" ? side : isMobile ? side.mobile : side.desktop;
+  const cn = clsx(styles.sidePanel, styles[`sidePanel${capitalize(sideValue)}`], className);
+  const contextValue = useMemo<SidePanelContextValue>(() => ({ side: sideValue }), [sideValue]);
 
   return (
     <Component className={cn} {...props}>

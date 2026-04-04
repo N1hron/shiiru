@@ -3,9 +3,7 @@ import { useId } from "react";
 import { Sidebar } from "@/components";
 import { Heading } from "./Heading";
 import { Card } from "@/ui";
-import { ExpandWrapper } from "./ExpandWrapper";
 import { Expand } from "./Expand";
-import { ResetWrapper } from "./ResetWrapper";
 import { Reset } from "./Reset";
 import { StringItem } from "./StringItem";
 import { AntialiasingQuality } from "./AntialiasingQuality";
@@ -22,13 +20,8 @@ export function StickerSettings() {
       <Heading id={headingId} />
 
       <Sidebar.Panel as="menu">
-        <ExpandWrapper>
-          <Expand />
-        </ExpandWrapper>
-
-        <ResetWrapper>
-          <Reset />
-        </ResetWrapper>
+        <Expand />
+        <Reset />
       </Sidebar.Panel>
 
       <Sidebar.Activity>

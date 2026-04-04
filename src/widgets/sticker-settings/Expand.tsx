@@ -9,25 +9,32 @@ const controls = `${config.id.header} ${config.id.footer} ${config.id.stickerSet
 export function Expand() {
   const dispatch = useAppDispatch();
   const expanded = useAppSelector(ui.selectIsSidebarVisible);
+  const isMobile = useAppSelector(ui.selectIsMobile);
 
-  function setExpanded(value: boolean) {
-    dispatch(ui.setShowSidebar(value));
+  if (!isMobile) {
+    return null;
   }
 
+  const setExpanded = (value: boolean) => {
+    dispatch(ui.setShowSidebar(value));
+  };
+
   return (
-    <ExpandToggle
-      className={styles.expand}
-      icon
-      color="accent"
-      size="medium"
-      sideways="rl"
-      aria-controls={controls}
-      expanded={expanded}
-      setExpanded={setExpanded}
-    >
-      <Element as="span" hidden="visually">
-        <Translation translationKey="stickerSettings.toggle" />
-      </Element>
-    </ExpandToggle>
+    <li>
+      <ExpandToggle
+        className={styles.expand}
+        icon
+        color="accent"
+        size="medium"
+        sideways="rl"
+        aria-controls={controls}
+        expanded={expanded}
+        setExpanded={setExpanded}
+      >
+        <Element as="span" hidden="visually">
+          <Translation translationKey="stickerSettings.toggle" />
+        </Element>
+      </ExpandToggle>
+    </li>
   );
 }
